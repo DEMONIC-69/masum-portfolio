@@ -255,7 +255,11 @@ export const seasons: Season[] = [
 ];
 
 export type TopPick = { label: string; title: string; detail: string; palette: Palette };
-export const topPicks: TopPick[] = [];
+export const topPicks: TopPick[] = [
+  { label: 'BUSINESS BUILT & SOLD', title: 'Siftmirth', detail: '$375 revenue · sold for $1,000', palette: journeyPalette },
+  { label: 'TRADEIFY GRAND CUP', title: '#2,360', detail: '$4,905 gain · $1M trading competition', palette: journeyPalette },
+  { label: 'CHANNEL BUILT & SOLD', title: 'Monee Forum', detail: '225K+ subscribers · online business education', palette: journeyPalette },
+];
 
 export type IntroSlide = { kicker: string; title: string; lines: string[]; chips?: string[] };
 export const introSlides: IntroSlide[] = [
