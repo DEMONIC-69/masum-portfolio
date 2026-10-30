@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { profile } from '../data/portfolio';
+import { profile, seasons } from '../data/portfolio';
 import { EASE, SectionHeading, Tilt } from './fx';
 
 export default function About() {
@@ -32,7 +32,7 @@ export default function About() {
                 <p className="text-[10px] font-bold tracking-[0.3em] text-gold-bright">INTRODUCTION</p>
                 <p className="font-display text-3xl leading-none text-bone">{profile.displayName}</p>
               </div>
-              <span className="rounded border border-white/30 px-1.5 text-[10px] font-bold text-bone">PROFILE</span>
+              <span className="rounded border border-white/30 px-1.5 text-[10px] font-bold text-bone">{String(seasons.length).padStart(2, '0')} SEASONS</span>
             </div>
           </div>
         </Tilt>
