@@ -35,7 +35,7 @@ jobs:
       - name: Build site
         run: npm run build
         env:
-          PAGES_BASE: /masum-portfolio/
+          PAGES_BASE: ./
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v4
