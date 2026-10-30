@@ -13,20 +13,22 @@ export default function FinalCTA({ onReplay }: { onReplay: () => void }) {
   const blur = useTransform(scrollYProgress, [0, 1], ['blur(16px)', 'blur(0px)']);
   const opacity = useTransform(scrollYProgress, [0.1, 0.9], [0, 1]);
 
-  const ctas = [
-    { label: "Let's Build", href: `mailto:${profile.email}?subject=${encodeURIComponent("Let's build something")}`, primary: true, cursor: 'play' },
-    { label: 'LinkedIn', href: profile.links.linkedin, cursor: 'link' },
-    { label: 'GitHub', href: profile.links.github, cursor: 'link' },
-    { label: 'Email', href: `mailto:${profile.email}`, cursor: 'link' },
+  const ctas: { label: string; href: string; primary: boolean; cursor: string }[] = [
+    { label: 'Explore Profile', href: '#about', primary: true, cursor: 'play' },
+    ...(profile.links.linkedin ? [{ label: 'LinkedIn', href: profile.links.linkedin, primary: false, cursor: 'link' }] : []),
+    ...(profile.links.youtube ? [{ label: 'YouTube', href: profile.links.youtube, primary: false, cursor: 'link' }] : []),
+    ...(profile.links.instagram ? [{ label: 'Instagram', href: profile.links.instagram, primary: false, cursor: 'link' }] : []),
+    ...(profile.links.github ? [{ label: 'GitHub', href: profile.links.github, primary: false, cursor: 'link' }] : []),
+    ...(profile.email ? [{ label: 'Email', href: `mailto:${profile.email}`, primary: false, cursor: 'link' }] : []),
   ];
 
   return (
     <section id="contact" ref={ref} className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-4 py-24 text-center">
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_60%,rgba(229,19,43,0.18),transparent_70%)]" />
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_60%,rgba(217,180,106,0.1),transparent_70%)]" />
       <Particles count={36} />
 
       <motion.p
-        className="relative mb-6 text-[11px] font-bold uppercase tracking-[0.5em] text-crimson-2"
+        className="relative mb-6 text-[11px] font-bold uppercase tracking-[0.5em] text-gold-bright"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -67,7 +69,7 @@ export default function FinalCTA({ onReplay }: { onReplay: () => void }) {
                 rel={c.href.startsWith('http') ? 'noreferrer' : undefined}
                 data-cursor={c.cursor}
                 className={`flex min-h-12 items-center gap-2 rounded-full px-7 text-sm font-bold tracking-[0.12em] transition ${
-                  c.primary ? 'bg-crimson text-white shadow-[0_0_50px_rgba(229,19,43,0.5)] hover:bg-crimson-2' : 'border border-white/25 text-bone hover:border-bone hover:bg-white/10'
+                  c.primary ? 'bg-gold text-ink shadow-[0_0_40px_rgba(217,180,106,0.16)] hover:bg-gold-bright' : 'border border-white/25 text-bone hover:border-bone hover:bg-white/10'
                 }`}
               >
                 {c.primary && <span>▶</span>}

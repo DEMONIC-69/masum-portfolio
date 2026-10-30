@@ -6,14 +6,13 @@ import { EASE, Magnetic } from './fx';
 
 /**
  * The signature moment:
- * black → studio card → SUSHMITA → THE SERIES → portrait reveal → role → ▶ PLAY
+ * black → studio card → MASUM KAJI → portrait reveal → tagline → ▶ PLAY
  */
 const TIMELINE = [
   { at: 300, beat: 1 }, // studio card
   { at: 1900, beat: 2 }, // name
-  { at: 2700, beat: 3 }, // THE SERIES
+  { at: 2700, beat: 3 }, // tagline
   { at: 3400, beat: 4 }, // portrait
-  { at: 4300, beat: 5 }, // role
   { at: 5000, beat: 6 }, // play button
 ];
 
@@ -51,7 +50,7 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
       <motion.div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: 'radial-gradient(60% 50% at 50% 55%, rgba(229,19,43,0.22), transparent 70%)' }}
+        style={{ background: 'radial-gradient(60% 50% at 50% 55%, rgba(217,180,106,0.07), transparent 70%)' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: beat >= 2 ? [0, 0.9, 0.5, 1] : 0 }}
         transition={{ duration: 1.4 }}
@@ -89,7 +88,7 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
       >
         <img
           src={profile.portrait.src}
-          srcSet={profile.portrait.srcSet}
+          srcSet={profile.portrait.srcSet || undefined}
           sizes="(max-width: 768px) 100vw, 900px"
           alt={profile.portrait.alt}
           className="h-full w-auto max-w-none object-contain object-bottom [mask-image:linear-gradient(to_bottom,black_55%,transparent_98%)]"
@@ -102,33 +101,25 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-center">
         <motion.h1
           className="font-display leading-[0.82] text-bone drop-shadow-[0_8px_40px_rgba(0,0,0,0.8)]"
-          style={{ fontSize: 'clamp(4.6rem, 20vw, 15rem)' }}
+          style={{ fontSize: 'clamp(3.2rem, 14vw, 13rem)' }}
           initial={{ opacity: 0, scale: 1.3, filter: 'blur(20px)', letterSpacing: '0.5em' }}
           animate={beat >= 2 ? { opacity: 1, scale: 1, filter: 'blur(0px)', letterSpacing: '0.04em', y: beat >= 4 ? '-30vh' : 0 } : {}}
           transition={{ duration: 1.3, ease: EASE }}
         >
-          {profile.firstName}
+          {profile.displayName.toUpperCase()}
         </motion.h1>
         <motion.p
-          className="font-sans text-sm font-bold text-crimson-2 [text-shadow:0_2px_20px_rgba(0,0,0,0.9)] sm:text-lg"
-          initial={{ opacity: 0, letterSpacing: '1.4em' }}
-          animate={beat >= 3 ? { opacity: 1, letterSpacing: '0.7em', y: beat >= 4 ? '-30vh' : 0 } : {}}
+          className="font-sans text-[9px] font-semibold tracking-[0.18em] text-gold-bright [text-shadow:0_2px_20px_rgba(0,0,0,0.9)] sm:text-sm sm:tracking-[0.3em]"
+          initial={{ opacity: 0, y: 14 }}
+          animate={beat >= 3 ? { opacity: 1, y: beat >= 4 ? '-30vh' : 0 } : {}}
           transition={{ duration: 1.1, ease: EASE }}
         >
-          {profile.seriesTag}
+          {profile.tagline.join(' • ')}
         </motion.p>
       </div>
 
-      {/* role + play */}
+      {/* play */}
       <div className="absolute inset-x-0 bottom-[9vh] z-20 flex flex-col items-center gap-6 px-4 text-center">
-        <motion.p
-          className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-bone/90 sm:text-sm sm:tracking-[0.4em]"
-          initial={{ opacity: 0, y: 14 }}
-          animate={beat >= 5 ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: EASE }}
-        >
-          {profile.tagline.join('  •  ')}
-        </motion.p>
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={beat >= 6 ? { opacity: 1, scale: 1 } : {}} transition={{ duration: 0.7, ease: EASE }}>
           <Magnetic>
             <button
@@ -136,7 +127,7 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
               data-cursor="play"
               onClick={onDone}
               tabIndex={beat >= 6 ? 0 : -1}
-              className="group flex items-center gap-3 rounded-full bg-bone px-9 py-4 font-sans text-base font-bold tracking-wide text-ink shadow-[0_0_60px_rgba(229,19,43,0.45)] transition hover:bg-white"
+              className="group flex items-center gap-3 rounded-full bg-bone px-9 py-4 font-sans text-base font-bold tracking-wide text-ink shadow-[0_0_60px_rgba(217,180,106,0.14)] transition hover:bg-white"
             >
               <span className="text-lg transition-transform group-hover:scale-125">▶</span> PLAY
             </button>

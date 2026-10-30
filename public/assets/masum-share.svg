@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow" cx="78%" cy="50%" r="48%">
+      <stop offset="0" stop-color="#d9b46a" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#d9b46a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#090a0c"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <circle cx="945" cy="315" r="205" fill="#111316" stroke="#d9b46a" stroke-opacity=".35"/>
+  <path d="M850 415V220l95 122 95-122v195" fill="none" stroke="#d9b46a" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M82 358h505" stroke="#d9b46a" stroke-opacity=".7" stroke-width="2"/>
+  <text x="78" y="300" font-family="Arial, sans-serif" font-size="88" font-weight="700" fill="#f4f1ec" letter-spacing="4">MASUM KAJI</text>
+  <text x="82" y="415" font-family="Arial, sans-serif" font-size="22" font-weight="600" fill="#d9b46a" letter-spacing="5">RESEARCH ANALYST • PROP FIRM TRADER</text>
+  <text x="82" y="478" font-family="Arial, sans-serif" font-size="16" fill="#a7a6ad" letter-spacing="3">PERSONAL PORTFOLIO</text>
+</svg>

@@ -102,13 +102,13 @@ export default function PlayIntro({ onClose }: { onClose: () => void }) {
       >
         <img
           src={profile.portrait.src}
-          srcSet={profile.portrait.srcSet}
+          srcSet={profile.portrait.srcSet || undefined}
           sizes="100vw"
           alt=""
           className="h-[88vh] w-auto max-w-none object-contain [mask-image:linear-gradient(to_bottom,black_60%,transparent)]"
         />
       </motion.div>
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_45%,rgba(120,10,25,0.35),transparent_70%)]" />
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_45%,rgba(217,180,106,0.08),transparent_70%)]" />
 
       {/* progress bars */}
       {phase !== 'zoom' && (
@@ -136,7 +136,7 @@ export default function PlayIntro({ onClose }: { onClose: () => void }) {
               exit={{ opacity: 0, scale: 0.96, filter: 'blur(10px)' }}
               transition={{ duration: 0.7, ease: EASE }}
             >
-              <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.5em] text-crimson-2 sm:text-xs">
+              <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.5em] text-gold-bright sm:text-xs">
                 Episode {String(index + 1).padStart(2, '0')} · {slide.kicker}
               </p>
               <h2 className="font-display leading-[0.88] text-bone" style={{ fontSize: 'clamp(3rem, 10vw, 8.5rem)' }}>

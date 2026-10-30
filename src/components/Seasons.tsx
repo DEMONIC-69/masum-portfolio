@@ -6,16 +6,25 @@ import EpisodeCard from './EpisodeCard';
 import { RailButtons } from './Rail';
 
 export default function Seasons() {
-  const [active, setActive] = useState(seasons.length - 2);
+  const [active, setActive] = useState(Math.max(seasons.length - 2, 0));
   const season = seasons[active];
   const rail = useRef<HTMLDivElement>(null);
+
+  if (!season) {
+    return (
+      <>
+        <SectionHeading kicker="Journey" title="My Journey" />
+        <p className="gutter text-sm text-mist">Education and experience details can be added here.</p>
+      </>
+    );
+  }
 
   return (
     <>
       <SectionHeading
         kicker={`${seasons.length} Seasons`}
         title="My Journey"
-        aside={<p className="max-w-xs text-sm text-mist">Every stage of the resume, told as a season — select one to see its episodes.</p>}
+        aside={<p className="max-w-xs text-sm text-mist">Background and experience, told as seasons — select one to see its episodes.</p>}
       />
 
       {/* season selector */}

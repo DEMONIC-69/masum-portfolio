@@ -21,7 +21,9 @@ export default function Achievements() {
 
   return (
     <>
-      <SectionHeading kicker="Awards season" title="Top Moments" />
+      <SectionHeading kicker="Milestones" title="Highlights" />
+
+      {achievements.length === 0 && <p className="gutter mb-8 text-sm text-mist">No achievements have been added.</p>}
 
       <div className="gutter grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 [perspective:1400px]">
         {achievements.map((a, i) => (
@@ -54,7 +56,7 @@ export default function Achievements() {
                     data-cursor="link"
                     className="relative mt-auto inline-flex min-h-10 items-center gap-1 pt-5 text-xs font-semibold tracking-wide text-bone underline decoration-[#d9b46a]/60 underline-offset-4 hover:decoration-[#d9b46a]"
                   >
-                    View certificate ↗
+                    View evidence ↗
                   </a>
                 )}
               </article>
@@ -67,11 +69,11 @@ export default function Achievements() {
       <div className="mt-16">
         <div className="gutter mb-2 flex flex-wrap items-end justify-between gap-2">
           <h3 className="font-sans text-lg font-semibold text-bone sm:text-2xl">
-            Certified <span className="text-mist">· {certifications.length} credentials</span>
+            Certificates <span className="text-mist">· {certifications.length} items</span>
           </h3>
           <p className="text-xs text-smoke">{issuers.join(' · ')}</p>
         </div>
-        <div className="group/rail relative">
+        {certifications.length === 0 ? <p className="gutter mt-4 text-sm text-mist">No certificates have been added.</p> : <div className="group/rail relative">
           <div ref={rail} className="rail gutter flex snap-x gap-3 overflow-x-auto py-5">
             {certifications.map((c, i) => (
               <motion.a
@@ -87,7 +89,7 @@ export default function Achievements() {
                 transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.04, ease: EASE }}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-crimson-2">{c.issuer}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold-bright">{c.issuer}</span>
                   <span className="text-sm text-smoke transition group-hover:text-bone">↗</span>
                 </div>
                 <p className="mt-6 text-sm font-medium leading-snug text-bone">{c.name}</p>
@@ -95,7 +97,7 @@ export default function Achievements() {
             ))}
           </div>
           <RailButtons rail={rail} />
-        </div>
+        </div>}
       </div>
     </>
   );
