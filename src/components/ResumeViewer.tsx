@@ -21,7 +21,7 @@ export default function ResumeSection({ onView }: { onView: () => void }) {
         <div className="lg:sticky lg:top-28 lg:self-start">
           <p className="font-serif text-3xl italic leading-tight text-bone">A profile in progress.</p>
           <p className="mt-3 text-sm leading-relaxed text-mist">
-            Current studies and confirmed milestones are listed. Research examples and work details will be added as they develop.
+            This profile brings together confirmed studies, milestones, platforms, and projects. Follow the Journey section for the timeline and current direction.
           </p>
           {profile.resumePdf && (
             <div className="mt-6 flex flex-col gap-3">
