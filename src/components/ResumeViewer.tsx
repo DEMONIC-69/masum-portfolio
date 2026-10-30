@@ -21,7 +21,7 @@ export default function ResumeSection({ onView }: { onView: () => void }) {
         <div className="lg:sticky lg:top-28 lg:self-start">
           <p className="font-serif text-3xl italic leading-tight text-bone">A profile in progress.</p>
           <p className="mt-3 text-sm leading-relaxed text-mist">
-            Research focus and verified certificates are listed. Add education and experience details to complete the profile.
+            Current studies and confirmed milestones are listed. Research examples and work details will be added as they develop.
           </p>
           {profile.resumePdf && (
             <div className="mt-6 flex flex-col gap-3">
@@ -112,6 +112,9 @@ export function ResumeSheet() {
                 <p className="text-xs text-smoke">{e.period}</p>
               </div>
               <p className="text-xs text-mist">{e.degree} · <span className="text-bone/80">{e.score}</span></p>
+              {e.currentCourses && e.currentCourses.length > 0 && (
+                <p className="mt-1 text-xs text-mist">Current coursework: {e.currentCourses.join(', ')}</p>
+              )}
             </div>
           ))}
         </section>
