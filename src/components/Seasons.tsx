@@ -14,7 +14,7 @@ export default function Seasons() {
     return (
       <>
         <SectionHeading kicker="Journey" title="My Journey" />
-        <p className="gutter text-sm text-mist">Education and experience details can be added here.</p>
+        <p className="gutter text-sm text-mist">More academic and work highlights will be added here over time.</p>
       </>
     );
   }
