@@ -7,7 +7,7 @@ A cinematic, streaming-inspired portfolio for Masum Kaji.
 **Visual direction:** charcoal and black with subtle gold accents
 **Hero image:** supplied transparent portrait, optimized for responsive use
 
-The finance positioning and market focus below are based on details Masum supplied. Research examples, certificates, education, experience, contact links, and résumé details remain empty until verified information is provided.
+The finance positioning, current studies, contact links, achievements, and certificates use details Masum supplied or supporting records. Research examples, work history, and résumé details remain empty until verified information is provided.
 
 ## Run locally
 
