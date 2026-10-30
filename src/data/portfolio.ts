@@ -122,8 +122,17 @@ export type SkillCategory = { id: string; title: string; subtitle: string; skill
 export const skillCategories: SkillCategory[] = [];
 export const skillEvidence: Record<string, string[]> = {};
 
-export type Education = { school: string; place: string; degree: string; period: string; score: string };
-export const education: Education[] = [];
+export type Education = { school: string; place: string; degree: string; period: string; score: string; currentCourses?: string[] };
+export const education: Education[] = [
+  {
+    school: 'Midnapore City College',
+    place: 'Midnapore, West Bengal',
+    degree: 'Four-year B.Sc. (Honours), Single Major in Geography',
+    period: 'Started 17 Jul 2025 · Expected 2029',
+    score: 'Currently studying',
+    currentCourses: ['MDC 3: Basics of AI'],
+  },
+];
 export type Experience = { company: string; role: string; place: string; period: string; points: string[] };
 export const experience: Experience[] = [];
 
