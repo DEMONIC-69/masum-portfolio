@@ -14,14 +14,14 @@ export default function Skills() {
     return (
       <>
         <SectionHeading kicker="Skills & tools" title="My Skill Universe" />
-        <p className="gutter text-sm text-mist">Add verified skills and tools here when ready.</p>
+        <p className="gutter text-sm text-mist">Skills will be grouped by the work and projects they support.</p>
       </>
     );
   }
 
   return (
     <>
-      <SectionHeading kicker="Genres" title="My Skill Universe" aside={<p className="max-w-xs text-sm text-mist">Hover or tap a skill to see where it shows up across projects and certifications.</p>} />
+      <SectionHeading kicker="Capabilities" title="My Skill Universe" aside={<p className="max-w-xs text-sm text-mist">A focused map of the tools and capabilities used across markets, content, creative work, coding, and ventures.</p>} />
 
       <div className="gutter grid gap-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-14">
         {/* genre list */}

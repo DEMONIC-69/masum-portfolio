@@ -119,8 +119,59 @@ export const certifications: Certification[] = [
 
 export type Skill = { name: string; mono: string; note?: string };
 export type SkillCategory = { id: string; title: string; subtitle: string; skills: Skill[] };
-export const skillCategories: SkillCategory[] = [];
-export const skillEvidence: Record<string, string[]> = {};
+export const skillCategories: SkillCategory[] = [
+  {
+    id: 'markets', title: 'Markets', subtitle: 'Research and trading focus', skills: [
+      { name: 'Global Markets', mono: 'GM' }, { name: 'Commodity Markets', mono: 'CM' }, { name: 'Capital Allocation', mono: 'CA' }, { name: 'Market Research', mono: 'MR' }, { name: 'Prop Trading', mono: 'PT' },
+    ],
+  },
+  {
+    id: 'content', title: 'Content', subtitle: '7 years creating and growing platforms', skills: [
+      { name: 'YouTube', mono: 'YT' }, { name: 'Audience Growth', mono: 'AG' }, { name: 'Social Media', mono: 'SM' }, { name: 'Community Operations', mono: 'CO' }, { name: 'Content Strategy', mono: 'CS' },
+    ],
+  },
+  {
+    id: 'creative', title: 'Creative', subtitle: 'Video production tools', skills: [
+      { name: 'After Effects', mono: 'AE' }, { name: 'Premiere Pro', mono: 'Pr' }, { name: 'Photoshop', mono: 'Ps' }, { name: 'Video Editing', mono: 'VE' },
+    ],
+  },
+  {
+    id: 'coding', title: 'Coding', subtitle: '4 years · self-taught', skills: [
+      { name: 'Python', mono: 'Py' }, { name: 'JavaScript', mono: 'JS' }, { name: 'Discord Bots', mono: 'DB' }, { name: 'Bot Features', mono: 'BF' }, { name: 'Chat-based Games', mono: 'CG' },
+    ],
+  },
+  {
+    id: 'ventures', title: 'Ventures', subtitle: '3 years in sales and entrepreneurship', skills: [
+      { name: 'Entrepreneurship', mono: 'EN' }, { name: 'Sales', mono: 'SA' }, { name: 'E-commerce', mono: 'EC' }, { name: 'Community Building', mono: 'CB' }, { name: 'Business Operations', mono: 'BO' },
+    ],
+  },
+];
+export const skillEvidence: Record<string, string[]> = {
+  'Global Markets': ['3 years exploring global markets'],
+  'Commodity Markets': ['1 year focused on commodities'],
+  'Capital Allocation': ['Short- and long-term allocation across global assets'],
+  'Market Research': ['Research focus: global assets and commodity markets'],
+  'Prop Trading': ['Tradeify Grand Cup · Atlas Funded · V Prop Trader'],
+  YouTube: ['Monee Forum: 225K+ subscribers · Win With Masum: current project'],
+  'Audience Growth': ['Monee Forum: 225K+ subscribers · Demonic 69: 12K subscribers'],
+  'Social Media': ['Instagram audience: @wifixcastle.ig · 23.5K followers'],
+  'Community Operations': ['Co-ran BUNIVERSITY · 8K-member Discord community'],
+  'Content Strategy': ['Built and sold a YouTube channel focused on online income and business education'],
+  'After Effects': ['Learned and used in editing agency work in 2025'],
+  'Premiere Pro': ['Learned and used in editing agency work in 2025'],
+  Photoshop: ['Learned and used in editing agency work in 2025'],
+  'Video Editing': ['Agency collaboration in 2025'],
+  Python: ['Self-taught through Discord bot projects'],
+  JavaScript: ['Self-taught through Discord bot projects'],
+  'Discord Bots': ['Music and multipurpose bots with management features'],
+  'Bot Features': ['Custom utilities and community management tools'],
+  'Chat-based Games': ['Built in-chat chess and other games'],
+  Entrepreneurship: ['Built and sold Monee Forum and Siftmirth'],
+  Sales: ['3 years in sales and entrepreneurship, as reported'],
+  'E-commerce': ['Siftmirth personalized gift store'],
+  'Community Building': ['Co-ran a Discord community that reached 8K members'],
+  'Business Operations': ['Built, operated, and sold a small online business'],
+};
 
 export type Education = { school: string; place: string; degree: string; period: string; score: string; currentCourses?: string[] };
 export const education: Education[] = [
@@ -138,7 +189,70 @@ export const experience: Experience[] = [];
 
 export type Episode = { code: string; title: string; description: string; tags: string[]; runtime: string; palette: Palette };
 export type Season = { number: number; title: string; period: string; synopsis: string; episodes: Episode[] };
-export const seasons: Season[] = [];
+const journeyPalette: Palette = { from: '#151719', via: '#302619', to: '#0b0c0e', accent: '#d9b46a' };
+export const journeyHighlights: Metric[] = [
+  { value: '7 years', label: 'Creating content' },
+  { value: '4 years', label: 'Self-taught coding' },
+  { value: '3 years', label: 'Global markets' },
+  { value: '3 years', label: 'Sales & entrepreneurship' },
+  { value: '1 year', label: 'Commodity markets' },
+];
+export const seasons: Season[] = [
+  {
+    number: 1,
+    title: 'Code & Community',
+    period: '2023–2024',
+    synopsis: 'A self-taught start: learning by building tools, games, and online communities with friends.',
+    episodes: [
+      { code: 'S01 E01', title: 'Discord Bots', description: 'Learned Python and JavaScript by building music and multipurpose Discord bots with management tools and custom features.', tags: ['Python', 'JavaScript', 'Discord'], runtime: 'Self-taught · 2023–2024', palette: journeyPalette },
+      { code: 'S01 E02', title: 'Games in Chat', description: 'Built interactive chess and other games that people could play directly inside Discord conversations.', tags: ['Bot development', 'Interactive games', 'Community'], runtime: 'Personal builds', palette: journeyPalette },
+      { code: 'S01 E03', title: 'BUNIVERSITY', description: 'Co-ran an 8,000-member Discord community with Ryan Willson in 2024, helping operate the community and serve its members.', tags: ['8K members', 'Community operations', 'Co-led'], runtime: '2024', palette: journeyPalette },
+    ],
+  },
+  {
+    number: 2,
+    title: 'Content & Audiences',
+    period: '7 years · ongoing',
+    synopsis: 'Built channels and audiences across YouTube and Instagram, learning content creation and growth through hands-on work.',
+    episodes: [
+      { code: 'S02 E01', title: 'Monee Forum', description: 'Grew an online income and business education YouTube channel to 225K+ subscribers, then sold it.', tags: ['YouTube', '225K+ subscribers', 'Built & sold'], runtime: 'Channel venture', palette: journeyPalette },
+      { code: 'S02 E02', title: 'Demonic 69', description: 'Built a Free Fire gaming video channel that reached 12K subscribers.', tags: ['Gaming', 'YouTube', '12K subscribers'], runtime: 'Creator channel', palette: journeyPalette },
+      { code: 'S02 E03', title: '@wifixcastle.ig', description: 'Grew an Instagram audience to 23.5K followers.', tags: ['Instagram', '23.5K followers', 'Audience growth'], runtime: 'Creator account', palette: journeyPalette },
+    ],
+  },
+  {
+    number: 3,
+    title: 'Creative Production',
+    period: '2025',
+    synopsis: 'Expanded from publishing into production, learning editing tools through work with an editing agency.',
+    episodes: [
+      { code: 'S03 E01', title: 'Editing Workflows', description: 'Worked with an editing agency and learned video editing with After Effects, Premiere Pro, and Photoshop.', tags: ['After Effects', 'Premiere Pro', 'Photoshop'], runtime: 'Agency work · 2025', palette: journeyPalette },
+    ],
+  },
+  {
+    number: 4,
+    title: 'Markets & Trading',
+    period: '3 years in global markets',
+    synopsis: 'Studying global assets and capital allocation, with a growing focus on commodities and a trading journey documented as it develops.',
+    episodes: [
+      { code: 'S04 E01', title: 'Learning the Markets', description: 'Started with personal capital, completed LearnTube’s Introduction to Forex Trading course, and developed a focus on global assets and commodities.', tags: ['Global assets', 'Forex course', '1 year in commodities'], runtime: 'Ongoing study', palette: journeyPalette },
+      { code: 'S04 E02', title: 'Prop Firm Challenges', description: 'Passed the V Prop Trader challenge phase and the Atlas Funded evaluation after beginning prop-firm trading in late 2025 and early 2026.', tags: ['V Prop Trader', 'Atlas Funded', 'Challenge milestones'], runtime: '2025–2026', palette: journeyPalette },
+      { code: 'S04 E03', title: 'Tradeify Grand Cup', description: 'Reached a $54,905.36 balance on a $50,000 prop account and ranked #2,360 worldwide in the $1M trading competition.', tags: ['Tradeify', '$50K account', 'Ranked #2,360'], runtime: 'Competition result', palette: journeyPalette },
+    ],
+  },
+  {
+    number: 5,
+    title: 'Building What’s Next',
+    period: '2026 · current chapter',
+    synopsis: 'Combining study, markets, and entrepreneurship while building Win With Masum and working toward a longer-term social-enterprise vision.',
+    episodes: [
+      { code: 'S05 E01', title: 'Siftmirth', description: 'Built a personalized gift store in 2026, generated $375 in revenue, and sold the business for $1,000.', tags: ['E-commerce', '$375 revenue', 'Sold for $1,000'], runtime: 'Built & sold · 2026', palette: journeyPalette },
+      { code: 'S05 E02', title: 'Win With Masum', description: 'Current creator project: documenting a learning journey in the markets while building a focused personal platform.', tags: ['YouTube', 'Markets', 'In progress'], runtime: 'Current project', palette: journeyPalette },
+      { code: 'S05 E03', title: 'Geography & AI', description: 'Studying a four-year B.Sc. in Geography at Midnapore City College, with Basics of AI among current coursework.', tags: ['B.Sc. Geography', 'Midnapore City College', 'Basics of AI'], runtime: '2025–2029 · in progress', palette: journeyPalette },
+      { code: 'S05 E04', title: 'Long-Term Vision', description: 'A future goal is to build a social enterprise that creates jobs and practical financial support for people with limited access to opportunity.', tags: ['Future vision', 'Job creation', 'Social enterprise'], runtime: 'Long-term goal', palette: journeyPalette },
+    ],
+  },
+];
 
 export type TopPick = { label: string; title: string; detail: string; palette: Palette };
 export const topPicks: TopPick[] = [];

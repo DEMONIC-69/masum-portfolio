@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { seasons } from '../data/portfolio';
+import { journeyHighlights, seasons } from '../data/portfolio';
 import { EASE, SectionHeading } from './fx';
 import EpisodeCard from './EpisodeCard';
 import { RailButtons } from './Rail';
 
 export default function Seasons() {
-  const [active, setActive] = useState(Math.max(seasons.length - 2, 0));
+  const [active, setActive] = useState(Math.max(seasons.length - 1, 0));
   const season = seasons[active];
   const rail = useRef<HTMLDivElement>(null);
 
@@ -14,7 +14,7 @@ export default function Seasons() {
     return (
       <>
         <SectionHeading kicker="Journey" title="My Journey" />
-        <p className="gutter text-sm text-mist">More academic and work highlights will be added here over time.</p>
+        <p className="gutter text-sm text-mist">The journey timeline is being shaped from confirmed milestones.</p>
       </>
     );
   }
@@ -24,8 +24,17 @@ export default function Seasons() {
       <SectionHeading
         kicker={`${seasons.length} Seasons`}
         title="My Journey"
-        aside={<p className="max-w-xs text-sm text-mist">Background and experience, told as seasons — select one to see its episodes.</p>}
+        aside={<p className="max-w-xs text-sm text-mist">A concise timeline of the platforms, skills, market experience, and ventures you’ve built along the way.</p>}
       />
+
+      <div className="gutter mb-8 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+        {journeyHighlights.map((highlight) => (
+          <div key={highlight.label} className="rounded-xl border border-white/[0.08] bg-white/[0.025] px-3 py-3 sm:px-4">
+            <p className="font-display text-2xl leading-none tracking-wide text-gold-bright sm:text-3xl">{highlight.value}</p>
+            <p className="mt-2 text-[10px] font-medium uppercase leading-snug tracking-[0.12em] text-mist">{highlight.label}</p>
+          </div>
+        ))}
+      </div>
 
       {/* season selector */}
       <div className="rail gutter mb-8 flex gap-2 overflow-x-auto" role="tablist" aria-label="Seasons">
