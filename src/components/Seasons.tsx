@@ -1,12 +1,15 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { journeyHighlights, seasons } from '../data/portfolio';
+import type { Episode } from '../data/portfolio';
 import { EASE, SectionHeading } from './fx';
 import EpisodeCard from './EpisodeCard';
 import { RailButtons } from './Rail';
+import DetailSheet, { type DetailSheetData } from './DetailSheet';
 
 export default function Seasons() {
   const [active, setActive] = useState(Math.max(seasons.length - 1, 0));
+  const [selectedEpisode, setSelectedEpisode] = useState<DetailSheetData | null>(null);
   const season = seasons[active];
   const rail = useRef<HTMLDivElement>(null);
 
@@ -79,13 +82,14 @@ export default function Seasons() {
           <div className="group/rail relative">
             <div ref={rail} className="rail gutter flex snap-x snap-mandatory gap-4 overflow-x-auto py-8 [perspective:1200px]">
               {season.episodes.map((e, i) => (
-                <EpisodeCard key={e.code} episode={e} index={i} />
+                <EpisodeCard key={e.code} episode={e} index={i} onOpen={(episode: Episode) => setSelectedEpisode({ eyebrow: `Season ${String(season.number).padStart(2, '0')} · ${episode.code}`, title: episode.title, subtitle: episode.description, meta: `${season.title} · ${episode.runtime}`, facts: episode.tags, note: 'A milestone from the journey timeline. This detail can grow as more specific context and reflections are added.' })} />
               ))}
             </div>
             <RailButtons rail={rail} />
           </div>
         </motion.div>
       </AnimatePresence>
+      <AnimatePresence><DetailSheet data={selectedEpisode} onClose={() => setSelectedEpisode(null)} /></AnimatePresence>
     </>
   );
 }
