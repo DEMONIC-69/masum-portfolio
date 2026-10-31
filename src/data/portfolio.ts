@@ -42,7 +42,7 @@ export const projects: Project[] = [];
 
 export type CurrentFocus = { title: string; status: string; detail: string; signal: string };
 export const currentFocus: CurrentFocus[] = [
-  { title: 'Win With Masum', status: 'Building', detail: 'Documenting the markets journey and creating research-led content.', signal: 'Creator project' },
+  { title: 'Win With Masum', status: 'Personal Brand', detail: 'Documenting the markets journey and creating research-led content.', signal: 'Creator project' },
   { title: 'Equity & Gold Research', status: 'Researching', detail: 'Developing and publishing equity research, gold views, and market observations as they take shape.', signal: 'Research desk' },
   { title: 'Trade Journal', status: 'In progress', detail: 'Recording trade ideas, decisions, reviews, and funded-account milestones when confirmed.', signal: 'Process first' },
   { title: 'Geography & AI', status: 'Learning', detail: 'B.Sc. Geography studies at Midnapore City College, including Basics of AI coursework.', signal: 'Current studies' },
