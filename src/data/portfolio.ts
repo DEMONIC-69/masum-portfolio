@@ -84,9 +84,17 @@ export const achievements: Achievement[] = [
     id: 'v-prop-challenge',
     title: 'Challenge Passed',
     org: 'V Prop Trader',
-    detail: 'Passed the $1,000 Challenge Phase and advanced to the Evaluation Phase.',
+    detail: 'Passed the $1,000 Challenge Phase on 10 January 2026 and advanced to the Evaluation Phase.',
     laurel: 'CHALLENGE PASSED',
-    link: publicAsset('certificates/v-prop-challenge-certificate.webp'),
+    link: publicAsset('certificates/v-prop-challenge-certificate-new.png'),
+  },
+  {
+    id: 'v-prop-evaluation',
+    title: 'Evaluation Passed',
+    org: 'V Prop Trader',
+    detail: 'Passed the V Prop Trader Evaluation Phase on 15 January 2026 and received Verified Prop Trader status.',
+    laurel: 'EVALUATION PASSED',
+    link: publicAsset('certificates/v-prop-evaluation-certificate.png'),
   },
   {
     id: 'siftmirth',
@@ -129,8 +137,13 @@ export const certifications: Certification[] = [
   },
   {
     issuer: 'V Prop Trader',
-    name: 'Trading Challenge — Challenge Phase Passed, 12 January 2026',
-    link: publicAsset('certificates/v-prop-challenge-certificate.webp'),
+    name: 'Trading Challenge — Challenge Phase Passed, 10 January 2026',
+    link: publicAsset('certificates/v-prop-challenge-certificate-new.png'),
+  },
+  {
+    issuer: 'V Prop Trader',
+    name: 'Trading Evaluation — Evaluation Phase Passed, 15 January 2026',
+    link: publicAsset('certificates/v-prop-evaluation-certificate.png'),
   },
   {
     issuer: 'LearnTube.ai • OSB Group',
@@ -258,7 +271,7 @@ export const seasons: Season[] = [
     synopsis: 'Studying global assets and capital allocation, with a growing focus on commodities and a trading journey documented as it develops.',
     episodes: [
       { code: 'S04 E01', title: 'Learning the Markets', description: 'Started with personal capital, completed LearnTube’s Introduction to Forex Trading course, and developed a focus on global assets and commodities.', tags: ['Global assets', 'Forex course', '1 year in commodities'], runtime: 'Ongoing study', palette: journeyPalette },
-      { code: 'S04 E02', title: 'Prop Firm Funding', description: 'Secured $25,000+ in live prop-firm funding across FundingPips, FundedNext, SFX Funded, and Goat Funded Trader. Also passed the V Prop Trader challenge phase and Atlas Funded evaluation.', tags: ['$25K+ live funding', 'FundingPips', 'FundedNext', 'SFX Funded', 'Goat Funded Trader', 'Atlas Funded', 'V Prop Trader'], runtime: '2025–2026', palette: journeyPalette },
+      { code: 'S04 E02', title: 'Prop Firm Funding', description: 'Secured $25,000+ in live prop-firm funding across FundingPips, FundedNext, SFX Funded, and Goat Funded Trader. Passed both the V Prop Trader Challenge Phase (10 January 2026) and Evaluation Phase (15 January 2026), as well as the Atlas Funded evaluation.', tags: ['$25K+ live funding', 'FundingPips', 'FundedNext', 'SFX Funded', 'Goat Funded Trader', 'V Prop Challenge + Evaluation', 'Atlas Funded'], runtime: '2025–2026', palette: journeyPalette },
       { code: 'S04 E03', title: 'Tradeify Grand Cup', description: 'Reached a $54,905.36 balance on a $50,000 prop account and ranked #2,360 worldwide in the $1M trading competition.', tags: ['Tradeify', '$50K account', 'Ranked #2,360'], runtime: 'Competition result', palette: journeyPalette },
     ],
   },
