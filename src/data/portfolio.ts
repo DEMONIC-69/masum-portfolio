@@ -56,12 +56,39 @@ export const ventureStudies: VentureStudy[] = [
   { name: 'Monee Forum', label: 'YOUTUBE · BUILT & SOLD', summary: 'An online income and business education channel grown into a large creator asset.', proof: ['225K+ subscribers', 'Audience-led growth', 'Sold'], lessons: 'A case study in content packaging, consistency, audience growth, and building an asset with an exit in mind.', palette: { from: '#191511', via: '#3b2d1e', to: '#0b0c0e', accent: '#d9b46a' } },
 ];
 
-export type JournalEntry = { date: string; category: string; title: string; summary: string; status: 'Draft prompt' | 'Published'; tags: string[] };
-// Add dated, sourced observations here. Draft prompts are prompts, not published research or trade recommendations.
-export const journalEntries: JournalEntry[] = [
-  { date: 'Research queue', category: 'Equity research', title: 'Company teardown', summary: 'A repeatable outline: business model, growth drivers, risks, valuation context, and what would change the thesis.', status: 'Draft prompt', tags: ['Equities', 'Framework'] },
-  { date: 'Research queue', category: 'Gold', title: 'Gold market note', summary: 'Capture the catalyst, timeframe, key levels or scenario, invalidation, and sources behind each view.', status: 'Draft prompt', tags: ['Commodities', 'Gold'] },
-  { date: 'Journal format', category: 'Trading review', title: 'Trade decision review', summary: 'Record setup, risk plan, execution, outcome, and lesson. Separate prop-firm activity from personal capital.', status: 'Draft prompt', tags: ['Process', 'Review'] },
+export type MarketView = {
+  date: string;
+  cadence: 'Daily' | 'Weekly' | 'Monthly';
+  market: string;
+  title: string;
+  summary: string;
+  thesis: string;
+  evidence: string[];
+  scenarios: string[];
+  risks: string[];
+  sources: { label: string; url: string }[];
+};
+// Add only completed, sourced views. This intentionally starts empty; it does not imply a live recommendation.
+export const marketViews: MarketView[] = [];
+
+export type LibraryItem = {
+  kind: 'Book' | 'PDF / Report' | 'Quote' | 'Resource';
+  title: string;
+  creator?: string;
+  date?: string;
+  description: string;
+  tags: string[];
+  url?: string;
+};
+// Add selected items and point url to a file in public/library/ or a trusted external source.
+export const libraryItems: LibraryItem[] = [
+  {
+    kind: 'PDF / Report',
+    title: 'How to Start Trading',
+    description: 'A trading guide selected for the research library.',
+    tags: ['Trading', 'Guide'],
+    url: publicAsset('library/how-to-start-trading.pdf'),
+  },
 ];
 
 export type Achievement = { id: string; title: string; org: string; detail: string; laurel: string; link?: string };
@@ -327,14 +354,14 @@ export const introSlides: IntroSlide[] = [
 ];
 
 export type ProfileId = 'masum' | 'recruiter' | 'investor' | 'trader';
-export type SectionId = 'now' | 'about' | 'journey' | 'ventures' | 'originals' | 'journal' | 'picks' | 'skills' | 'moments' | 'story';
+export type SectionId = 'now' | 'about' | 'journey' | 'ventures' | 'originals' | 'journal' | 'library' | 'picks' | 'skills' | 'moments' | 'story';
 
-const order: SectionId[] = ['now', 'about', 'journey', 'ventures', 'originals', 'journal', 'picks', 'skills', 'moments', 'story'];
+const order: SectionId[] = ['now', 'about', 'journey', 'ventures', 'originals', 'journal', 'library', 'picks', 'skills', 'moments', 'story'];
 export const viewerProfiles: { id: ProfileId; name: string; blurb: string; color: string; order: SectionId[] }[] = [
   { id: 'masum', name: 'Masum', blurb: 'The full portfolio', color: '#d9b46a', order },
-  { id: 'recruiter', name: 'Recruiter', blurb: 'Profile and work first', color: '#d9b46a', order: ['story', 'moments', 'skills', 'ventures', 'now', 'about', 'journey', 'originals', 'journal', 'picks'] },
-  { id: 'investor', name: 'Investor', blurb: 'Research and allocation first', color: '#b38a3b', order: ['originals', 'journal', 'now', 'picks', 'skills', 'journey', 'ventures', 'moments', 'about', 'story'] },
-  { id: 'trader', name: 'Trader', blurb: 'Markets and trading first', color: '#e5c886', order: ['now', 'originals', 'journal', 'journey', 'picks', 'skills', 'moments', 'ventures', 'about', 'story'] },
+  { id: 'recruiter', name: 'Recruiter', blurb: 'Profile and work first', color: '#d9b46a', order: ['story', 'moments', 'skills', 'ventures', 'now', 'about', 'journey', 'originals', 'journal', 'library', 'picks'] },
+  { id: 'investor', name: 'Investor', blurb: 'Research and allocation first', color: '#b38a3b', order: ['originals', 'journal', 'library', 'now', 'picks', 'skills', 'journey', 'ventures', 'moments', 'about', 'story'] },
+  { id: 'trader', name: 'Trader', blurb: 'Markets and trading first', color: '#e5c886', order: ['now', 'originals', 'journal', 'library', 'journey', 'picks', 'skills', 'moments', 'ventures', 'about', 'story'] },
 ];
 
 const neutral: Palette = { from: '#111316', via: '#27251f', to: '#090a0c', accent: '#d9b46a' };
@@ -344,7 +371,8 @@ export const sectionMeta: Record<SectionId, { nav: string; card: string; meta: s
   journey: { nav: 'Journey', card: 'My Journey', meta: 'Background and milestones', palette: neutral },
   ventures: { nav: 'Ventures', card: 'Venture Case Studies', meta: 'Businesses built and sold', palette: neutral },
   originals: { nav: 'Research', card: 'Research & Ideas', meta: 'Market analysis and research notes', palette: neutral },
-  journal: { nav: 'Journal', card: 'Open Journal', meta: 'Market notes and lessons', palette: neutral },
+  journal: { nav: 'Market Views', card: 'Market Journal', meta: 'Daily, weekly, and monthly research', palette: neutral },
+  library: { nav: 'Library', card: 'Research Library', meta: 'Selected books, PDFs, quotes, and resources', palette: neutral },
   picks: { nav: 'Highlights', card: 'Highlights', meta: 'Selected highlights', palette: neutral },
   skills: { nav: 'Skills', card: 'My Skills', meta: 'Skills and tools', palette: neutral },
   moments: { nav: 'Milestones', card: 'Milestones', meta: 'Achievements and credentials', palette: neutral },

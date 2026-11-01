@@ -20,6 +20,7 @@ import FinalCTA from './components/FinalCTA';
 import CurrentlyBuilding from './components/CurrentlyBuilding';
 import VentureStudies from './components/VentureStudies';
 import OpenJournal from './components/OpenJournal';
+import ResearchLibrary from './components/ResearchLibrary';
 import { EASE } from './components/fx';
 
 // Overlays are only needed on demand — split them out of the first load.
@@ -102,6 +103,7 @@ function Series() {
     journey: <Seasons />,
     ventures: <VentureStudies />,
     journal: <OpenJournal />,
+    library: <ResearchLibrary />,
     originals: <Originals onOpen={setProject} />,
     picks: <TopPicks />,
     skills: <Skills />,
