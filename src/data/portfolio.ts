@@ -53,7 +53,7 @@ export const currentFocus: CurrentFocus[] = [
 
 export type VentureStudy = { name: string; label: string; summary: string; proof: string[]; lessons: string; palette: Palette };
 export const ventureStudies: VentureStudy[] = [
-  { name: 'Siftmirth', label: 'E-COMMERCE · BUILT & SOLD', summary: 'A personalized gift store built around thoughtful, custom-made products.', proof: ['$375 revenue', 'Sold for $1,000', '2026'], lessons: 'A compact case study of offer creation, customer acquisition, operations, and the decision to sell.', palette: { from: '#20180f', via: '#49351d', to: '#101113', accent: '#d9b46a' } },
+  { name: 'Siftmirth', label: 'E-COMMERCE · BUILT & SOLD', summary: 'A personalized gift store built around thoughtful, custom-made products.', proof: ['$375 revenue', '~$195 estimated net profit', 'Sold for $1,000', '2026'], lessons: 'A compact case study of offer creation, customer acquisition, operations, and the decision to sell.', palette: { from: '#20180f', via: '#49351d', to: '#101113', accent: '#d9b46a' } },
   { name: 'Monee Forum', label: 'YOUTUBE · BUILT & SOLD', summary: 'An online income and business education channel grown into a large creator asset.', proof: ['225K+ subscribers', 'Audience-led growth', 'Sold'], lessons: 'A case study in content packaging, consistency, audience growth, and building an asset with an exit in mind.', palette: { from: '#191511', via: '#3b2d1e', to: '#0b0c0e', accent: '#d9b46a' } },
 ];
 
@@ -141,7 +141,7 @@ export const achievements: Achievement[] = [
     id: 'siftmirth',
     title: 'Siftmirth',
     org: 'Business Built & Sold',
-    detail: 'Built a personalized gift company, generated $375 in revenue, and sold the business for $1,000.',
+    detail: 'Built a personalized gift company, generated $375 in dashboard-recorded revenue, estimated about $195 net profit after approximately $178–$180 in listed costs, and sold the business for $1,000.',
     laurel: 'FOUNDED & SOLD',
     link: publicAsset('certificates/siftmirth-revenue-evidence.webp'),
   },

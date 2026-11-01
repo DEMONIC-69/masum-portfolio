@@ -52,8 +52,9 @@ function SiftmirthResearchBody() {
       <div className="grid gap-3 sm:grid-cols-3">
         {[
           { label: 'Dashboard revenue', value: '$375', sub: 'Recorded in the supplied Polsia snapshot' },
+          { label: 'Estimated net profit', value: '~$195', sub: 'Founder estimate after listed costs' },
           { label: 'Reported sale price', value: '$1,000', sub: 'Founder-reported business sale' },
-          { label: 'Net profit', value: 'Not reported', sub: 'Costs and sale accounting were not supplied' },
+          { label: 'Estimated costs', value: '$178–$180', sub: 'Founder-provided itemized estimate' },
         ].map((metric) => <div key={metric.label} className="rounded-xl border border-gold/20 bg-[linear-gradient(145deg,rgba(217,180,106,.09),rgba(255,255,255,.02))] p-5"><p className="text-[9px] font-bold uppercase tracking-[.2em] text-smoke">{metric.label}</p><p className="mt-3 font-display text-3xl text-bone sm:text-4xl">{metric.value}</p><p className="mt-2 text-[10px] leading-relaxed text-mist">{metric.sub}</p></div>)}
       </div>
 
@@ -128,11 +129,17 @@ function SiftmirthResearchBody() {
         <p className={heading}>What the figures do—and do not—say</p>
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
           <div className={card}>
-            <p className="text-xs leading-relaxed text-mist">The supplied dashboard capture shows <strong className="text-bone">$375 in recorded revenue</strong> alongside 436 views and 14 users. The founder separately reports that the business was sold for <strong className="text-bone">$1,000</strong>. These are two different measures: revenue is not profit, and a sale price is not automatically net proceeds.</p>
+            <p className="text-xs leading-relaxed text-mist">The supplied dashboard capture shows <strong className="text-bone">$375 in recorded revenue</strong> alongside 436 views and 14 users. The founder’s estimated costs total <strong className="text-bone">$178–$180</strong>, giving an estimated net profit of about <strong className="text-bone">$195</strong> (roughly $195–$197 from the listed ranges). The founder separately reports a <strong className="text-bone">$1,000 sale price</strong>; that is not included in the operating-profit estimate.</p>
           </div>
           <div className="rounded-xl border border-amber-200/15 bg-amber-100/[.035] p-5">
-            <p className="text-[9px] font-bold uppercase tracking-[.2em] text-amber-100/80">Profit was not calculated</p>
-            <p className="mt-3 text-xs leading-relaxed text-mist">The files do not include product costs, packaging, shipping, ad spend, payment fees, refunds, tax, or transaction terms. Without those details, a net-profit or margin figure would be invented.</p>
+            <p className="text-[9px] font-bold uppercase tracking-[.2em] text-amber-100/80">Founder-provided cost estimate</p>
+            <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-[11px] text-mist">
+              {[
+                ['Product costs', '$125'], ['Packaging', '$10'], ['Shipping', '$25'], ['Ad spend', '$10'],
+                ['Payment fees', '$2–$3'], ['Refunds', '$0'], ['Tax', '$5'], ['Transaction', '$1–$2'],
+              ].map(([name, amount]) => <li key={name} className="flex justify-between gap-2"><span>{name}</span><span className="text-bone">{amount}</span></li>)}
+            </ul>
+            <p className="mt-4 border-t border-white/10 pt-3 text-[10px] leading-relaxed text-smoke">Approximate amounts supplied by the founder, not independently audited. The sale price is shown separately from this estimated business profit.</p>
           </div>
         </div>
       </section>

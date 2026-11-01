@@ -85,9 +85,10 @@ export default function FinalCTA({ onReplay, onResume }: { onReplay: () => void;
               type="button"
               onClick={onResume}
               data-cursor="link"
-              className="flex min-h-12 items-center gap-2 rounded-full border border-white/25 px-7 text-sm font-bold tracking-[0.12em] text-bone transition hover:border-bone hover:bg-white/10"
+              className="flex min-h-12 items-center gap-2 rounded-full bg-bone px-7 text-sm font-extrabold tracking-[0.12em] text-ink shadow-[0_8px_36px_rgba(255,255,255,0.16)] transition hover:scale-[1.03] hover:bg-gold-bright focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-bright"
             >
-              RESUME <span className="text-mist">↗</span>
+              <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4" xmlns="http://www.w3.org/2000/svg"><path d="M5.75 2.75h5.5l3.75 3.75v10.75H5.75V2.75Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M11 2.9v4h4M8 10h4.75M8 13h4.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+              VIEW RESUME <span>↗</span>
             </button>
           </Magnetic>
         </motion.div>

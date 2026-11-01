@@ -230,7 +230,7 @@ export function ResumeSheet() {
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-xl border border-white/10 bg-white/[0.025] p-4">
             <p className="text-sm font-semibold text-bone">Siftmirth</p>
-            <p className="mt-1 text-xs leading-relaxed text-mist">Built and sold a personalized gift store; generated $375 revenue and sold the business for $1,000 (2026).</p>
+            <p className="mt-1 text-xs leading-relaxed text-mist">Built and sold a personalized gift store; generated $375 revenue, estimated about $195 net profit after listed costs, and sold the business for $1,000 (2026).</p>
           </div>
           <div className="rounded-xl border border-white/10 bg-white/[0.025] p-4">
             <p className="text-sm font-semibold text-bone">Monee Forum</p>

@@ -19,24 +19,34 @@ function Intro() {
   return (
     <div className="flex w-full shrink-0 flex-col justify-center lg:w-[34vw]">
       <p className="mb-3 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-gold-bright">
-        <span className="h-px w-8 bg-gold-bright" /> {projects.length} Notes
+        <span className="h-px w-8 bg-gold-bright" /> Founder research desk
       </p>
       <RevealText as="h2" text="RESEARCH" className="font-display text-[clamp(3.5rem,9vw,8rem)] leading-[0.85] text-bone" />
-      <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-mist">
-        Research notes and market analysis can be added here.
-      </p>
+      <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-mist">A growing record of business case studies and market research, with dated views, evidence, scenarios, and risks.</p>
+      <div className="mt-6 flex flex-wrap gap-2">
+        <a href="#ventures" className="rounded-full border border-gold/50 bg-gold/10 px-3 py-2 text-[9px] font-bold uppercase tracking-[.16em] text-gold-bright transition hover:bg-gold/20">Siftmirth case file ↗</a>
+        <a href="#journal" className="rounded-full border border-white/15 px-3 py-2 text-[9px] font-bold uppercase tracking-[.16em] text-mist transition hover:border-white/35 hover:text-bone">Market journal ↗</a>
+      </div>
       <p className="mt-6 hidden text-xs tracking-[0.24em] text-smoke lg:block">SCROLL TO BROWSE →</p>
     </div>
   );
 }
 
-function Outro() {
+function SiftmirthCaseFile() {
   return (
-    <div className="flex aspect-[3/4] w-[70vw] shrink-0 snap-start flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/15 text-center sm:w-[44vw] lg:aspect-auto lg:h-[66vh] lg:w-[24vw]">
-      <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 text-2xl text-bone">＋</span>
-      <span className="font-display text-3xl tracking-wide text-bone">Research goes here</span>
-      <span className="text-xs text-mist">Add verified research examples when ready.</span>
-    </div>
+    <a href="#ventures" className="group relative flex aspect-[3/4] w-[70vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-2xl border border-gold/30 bg-[radial-gradient(90%_80%_at_100%_0%,rgba(217,180,106,.2),transparent_70%),linear-gradient(145deg,#1b1710,#0e0f11)] p-6 transition hover:-translate-y-1 hover:border-gold/70 sm:w-[44vw] lg:aspect-auto lg:h-[66vh] lg:w-[24vw] lg:p-7">
+      <div><p className="text-[9px] font-bold uppercase tracking-[.25em] text-gold-bright">Featured founder case file</p><h3 className="mt-5 font-display text-4xl tracking-wide text-bone">Siftmirth</h3><p className="mt-3 text-xs leading-relaxed text-mist">A one-person, AI-assisted gifting venture: product idea, operating model, recorded sales, costs, and exit.</p></div>
+      <div><div className="grid grid-cols-2 gap-2"><span className="rounded-lg border border-white/10 bg-black/25 p-3"><span className="block text-[8px] uppercase tracking-widest text-smoke">Revenue</span><span className="mt-1 block font-display text-xl text-bone">$375</span></span><span className="rounded-lg border border-white/10 bg-black/25 p-3"><span className="block text-[8px] uppercase tracking-widest text-smoke">Est. net</span><span className="mt-1 block font-display text-xl text-gold-bright">~$195</span></span></div><span className="mt-5 inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[.18em] text-gold-bright">Open the full case study <span className="transition-transform group-hover:translate-x-1">↗</span></span></div>
+    </a>
+  );
+}
+
+function CoverageCard({ label, title, summary }: { label: string; title: string; summary: string }) {
+  return (
+    <a href="#journal" className="group flex aspect-[3/4] w-[70vw] shrink-0 snap-start flex-col justify-between rounded-2xl border border-white/10 bg-gradient-to-br from-white/[.055] to-transparent p-6 transition hover:-translate-y-1 hover:border-white/25 sm:w-[44vw] lg:aspect-auto lg:h-[66vh] lg:w-[24vw] lg:p-7">
+      <div><p className="text-[9px] font-bold uppercase tracking-[.25em] text-gold-bright">{label}</p><h3 className="mt-5 font-display text-3xl tracking-wide text-bone">{title}</h3><p className="mt-3 text-xs leading-relaxed text-mist">{summary}</p></div>
+      <span className="inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[.18em] text-mist transition group-hover:text-bone">Read dated market views <span className="transition-transform group-hover:translate-x-1">↗</span></span>
+    </a>
   );
 }
 
@@ -77,7 +87,9 @@ function PinnedOriginals({ onOpen }: { onOpen: (p: Project) => void }) {
           {projects.map((p, i) => (
             <ProjectCard key={p.id} project={p} index={i} onOpen={() => onOpen(p)} />
           ))}
-          <Outro />
+          <SiftmirthCaseFile />
+          <CoverageCard label="Coverage in progress" title="Gold & Commodities" summary="Dated research on market structure, catalysts, scenarios, and the risks that could invalidate a view." />
+          <CoverageCard label="Coverage in progress" title="Equities & Nasdaq" summary="Company and index research focused on evidence, valuation context, catalysts, and downside cases." />
         </motion.div>
         <div className="gutter absolute inset-x-0 bottom-8 flex items-center gap-4">
           <span className="text-[10px] font-bold tracking-[0.3em] text-smoke">RESEARCH</span>
@@ -106,7 +118,9 @@ function RailOriginals({ onOpen }: { onOpen: (p: Project) => void }) {
         {projects.map((p, i) => (
           <ProjectCard key={p.id} project={p} index={i} onOpen={() => onOpen(p)} />
         ))}
-        <Outro />
+        <SiftmirthCaseFile />
+        <CoverageCard label="Coverage in progress" title="Gold & Commodities" summary="Dated research on market structure, catalysts, scenarios, and the risks that could invalidate a view." />
+        <CoverageCard label="Coverage in progress" title="Equities & Nasdaq" summary="Company and index research focused on evidence, valuation context, catalysts, and downside cases." />
       </motion.div>
     </div>
   );
