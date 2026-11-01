@@ -24,10 +24,10 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
       exit={{ opacity: 0 }}
       role="dialog"
       aria-modal="true"
-      aria-label="Profile"
+      aria-label={profile.resumePdf ? 'Resume' : 'Resume preview'}
     >
       <div className="gutter flex h-16 shrink-0 items-center justify-between gap-3 pt-[env(safe-area-inset-top)]">
-        <p className="truncate font-display text-2xl tracking-wide text-bone">Profile</p>
+        <p className="truncate font-display text-2xl tracking-wide text-bone">{profile.resumePdf ? 'Resume' : 'Resume preview'}</p>
         <div className="flex items-center gap-2">
           {profile.resumePdf && <a href={profile.resumePdf} download className="rounded-md bg-bone px-4 py-2 text-xs font-bold text-ink">⤓ Download</a>}
           <button type="button" onClick={onClose} aria-label="Close profile" data-cursor="close" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-bone hover:bg-white/20">✕</button>

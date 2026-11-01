@@ -46,19 +46,19 @@ export default function ResumeSection({ onView }: { onView: () => void }) {
                 See What I’m Building <span aria-hidden>↗</span>
               </button>
             </Magnetic>
+            <Magnetic className="w-full">
+              <button
+                type="button"
+                data-cursor="view"
+                onClick={onView}
+                className="glass flex min-h-12 w-full items-center justify-center gap-2 rounded-md px-6 text-[15px] font-semibold text-bone transition hover:bg-white/15"
+              >
+                View Resume <span aria-hidden>↗</span>
+              </button>
+            </Magnetic>
           </div>
           {profile.resumePdf && (
             <div className="mt-6 flex flex-col gap-3">
-              <Magnetic className="w-full">
-                <button
-                  type="button"
-                  data-cursor="view"
-                  onClick={onView}
-                  className="flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-bone px-6 text-[15px] font-bold text-ink transition hover:bg-white"
-                >
-                  ▶ View Resume
-                </button>
-              </Magnetic>
               <Magnetic className="w-full">
                 <a
                   href={profile.resumePdf}
