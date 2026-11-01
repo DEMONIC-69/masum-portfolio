@@ -26,6 +26,6 @@ function LibraryCard({ item, index }: { item: LibraryItem; index: number }) {
     <h3 className="mt-5 font-display text-2xl text-bone">{item.title}</h3>{item.creator && <p className="mt-1 text-xs text-smoke">{item.creator}</p>}
     <p className="mt-3 flex-1 text-sm leading-relaxed text-mist">{item.kind === 'Quote' && item.description.length > 0 ? `“${item.description}”` : item.description}</p>
     {item.tags.length > 0 && <div className="mt-5 flex flex-wrap gap-x-3 gap-y-1">{item.tags.map((tag) => <span key={tag} className="text-[10px] text-bone/60">#{tag.replace(/\s+/g, '')}</span>)}</div>}
-    {item.url && <a href={item.url} target={item.url.startsWith('http') ? '_blank' : undefined} rel={item.url.startsWith('http') ? 'noreferrer' : undefined} className="mt-5 inline-flex w-fit items-center gap-2 border-b border-gold/40 pb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-gold-bright hover:border-gold-bright">{item.kind === 'Book' ? 'Open book / notes' : item.kind === 'PDF / Report' ? 'Open PDF' : 'Open resource'} <span aria-hidden>↗</span></a>}
+    {item.url && <a href={item.url} target={item.url.startsWith('http') ? '_blank' : undefined} rel={item.url.startsWith('http') ? 'noreferrer' : undefined} className="mt-5 inline-flex w-fit items-center gap-2 border-b border-gold/40 pb-1 text-[10px] font-semibold uppercase tracking-[.18em] text-gold-bright hover:border-gold-bright">{item.kind === 'Book' ? 'Book details' : item.kind === 'PDF / Report' ? 'Open PDF' : 'Open resource'} <span aria-hidden>↗</span></a>}
   </motion.article>;
 }
