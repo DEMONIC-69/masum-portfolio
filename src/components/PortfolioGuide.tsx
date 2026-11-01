@@ -1,38 +1,25 @@
-import { useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { profile } from '../data/portfolio';
 
-type Message = { from: 'guide' | 'visitor'; text: string };
+type ChatMessage = { role: 'user' | 'model'; text: string };
+type Mood = 'idle' | 'thinking' | 'speaking';
 
-const suggestions = ['What is Masum building?', 'Tell me about Siftmirth', 'What is his background?'];
+const endpoint = import.meta.env.VITE_MASUM_AI_ENDPOINT?.trim();
+const suggestions = [
+  'What is Masum working on now?',
+  'How did he build and sell Siftmirth?',
+  'Tell me about his creator journey',
+  'What market research does he share?',
+];
 
-function answerFor(question: string) {
-  const q = question.toLowerCase();
-  if (/siftmirth|gift|venture|business/.test(q)) return 'Siftmirth was Masum’s personalized gift business. He reports $375 in revenue, about $195 in net profit after listed costs, and a $1,000 sale price. The detailed venture case study is in the Ventures section.';
-  if (/fund|prop|trade|trading|atlas|tradeify|profit|pnl|p&l|gold|market/.test(q)) return 'Masum is documenting his market research and trading process, including equity and gold views and a trade journal. His portfolio records passing both V Prop Trader phases and shares selected historical Atlas Funded trade examples. These are personal milestones, not investment advice.';
-  if (/build|now|current|project|win with|youtube/.test(q)) return 'Masum is currently developing Win With Masum, publishing research on equities and gold, keeping a process-first trade journal, and studying Geography and Basics of AI at Midnapore City College. The Now section has the latest project snapshot.';
-  if (/journey|background|story|creator|youtube|monee|coding|discord|skill/.test(q)) return 'Masum’s experience spans content creation, coding, entrepreneurship, and markets. He grew Monee Forum to 225K+ YouTube subscribers before selling it, built Discord bots with Python and JavaScript, and now studies Geography at Midnapore City College while developing Win With Masum.';
-  if (/contact|email|linkedin|instagram|reach/.test(q)) return `You can reach Masum at ${profile.email}, or use the LinkedIn, YouTube, and Instagram links in the contact section.`;
-  if (/finance|financial|personal finance|education|mission|goal/.test(q)) return 'Masum is interested in helping young people make more informed decisions through practical education about money, business, markets, and personal finance. His longer-term goal is a social enterprise that creates meaningful work and support for people with limited opportunities.';
-  return 'I can help with Masum’s background, current projects, Siftmirth, market work, or contact details. Try one of the suggested questions, or explore the Now, Journey, Ventures, and Market Views sections.';
-}
-
-function MiniAvatar({ small = false, mood = 'friendly' }: { small?: boolean; mood?: 'friendly' | 'thinking' | 'happy' }) {
+function MasumAvatar({ mood = 'idle', small = false }: { mood?: Mood; small?: boolean }) {
   return (
-    <span className={`relative grid shrink-0 place-items-center overflow-hidden rounded-full border border-gold-bright/60 bg-[radial-gradient(circle_at_50%_24%,#4b3920,#181511_68%)] shadow-[0_0_24px_rgba(217,180,106,.18)] ${small ? 'h-9 w-9' : 'h-14 w-14'}`} aria-hidden="true">
-      <svg viewBox="0 0 64 64" className="h-[90%] w-[90%]" fill="none">
-        <path d="M17 25c0-13 7-20 16-20 10 0 17 8 17 20v9H17v-9Z" fill="#171719" stroke="#d9b46a" strokeWidth="1.8" />
-        <path d="M21 25c2-7 6-11 12-11 7 0 11 4 14 11l-3 3-4-4-5 3-5-3-5 4-4-3Z" fill="#090a0c" />
-        <path d="M24 34c0-5 3-8 8-8s8 3 8 8v6c0 6-3 10-8 10s-8-4-8-10v-6Z" fill="#dcae82" />
-        {mood === 'thinking' ? <path d="M27 36h1m8 0h1" stroke="#171719" strokeWidth="2.6" strokeLinecap="round" /> : <path d="M26.5 36c1.3-1.2 2.7-1.2 4 0m3 0c1.3-1.2 2.7-1.2 4 0" stroke="#171719" strokeWidth="1.8" strokeLinecap="round" />}
-        <path d={mood === 'thinking' ? 'M30 43c1.2-.5 2.8-.5 4 0' : mood === 'happy' ? 'M28 41c2 4 6 4 8 0' : 'M29 43c2 2 4 2 6 0'} stroke="#8b5544" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M15 63c1-11 8-17 17-17s16 6 17 17" fill="#101113" stroke="#d9b46a" strokeWidth="1.8" />
-        <path d="m29 48 3 5 3-5" stroke="#f4f1ec" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M32 53v10" stroke="#d9b46a" strokeWidth="1.6" />
-        <circle cx="51" cy="15" r="7" fill="#101113" stroke="#d9b46a" strokeWidth="1.5" />
-        <path d="M51 11v8m-3-4h6" stroke="#f4f1ec" strokeWidth="1.4" strokeLinecap="round" />
-      </svg>
-      {!small && <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-[#111316] bg-emerald-400" />}
+    <span className={`masum-avatar masum-avatar--${mood} ${small ? 'masum-avatar--small' : ''}`} aria-hidden="true">
+      <span className="masum-avatar__orbit" />
+      <img src={`${import.meta.env.BASE_URL}assets/masum-ai-avatar.webp`} alt="" />
+      <span className="masum-avatar__spark masum-avatar__spark--one">✦</span>
+      <span className="masum-avatar__spark masum-avatar__spark--two">✧</span>
+      <span className="masum-avatar__status" />
     </span>
   );
 }
@@ -40,31 +27,51 @@ function MiniAvatar({ small = false, mood = 'friendly' }: { small?: boolean; moo
 export default function PortfolioGuide() {
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState('');
-  const [thinking, setThinking] = useState(false);
-  const [happy, setHappy] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    { from: 'guide', text: 'Hey! I’m Masum’s portfolio guide. Ask me about his journey, projects, market work, or how to get in touch.' },
-  ]);
+  const [busy, setBusy] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [error, setError] = useState('');
   const listRef = useRef<HTMLDivElement>(null);
 
-  const ask = (raw: string) => {
+  const mood: Mood = busy ? 'thinking' : messages.length > 0 && messages[messages.length - 1].role === 'model' ? 'speaking' : 'idle';
+
+  useEffect(() => {
+    if (open && listRef.current) listRef.current.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' });
+  }, [messages, busy, open]);
+
+  const ask = async (raw: string) => {
     const text = raw.trim();
-    if (!text) return;
-    setMessages((current) => [...current, { from: 'visitor', text }]);
+    if (!text || busy) return;
+    if (!endpoint) {
+      setError('The AI connection is not active yet. Masum needs to connect the private AI service before this can answer.');
+      return;
+    }
+
+    const nextMessages: ChatMessage[] = [...messages, { role: 'user', text: text.slice(0, 700) }];
+    setMessages(nextMessages);
     setQuestion('');
-    setThinking(true);
-    window.setTimeout(() => {
-      setMessages((current) => [...current, { from: 'guide', text: answerFor(text) }]);
-      setThinking(false);
-      setHappy(true);
-      window.setTimeout(() => setHappy(false), 1500);
-      requestAnimationFrame(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' }));
-    }, 420);
+    setError('');
+    setBusy(true);
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: nextMessages.slice(-8) }),
+      });
+      const payload = await response.json().catch(() => ({})) as { answer?: string; error?: string };
+      if (!response.ok || !payload.answer) throw new Error(payload.error || 'The AI could not answer just now. Please try again shortly.');
+      setMessages((current) => [...current, { role: 'model', text: payload.answer!.slice(0, 2400) }]);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'Connection failed. Please try again.');
+      // Keep the visitor's question visible so a transient provider error doesn't erase it.
+    } finally {
+      setBusy(false);
+    }
   };
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    ask(question);
+    void ask(question);
   };
 
   return (
@@ -72,61 +79,73 @@ export default function PortfolioGuide() {
       <AnimatePresence>
         {open && (
           <motion.section
-            aria-label="Masum’s portfolio guide"
-            className="glass absolute bottom-[4.5rem] right-0 flex max-h-[min(76dvh,560px)] w-[min(360px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-gold-bright/25 bg-[#0d0f11]/95 shadow-[0_24px_80px_rgba(0,0,0,.65)] backdrop-blur-2xl sm:bottom-[5rem]"
-            initial={{ opacity: 0, y: 18, scale: .96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: .98 }}
-            transition={{ duration: .22 }}
+            aria-label="Ask Masum AI"
+            className="masum-ai-panel absolute bottom-[5rem] right-0 flex max-h-[min(78dvh,650px)] w-[min(390px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.35rem] border border-gold-bright/30 bg-[#0b0d0f]/[.97] shadow-[0_28px_100px_rgba(0,0,0,.72),0_0_55px_rgba(217,180,106,.09)] backdrop-blur-2xl"
+            initial={{ opacity: 0, y: 22, scale: .94, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: 12, scale: .98, filter: 'blur(5px)' }}
+            transition={{ duration: .25, ease: 'easeOut' }}
           >
-            <header className="flex items-center gap-3 border-b border-white/10 px-4 py-3.5">
-              <MiniAvatar small />
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-bone">Masum’s AI Guide</p>
-                <p className="mt-0.5 text-[10px] uppercase tracking-[.16em] text-smoke">Curated answers · public info</p>
+            <header className="relative flex items-center gap-3 overflow-hidden border-b border-white/10 px-4 py-3.5">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(217,180,106,.12),transparent_58%)]" />
+              <MasumAvatar small mood={mood} />
+              <div className="relative min-w-0 flex-1">
+                <p className="text-sm font-semibold text-bone">Ask Masum AI</p>
+                <p className="mt-0.5 text-[10px] uppercase tracking-[.15em] text-smoke">{endpoint ? 'Portfolio assistant · beta' : 'AI connection needed'}</p>
               </div>
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close portfolio guide" className="grid h-9 w-9 place-items-center rounded-full text-lg text-mist transition hover:bg-white/10 hover:text-bone">×</button>
+              <button type="button" onClick={() => setOpen(false)} aria-label="Close Ask Masum AI" className="relative grid h-9 w-9 place-items-center rounded-full text-xl text-mist transition hover:bg-white/10 hover:text-bone">×</button>
             </header>
 
-            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4" aria-live="polite">
-              {messages.map((message, index) => (
-                <div key={`${index}-${message.from}`} className={`flex ${message.from === 'visitor' ? 'justify-end' : 'justify-start'}`}>
-                  {message.from === 'guide' && <MiniAvatar small mood={happy ? 'happy' : 'friendly'} />}
-                  <p className={`max-w-[84%] whitespace-pre-line rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed ${message.from === 'visitor' ? 'ml-2 rounded-br-sm bg-gold-bright text-[#16120b]' : 'ml-2 border border-white/10 bg-white/[.055] text-bone/85'}`}>
-                    {message.text}
-                  </p>
-                </div>
-              ))}
-              {messages.length === 1 && (
-                <div className="flex flex-wrap gap-2 pl-11 pt-1">
-                  {suggestions.map((suggestion) => <button key={suggestion} type="button" onClick={() => ask(suggestion)} className="rounded-full border border-gold-bright/25 px-2.5 py-1.5 text-[10px] text-gold-bright transition hover:bg-gold-bright/10">{suggestion}</button>)}
+            <div ref={listRef} className="min-h-44 flex-1 space-y-3 overflow-y-auto px-4 py-4" aria-live="polite" aria-relevant="additions text">
+              {messages.length === 0 && (
+                <div className="space-y-4">
+                  <div className="flex items-start gap-2.5">
+                    <MasumAvatar small />
+                    <div className="max-w-[86%] rounded-2xl rounded-tl-sm border border-white/10 bg-white/[.055] px-3.5 py-3 text-xs leading-relaxed text-bone/85">
+                      <p className="font-medium text-bone">Hey, I’m Masum’s portfolio assistant.</p>
+                      <p className="mt-1.5">Ask about his journey, ventures, current projects, or the research he publishes.</p>
+                    </div>
+                  </div>
+                  {!endpoint && <p className="ml-11 rounded-xl border border-gold-bright/20 bg-gold-bright/[.045] px-3 py-2 text-[10px] leading-relaxed text-gold-bright/90">The AI service is being connected. Questions will be sent to Gemini after setup; please don’t enter private information.</p>}
+                  <div className="flex flex-wrap gap-2 pl-11">
+                    {suggestions.map((suggestion) => (
+                      <button key={suggestion} type="button" disabled={!endpoint || busy} onClick={() => void ask(suggestion)} className="rounded-full border border-gold-bright/25 bg-gold-bright/[.04] px-2.5 py-2 text-left text-[10px] leading-snug text-gold-bright transition hover:border-gold-bright/55 hover:bg-gold-bright/10 disabled:cursor-default disabled:opacity-60">{suggestion}</button>
+                    ))}
+                  </div>
                 </div>
               )}
-              {thinking && <div className="ml-11 flex items-center gap-1.5 text-[10px] text-smoke"><MiniAvatar small mood="thinking" /><span className="ml-1">Thinking</span><span className="animate-pulse text-gold-bright">•••</span></div>}
+              {messages.map((message, index) => (
+                <div key={`${index}-${message.role}`} className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  {message.role === 'model' && <MasumAvatar small mood="speaking" />}
+                  <p className={`max-w-[84%] whitespace-pre-line rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed ${message.role === 'user' ? 'rounded-br-sm bg-gold-bright text-[#16120b]' : 'rounded-bl-sm border border-white/10 bg-white/[.055] text-bone/85'}`}>{message.text}</p>
+                </div>
+              ))}
+              {busy && <div className="flex items-center gap-2.5 pl-1"><MasumAvatar small mood="thinking" /><span className="text-[11px] text-smoke">Thinking through that<span className="masum-ai-dots ml-1 text-gold-bright">···</span></span></div>}
+              {error && <p role="status" className="ml-11 rounded-xl border border-amber-300/20 bg-amber-200/[.06] px-3 py-2 text-[11px] leading-relaxed text-amber-100/80">{error}</p>}
             </div>
 
             <form onSubmit={submit} className="flex items-center gap-2 border-t border-white/10 p-3">
-              <label className="sr-only" htmlFor="portfolio-guide-question">Ask about Masum</label>
-              <input id="portfolio-guide-question" value={question} onChange={(event) => setQuestion(event.target.value)} placeholder="Ask about Masum…" className="min-w-0 flex-1 rounded-full border border-white/10 bg-black/30 px-4 py-2.5 text-xs text-bone outline-none placeholder:text-smoke focus:border-gold-bright/50" />
-              <button type="submit" aria-label="Send question" className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold-bright text-lg font-semibold text-[#15120d] transition hover:bg-[#f0ce83]">↑</button>
+              <label className="sr-only" htmlFor="portfolio-guide-question">Ask Masum AI a question</label>
+              <input id="portfolio-guide-question" value={question} onChange={(event) => setQuestion(event.target.value)} maxLength={700} disabled={!endpoint || busy} placeholder={endpoint ? 'Ask about Masum…' : 'AI connection is being set up'} className="min-w-0 flex-1 rounded-full border border-white/10 bg-black/35 px-4 py-3 text-xs text-bone outline-none placeholder:text-smoke focus:border-gold-bright/55 disabled:opacity-60" />
+              <button type="submit" aria-label="Send question" disabled={!endpoint || busy || !question.trim()} className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold-bright text-lg font-semibold text-[#15120d] transition hover:bg-[#f0ce83] disabled:cursor-not-allowed disabled:opacity-45">↑</button>
             </form>
+            <p className="px-4 pb-3 text-[9px] leading-relaxed text-smoke/80">Questions are processed by Google Gemini after setup. Don’t share private information. No live market data or personalized financial advice.</p>
           </motion.section>
         )}
       </AnimatePresence>
 
       <motion.button
         type="button"
-        aria-label={open ? 'Close Masum’s AI Guide' : 'Open Masum’s AI Guide'}
+        aria-label={open ? 'Close Ask Masum AI' : 'Open Ask Masum AI'}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="group relative grid h-14 w-14 place-items-center rounded-full border border-gold-bright/55 bg-[#111316] shadow-[0_8px_32px_rgba(0,0,0,.55),0_0_28px_rgba(217,180,106,.14)] transition hover:-translate-y-1 hover:border-gold-bright sm:h-16 sm:w-16"
+        className="masum-ai-launch group relative grid h-[4.15rem] w-[4.15rem] place-items-center rounded-full border border-gold-bright/65 bg-[#111316] shadow-[0_8px_32px_rgba(0,0,0,.6),0_0_30px_rgba(217,180,106,.16)] transition hover:-translate-y-1 hover:border-gold-bright"
         animate={{ y: open ? 0 : [0, -4, 0] }}
-        transition={{ y: open ? { duration: .2 } : { duration: 3, repeat: Infinity, ease: 'easeInOut' } }}
+        transition={{ y: open ? { duration: .2 } : { duration: 3.2, repeat: Infinity, ease: 'easeInOut' } }}
         whileTap={{ scale: .94 }}
       >
-        <span className="absolute inset-1 rounded-full border border-white/10" />
-        <MiniAvatar small mood={happy ? 'happy' : thinking ? 'thinking' : 'friendly'} />
-        <span className="absolute -left-2 -top-2 rounded-full border border-gold-bright/35 bg-[#101113] px-2 py-1 text-[8px] font-bold uppercase tracking-[.12em] text-gold-bright shadow">Ask Masum</span>
+        <MasumAvatar mood={mood} />
+        <span className="absolute -left-2 -top-2 rounded-full border border-gold-bright/40 bg-[#101113] px-2 py-1 text-[8px] font-bold uppercase tracking-[.12em] text-gold-bright shadow">{endpoint ? 'Ask AI' : 'AI setup'}</span>
       </motion.button>
     </div>
   );

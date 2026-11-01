@@ -2,5 +2,9 @@ node_modules
 dist
 .DS_Store
 *.local
+.dev.vars
+.env
+.env.*
+!.env.example
 /.claude
 /_local-backups/
