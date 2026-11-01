@@ -3,7 +3,7 @@
 A cinematic, streaming-inspired portfolio for Masum Kaji.
 
 **Opening name:** MASUM KAJI
-**Positioning:** Research Analyst • Capital Allocator • Commodity Researcher
+**Positioning:** Research Analyst • Business Strategist • Finance Specialist
 **Visual direction:** charcoal and black with subtle gold accents
 **Hero image:** supplied transparent portrait, optimized for responsive use
 
