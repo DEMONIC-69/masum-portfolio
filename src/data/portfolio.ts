@@ -81,7 +81,21 @@ export type LibraryItem = {
   url?: string;
 };
 // Add selected items and point url to a file in public/library/ or a trusted external source.
-export const libraryItems: LibraryItem[] = [];
+export const libraryItems: LibraryItem[] = [
+  { kind: 'PDF / Report', title: 'The Winners Trading Plan', creator: 'Masum Kaji · Win With Masum', description: 'Original trading guide by Masum Kaji.', tags: ['Trading', 'Planning'], url: publicAsset('library/winners-trading-plan.pdf') },
+  { kind: 'PDF / Report', title: 'Fabio IVB Model: The Institutional Protocol', creator: 'Masum Kaji · Win With Masum', description: 'Original research guide by Masum Kaji.', tags: ['Research', 'Trading model'], url: publicAsset('library/fabio-ivb-model-institutional-protocol.pdf') },
+  { kind: 'PDF / Report', title: 'Psychology of Trading Success', creator: 'Masum Kaji · Win With Masum', description: 'Original trading guide by Masum Kaji.', tags: ['Trading', 'Psychology'], url: publicAsset('library/psychology-of-trading-success.pdf') },
+  { kind: 'PDF / Report', title: 'Crypto Trading Guide', creator: 'Masum Kaji · Win With Masum', description: 'Original guide by Masum Kaji.', tags: ['Crypto', 'Trading'], url: publicAsset('library/crypto-trading-guide-masum-kaji.pdf') },
+  { kind: 'PDF / Report', title: 'From Zero to Funded', creator: 'Masum Kaji · Win With Masum', description: 'Original prop trading guide by Masum Kaji.', tags: ['Prop trading', 'Trading'], url: publicAsset('library/from-zero-to-funded.pdf') },
+  { kind: 'PDF / Report', title: '40 Trading Secrets', creator: 'Masum Kaji · Win With Masum', description: 'Original trading guide by Masum Kaji.', tags: ['Trading', 'Lessons'], url: publicAsset('library/40-trading-secrets-masum-kaji.pdf') },
+  { kind: 'PDF / Report', title: 'How to Start Trading', creator: 'Masum Kaji · Win With Masum', description: 'Original beginner trading guide by Masum Kaji.', tags: ['Trading', 'Getting started'], url: publicAsset('library/how-to-start-trading.pdf') },
+  { kind: 'PDF / Report', title: 'Embarking on Your Trading Journey: The Ultimate Blueprint', creator: 'Masum Kaji · Win With Masum', description: 'Original trading guide by Masum Kaji.', tags: ['Trading', 'Getting started'], url: publicAsset('library/embarking-on-your-trading-journey.pdf') },
+  { kind: 'PDF / Report', title: 'Guide to Liquidity Trading', creator: 'Masum Kaji · Win With Masum', description: 'Original trading guide by Masum Kaji.', tags: ['Liquidity', 'Trading'], url: publicAsset('library/guide-to-liquidity-trading.pdf') },
+  { kind: 'PDF / Report', title: 'The Only Times You Should Ever Day Trade', creator: 'Masum Kaji · Win With Masum', description: 'Original trading guide by Masum Kaji.', tags: ['Day trading', 'Timing'], url: publicAsset('library/best-times-to-day-trade.pdf') },
+  { kind: 'PDF / Report', title: 'Market Structure Mastery', creator: 'Masum Kaji · Win With Masum', description: 'Original market structure guide by Masum Kaji.', tags: ['Market structure', 'Trading'], url: publicAsset('library/market-structure-mastery.pdf') },
+  { kind: 'PDF / Report', title: 'XAUUSD Strategy: Cheat Sheet', creator: 'Masum Kaji · Win With Masum', description: 'Original gold trading guide by Masum Kaji.', tags: ['Gold', 'XAUUSD'], url: publicAsset('library/xauusd-strategy-cheat-sheet.pdf') },
+  { kind: 'PDF / Report', title: '$0 to $10,000 a Month', creator: 'Masum Kaji · Win With Masum', description: 'Original trading guide by Masum Kaji.', tags: ['Prop trading', 'Trading'], url: publicAsset('library/trading-roadmap-0-to-10000-month.pdf') },
+];
 
 export type Achievement = { id: string; title: string; org: string; detail: string; laurel: string; link?: string };
 export const achievements: Achievement[] = [
