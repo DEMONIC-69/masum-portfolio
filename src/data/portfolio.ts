@@ -303,7 +303,26 @@ export const introSlides: IntroSlide[] = [
   {
     kicker: 'Introduction',
     title: 'Masum Kaji',
-    lines: ['Specializing in short- and long-term capital allocation across global assets.', 'Focused on commodity markets. Prop firm trader.'],
+    lines: ['Research Analyst • Business Strategist • Finance Specialist', 'Exploring capital allocation, business strategy, and financial education.'],
+    chips: ['Research', 'Business', 'Finance'],
+  },
+  {
+    kicker: 'The Builder',
+    title: 'Ideas Into Ventures',
+    lines: ['Grew Monee Forum to 225K+ subscribers and later sold the channel.', 'Built and sold Siftmirth, a personalized gift company.'],
+    chips: ['Content', 'Entrepreneurship', 'Audience growth'],
+  },
+  {
+    kicker: 'The Analyst',
+    title: 'Learning The Markets',
+    lines: ['Studying global assets and developing a focus on commodities.', 'Documenting research and prop-firm trading milestones through Win With Masum.'],
+    chips: ['Global assets', 'Commodities', 'Market research'],
+  },
+  {
+    kicker: 'The Mission',
+    title: 'Knowledge Creates Options',
+    lines: ['I want to help young people learn about money, business, markets, and personal finance.', 'My long-term goal is to build a company that creates meaningful work and practical support.'],
+    chips: ['Education', 'Opportunity', 'Long-term vision'],
   },
 ];
 
@@ -321,7 +340,7 @@ export const viewerProfiles: { id: ProfileId; name: string; blurb: string; color
 const neutral: Palette = { from: '#111316', via: '#27251f', to: '#090a0c', accent: '#d9b46a' };
 export const sectionMeta: Record<SectionId, { nav: string; card: string; meta: string; palette: Palette }> = {
   now: { nav: 'Now', card: 'Currently Building', meta: 'Live priorities and research focus', palette: neutral },
-  about: { nav: 'About', card: 'About Masum', meta: 'Research Analyst • Prop Firm Trader', palette: neutral },
+  about: { nav: 'About', card: 'About Masum', meta: 'Research Analyst • Business Strategist • Finance Specialist', palette: neutral },
   journey: { nav: 'Journey', card: 'My Journey', meta: 'Background and milestones', palette: neutral },
   ventures: { nav: 'Ventures', card: 'Venture Case Studies', meta: 'Businesses built and sold', palette: neutral },
   originals: { nav: 'Research', card: 'Research & Ideas', meta: 'Market analysis and research notes', palette: neutral },
