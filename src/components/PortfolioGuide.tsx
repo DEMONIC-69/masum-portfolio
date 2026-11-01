@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 type ChatMessage = { role: 'user' | 'model'; text: string };
-type Mood = 'idle' | 'thinking' | 'speaking';
+type Mood = 'idle' | 'listening' | 'thinking' | 'speaking' | 'happy';
 
 const endpoint = import.meta.env.VITE_MASUM_AI_ENDPOINT?.trim();
 const suggestions = [
@@ -12,11 +12,46 @@ const suggestions = [
   'What market research does he share?',
 ];
 
-function MasumAvatar({ mood = 'idle', small = false }: { mood?: Mood; small?: boolean }) {
+function MasumAvatar({ mood = 'idle', small = false, hero = false }: { mood?: Mood; small?: boolean; hero?: boolean }) {
   return (
-    <span className={`masum-avatar masum-avatar--${mood} ${small ? 'masum-avatar--small' : ''}`} aria-hidden="true">
+    <span className={`masum-avatar masum-avatar--${mood} ${small ? 'masum-avatar--small' : ''} ${hero ? 'masum-avatar--hero' : ''}`} aria-hidden="true">
       <span className="masum-avatar__orbit" />
-      <img src={`${import.meta.env.BASE_URL}assets/masum-ai-avatar.webp`} alt="" />
+      <svg className="masum-avatar__figure" viewBox="0 0 240 260" role="presentation">
+        <ellipse className="masum-avatar__aura" cx="120" cy="142" rx="103" ry="104" />
+        <g className="masum-avatar__body">
+          <path className="masum-avatar__jacket" d="M44 244c3-54 28-80 59-88h34c31 8 56 34 59 88H44Z" />
+          <path className="masum-avatar__shirt" d="m95 158 25 29 25-29-8-14h-34l-8 14Z" />
+          <path className="masum-avatar__tie" d="m113 177 7 10 7-10 9 67h-32l9-67Z" />
+          <path className="masum-avatar__lapel" d="m94 156 26 31-20 6-15-27 9-10Zm52 0-26 31 20 6 15-27-9-10Z" />
+          <path className="masum-avatar__neck" d="M104 135h32v31c-9 12-23 12-32 0v-31Z" />
+          <g className="masum-avatar__head">
+            <ellipse className="masum-avatar__ear" cx="64" cy="101" rx="11" ry="18" />
+            <ellipse className="masum-avatar__ear" cx="176" cy="101" rx="11" ry="18" />
+            <path className="masum-avatar__face" d="M69 79c0-32 21-52 51-52s51 20 51 52v35c0 35-22 58-51 58s-51-23-51-58V79Z" />
+            <path className="masum-avatar__hair" d="M67 91c-5-33 4-62 28-72 8-16 29-18 41-11 28-3 48 19 39 53 12 13 9 27 4 39l-5 4c-2-16-9-29-18-37-12 7-24 8-38 4-13 8-27 10-41 7-3 7-5 17-6 27l-5-2c-5-4-6-7-5-12Z" />
+            <path className="masum-avatar__fringe" d="M73 73c13-19 27-27 42-26 10-11 23-15 42-11-8 7-12 13-14 20 11-5 19-4 28 1-12 5-18 12-19 21-15-5-29-5-44 1-13 6-23 6-35 3Z" />
+            <path className="masum-avatar__brow" d="M83 93c8-5 18-6 27-2m20 0c8-4 18-3 27 2" />
+            <g className="masum-avatar__eyes">
+              <ellipse className="masum-avatar__eye-white" cx="97" cy="106" rx="10" ry="8" />
+              <ellipse className="masum-avatar__eye-white" cx="143" cy="106" rx="10" ry="8" />
+              <circle className="masum-avatar__pupil" cx="99" cy="107" r="4.5" />
+              <circle className="masum-avatar__pupil" cx="141" cy="107" r="4.5" />
+              <circle className="masum-avatar__glint" cx="100" cy="105" r="1.2" />
+              <circle className="masum-avatar__glint" cx="142" cy="105" r="1.2" />
+            </g>
+            <path className="masum-avatar__nose" d="M119 108c-1 8-4 13-8 17 5 4 11 4 17 0" />
+            <path className="masum-avatar__mouth masum-avatar__mouth--neutral" d="M105 137c8 4 22 4 30 0" />
+            <path className="masum-avatar__mouth masum-avatar__mouth--happy" d="M103 134c8 14 25 14 34 0" />
+            <ellipse className="masum-avatar__mouth-open" cx="120" cy="138" rx="7" ry="2" />
+            <ellipse className="masum-avatar__blush" cx="82" cy="124" rx="8" ry="4" />
+            <ellipse className="masum-avatar__blush" cx="158" cy="124" rx="8" ry="4" />
+          </g>
+        </g>
+        <g className="masum-avatar__wave">
+          <path d="M176 210c15-9 24-23 26-39l3-18c1-7 9-8 12-2 2 5 1 13 0 19 8-10 16-11 19-6 3 5-3 14-7 19 10-4 16 1 14 7-2 7-12 12-20 14-6 16-18 26-35 31l-12-25Z" />
+          <path className="masum-avatar__wave-cuff" d="m176 210 20 26-9 8-24-25 13-9Z" />
+        </g>
+      </svg>
       <span className="masum-avatar__spark masum-avatar__spark--one">✦</span>
       <span className="masum-avatar__spark masum-avatar__spark--two">✧</span>
       <span className="masum-avatar__status" />
@@ -28,11 +63,12 @@ export default function PortfolioGuide() {
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState('');
   const [busy, setBusy] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [error, setError] = useState('');
   const listRef = useRef<HTMLDivElement>(null);
 
-  const mood: Mood = busy ? 'thinking' : messages.length > 0 && messages[messages.length - 1].role === 'model' ? 'speaking' : 'idle';
+  const mood: Mood = busy ? 'thinking' : speaking ? 'speaking' : open ? 'listening' : 'idle';
 
   useEffect(() => {
     if (open && listRef.current) listRef.current.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' });
@@ -61,6 +97,8 @@ export default function PortfolioGuide() {
       const payload = await response.json().catch(() => ({})) as { answer?: string; error?: string };
       if (!response.ok || !payload.answer) throw new Error(payload.error || 'The AI could not answer just now. Please try again shortly.');
       setMessages((current) => [...current, { role: 'model', text: payload.answer!.slice(0, 2400) }]);
+      setSpeaking(true);
+      window.setTimeout(() => setSpeaking(false), 2600);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Connection failed. Please try again.');
       // Keep the visitor's question visible so a transient provider error doesn't erase it.
@@ -88,7 +126,7 @@ export default function PortfolioGuide() {
           >
             <header className="relative flex items-center gap-3 overflow-hidden border-b border-white/10 px-4 py-3.5">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(217,180,106,.12),transparent_58%)]" />
-              <MasumAvatar small mood={mood} />
+              <MasumAvatar hero mood={mood} />
               <div className="relative min-w-0 flex-1">
                 <p className="text-sm font-semibold text-bone">Ask Masum AI</p>
                 <p className="mt-0.5 text-[10px] uppercase tracking-[.15em] text-smoke">{endpoint ? 'Portfolio assistant · beta' : 'AI connection needed'}</p>
@@ -100,7 +138,7 @@ export default function PortfolioGuide() {
               {messages.length === 0 && (
                 <div className="space-y-4">
                   <div className="flex items-start gap-2.5">
-                    <MasumAvatar small />
+                    <MasumAvatar small mood="happy" />
                     <div className="max-w-[86%] rounded-2xl rounded-tl-sm border border-white/10 bg-white/[.055] px-3.5 py-3 text-xs leading-relaxed text-bone/85">
                       <p className="font-medium text-bone">Hey, I’m Masum’s portfolio assistant.</p>
                       <p className="mt-1.5">Ask about his journey, ventures, current projects, or the research he publishes.</p>
