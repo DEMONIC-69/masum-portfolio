@@ -36,7 +36,7 @@ jobs:
         run: npm run build
         env:
           PAGES_BASE: ./
-          VITE_MASUM_AI_ENDPOINT: ${{ secrets.MASUM_AI_ENDPOINT }}
+          VITE_MASUM_AI_ENDPOINT: ${{ vars.MASUM_AI_ENDPOINT }}
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v4

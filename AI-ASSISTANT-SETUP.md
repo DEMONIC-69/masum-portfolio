@@ -20,7 +20,7 @@ The portfolio is deployed as a static GitHub Pages site. The AI model therefore 
 
    Paste it into Wrangler's hidden prompt; do not put it in source files, GitHub, or chat. The worker is configured with `gemini-3.8-flash`. Adjust the model in `wrangler.jsonc` only if Google changes its supported stable model list.
 
-4. Copy the deployed Worker URL printed by Wrangler. In the GitHub repository settings, open **Secrets and variables → Actions → New repository secret** and add `MASUM_AI_ENDPOINT` with that URL.
+4. Copy the deployed Worker URL printed by Wrangler. In the GitHub repository settings, open **Secrets and variables → Actions → Variables → New repository variable** and add `MASUM_AI_ENDPOINT` with that URL. It is a public Worker address, not an API key.
 5. Push the site commit to `main` (or rerun the Pages workflow). The deployment workflow injects this public endpoint into the static build; it never injects the API key.
 
 The Worker permits requests from `https://masumkaji.tech`, `https://www.masumkaji.tech`, and local Vite development. It accepts short text chat only, limits request size and output, applies a per-isolate best-effort request cap, does not log visitor prompts, and grounds answers in confirmed public portfolio facts. CORS is not an access-control mechanism by itself, so watch Gemini usage and set provider-side limits as available.
