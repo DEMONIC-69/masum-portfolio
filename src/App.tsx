@@ -21,6 +21,7 @@ import CurrentlyBuilding from './components/CurrentlyBuilding';
 import VentureStudies from './components/VentureStudies';
 import OpenJournal from './components/OpenJournal';
 import ResearchLibrary from './components/ResearchLibrary';
+import Newsletter from './components/Newsletter';
 import PortfolioGuide from './components/PortfolioGuide';
 import { EASE } from './components/fx';
 
@@ -104,6 +105,7 @@ function Series() {
     journey: <Seasons />,
     ventures: <VentureStudies />,
     journal: <OpenJournal />,
+    newsletter: <Newsletter />,
     library: <ResearchLibrary />,
     originals: <Originals onOpen={setProject} />,
     picks: <TopPicks />,

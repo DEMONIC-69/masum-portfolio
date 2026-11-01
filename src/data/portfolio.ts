@@ -366,14 +366,14 @@ export const introSlides: IntroSlide[] = [
 ];
 
 export type ProfileId = 'masum' | 'recruiter' | 'investor' | 'trader';
-export type SectionId = 'now' | 'about' | 'journey' | 'ventures' | 'originals' | 'journal' | 'library' | 'picks' | 'skills' | 'moments' | 'story';
+export type SectionId = 'now' | 'about' | 'journey' | 'ventures' | 'originals' | 'journal' | 'newsletter' | 'library' | 'picks' | 'skills' | 'moments' | 'story';
 
-const order: SectionId[] = ['now', 'about', 'journey', 'ventures', 'originals', 'journal', 'library', 'picks', 'skills', 'moments', 'story'];
+const order: SectionId[] = ['now', 'about', 'journey', 'ventures', 'originals', 'journal', 'newsletter', 'library', 'picks', 'skills', 'moments', 'story'];
 export const viewerProfiles: { id: ProfileId; name: string; blurb: string; color: string; order: SectionId[] }[] = [
   { id: 'masum', name: 'Masum', blurb: 'The full portfolio', color: '#d9b46a', order },
-  { id: 'recruiter', name: 'Recruiter', blurb: 'Profile and work first', color: '#d9b46a', order: ['story', 'moments', 'skills', 'ventures', 'now', 'about', 'journey', 'originals', 'journal', 'library', 'picks'] },
-  { id: 'investor', name: 'Investor', blurb: 'Research and allocation first', color: '#b38a3b', order: ['originals', 'journal', 'library', 'now', 'picks', 'skills', 'journey', 'ventures', 'moments', 'about', 'story'] },
-  { id: 'trader', name: 'Trader', blurb: 'Markets and trading first', color: '#e5c886', order: ['now', 'originals', 'journal', 'library', 'journey', 'picks', 'skills', 'moments', 'ventures', 'about', 'story'] },
+  { id: 'recruiter', name: 'Recruiter', blurb: 'Profile and work first', color: '#d9b46a', order: ['story', 'moments', 'skills', 'ventures', 'now', 'about', 'journey', 'originals', 'journal', 'newsletter', 'library', 'picks'] },
+  { id: 'investor', name: 'Investor', blurb: 'Research and allocation first', color: '#b38a3b', order: ['originals', 'journal', 'newsletter', 'library', 'now', 'picks', 'skills', 'journey', 'ventures', 'moments', 'about', 'story'] },
+  { id: 'trader', name: 'Trader', blurb: 'Markets and trading first', color: '#e5c886', order: ['now', 'originals', 'journal', 'newsletter', 'library', 'journey', 'picks', 'skills', 'moments', 'ventures', 'about', 'story'] },
 ];
 
 const neutral: Palette = { from: '#111316', via: '#27251f', to: '#090a0c', accent: '#d9b46a' };
@@ -384,6 +384,7 @@ export const sectionMeta: Record<SectionId, { nav: string; card: string; meta: s
   ventures: { nav: 'Ventures', card: 'Venture Case Studies', meta: 'Businesses built and sold', palette: neutral },
   originals: { nav: 'Research', card: 'Research & Ideas', meta: 'Market analysis and research notes', palette: neutral },
   journal: { nav: 'Market Views', card: 'Market Journal', meta: 'Daily, weekly, and monthly research', palette: neutral },
+  newsletter: { nav: 'Newsletter', card: 'Market Notes', meta: 'Research updates by email', palette: neutral },
   library: { nav: 'Archive', card: 'Masum’s Archive', meta: 'Books, PDFs, quotes, and useful resources', palette: neutral },
   picks: { nav: 'Highlights', card: 'Highlights', meta: 'Selected highlights', palette: neutral },
   skills: { nav: 'Skills', card: 'My Skills', meta: 'Skills and tools', palette: neutral },
