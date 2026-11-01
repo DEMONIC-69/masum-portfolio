@@ -6,6 +6,7 @@ export type Palette = { from: string; via: string; to: string; accent: string };
 
 export const profile = {
   fullName: 'MASUM KAJI',
+  resumeName: 'KAJI MASUM HOSSEN',
   displayName: 'Masum Kaji',
   originalLabel: 'MASUM KAJI',
   role: 'RESEARCH ANALYST • BUSINESS STRATEGIST • FINANCE SPECIALIST',
@@ -16,7 +17,7 @@ export const profile = {
   location: undefined as string | undefined,
   email: 'masumkaji07@gmail.com',
   links: { linkedin: 'https://www.linkedin.com/in/masum-kaji-543a38266/', youtube: 'https://youtube.com/@winwithmasum', instagram: 'https://www.instagram.com/winwithmasum/' } as { linkedin?: string; github?: string; youtube?: string; instagram?: string },
-  resumePdf: undefined as string | undefined,
+  resumePdf: publicAsset('kaji-masum-hossen-resume.pdf') as string | undefined,
   portrait: {
     src: publicAsset('assets/portrait-1100.webp'),
     srcSet: `${publicAsset('assets/portrait-420.webp')} 420w, ${publicAsset('assets/portrait-720.webp')} 720w, ${publicAsset('assets/portrait-1100.webp')} 1100w`,
