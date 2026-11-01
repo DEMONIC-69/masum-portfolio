@@ -41,7 +41,43 @@ export default function PortfolioGuide() {
   const [speaking, setSpeaking] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [error, setError] = useState('');
+  const [roam, setRoam] = useState(0);
+  const [bubble, setBubble] = useState(true);
+  const [tipIndex, setTipIndex] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setRoam((current) => (current + 1) % 4);
+      setTipIndex((current) => (current + 1) % 3);
+      setBubble(true);
+    }, 16000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!bubble || open) return;
+    const hide = window.setTimeout(() => setBubble(false), 6500);
+    return () => window.clearTimeout(hide);
+  }, [bubble, open]);
+
+  useEffect(() => {
+    const sections = ['now', 'ventures', 'journal', 'newsletter', 'library'];
+    const nodes = sections.map((id) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActiveSection(visible.target.id);
+    }, { threshold: [0.15, 0.35, 0.6] });
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
+
+  const contextualTip = activeSection === 'newsletter'
+    ? ['Want my next market update? The newsletter is just above.', 'I share market notes by email—take a look at the signup.', 'Have a question first? Open the chat and ask me.'][tipIndex]
+    : activeSection === 'now'
+      ? ['This is what Masum is focused on right now.', 'Explore a project card to see the details.', 'Want updates by email? Visit the newsletter section.'][tipIndex]
+      : ['Curious about Masum’s journey? Ask Sunny.', 'I can point you to his projects and published research.', 'Want the next update? Find the newsletter below.'][tipIndex];
 
   const mood: Mood = busy ? 'thinking' : speaking ? 'speaking' : open ? 'listening' : 'idle';
 
@@ -64,18 +100,22 @@ export default function PortfolioGuide() {
     setBusy(true);
 
     try {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 18000);
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: nextMessages.slice(-8) }),
+        signal: controller.signal,
       });
+      window.clearTimeout(timeout);
       const payload = await response.json().catch(() => ({})) as { answer?: string; error?: string };
       if (!response.ok || !payload.answer) throw new Error(payload.error || 'The AI could not answer just now. Please try again shortly.');
       setMessages((current) => [...current, { role: 'model', text: payload.answer!.slice(0, 2400) }]);
       setSpeaking(true);
       window.setTimeout(() => setSpeaking(false), 2600);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'Connection failed. Please try again.');
+      setError(cause instanceof DOMException && cause.name === 'AbortError' ? 'Sunny couldn’t reach the AI just now. Please try again.' : cause instanceof Error ? cause.message : 'Connection failed. Please try again.');
       // Keep the visitor's question visible so a transient provider error doesn't erase it.
     } finally {
       setBusy(false);
@@ -88,7 +128,8 @@ export default function PortfolioGuide() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-[95] sm:bottom-6 sm:right-6">
+    <motion.div className={`sunny-roamer sunny-roamer--${roam} fixed z-[95]`} animate={{ x: roam % 2 ? -24 : 0, y: roam > 1 ? -18 : 0 }} transition={{ duration: 2.2, ease: 'easeInOut' }}>
+      {!open && bubble && <div className="sunny-bubble" role="status">{contextualTip}{activeSection !== 'newsletter' && tipIndex === 2 && <a href="#newsletter" onClick={() => setBubble(false)}> Join ↗</a>}</div>}
       <AnimatePresence>
         {open && (
           <motion.section
@@ -160,6 +201,6 @@ export default function PortfolioGuide() {
         <SunnyAvatar mood={mood} />
         <span className="absolute -left-2 -top-2 rounded-full border border-gold-bright/40 bg-[#101113] px-2 py-1 text-[8px] font-bold uppercase tracking-[.12em] text-gold-bright shadow">{endpoint ? 'Meet Sunny' : 'Sunny · setup'}</span>
       </motion.button>
-    </div>
+    </motion.div>
   );
 }

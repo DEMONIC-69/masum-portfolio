@@ -186,15 +186,15 @@ a:focus-visible {
   position: absolute;
   z-index: 1;
   inset: 0;
-  overflow: hidden;
+  overflow: visible;
   border-radius: inherit;
 }
 .masum-avatar__sprite {
   position: absolute;
   left: 50%;
-  bottom: -7%;
-  width: 118%;
-  height: 118%;
+  bottom: -22%;
+  width: 160%;
+  height: 160%;
   max-width: none;
   object-fit: contain;
   transform: translateX(-50%);
@@ -211,7 +211,7 @@ a:focus-visible {
   background: radial-gradient(ellipse at 50% 57%, rgba(217,180,106,.15), transparent 72%);
   box-shadow: 0 0 42px rgba(217,180,106,.13);
 }
-.masum-avatar--hero .masum-avatar__sprite { bottom: -8%; width: 122%; height: 122%; }
+.masum-avatar--hero .masum-avatar__sprite { bottom: -18%; width: 150%; height: 150%; }
 .masum-avatar__orbit {
   position: absolute;
   z-index: 0;
@@ -257,6 +257,43 @@ a:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .masum-avatar__orbit, .masum-avatar__spark, .masum-ai-dots { animation: none !important; }
+}
+
+.sunny-roamer {
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  transition: right 2.4s ease, left 2.4s ease, top 2.4s ease, bottom 2.4s ease;
+  pointer-events: none;
+}
+.sunny-roamer > * { pointer-events: auto; }
+.sunny-roamer--1 { right: auto; left: max(24px, env(safe-area-inset-left)); }
+.sunny-roamer--2 { top: 22%; bottom: auto; right: max(18px, env(safe-area-inset-right)); }
+.sunny-roamer--3 { top: 32%; bottom: auto; right: auto; left: max(24px, env(safe-area-inset-left)); }
+.sunny-bubble {
+  position: absolute;
+  right: 3rem;
+  bottom: 1rem;
+  width: max-content;
+  max-width: min(17rem, calc(100vw - 6rem));
+  padding: .75rem .95rem;
+  border: 1px solid rgba(217,180,106,.42);
+  border-radius: 1.1rem 1.1rem .25rem 1.1rem;
+  background: rgba(15,16,17,.96);
+  color: #f4f1ec;
+  font-size: .75rem;
+  line-height: 1.45;
+  box-shadow: 0 10px 35px rgba(0,0,0,.48);
+  animation: sunny-bubble-in .35s ease-out both;
+}
+.sunny-bubble a { display: inline-block; color: #f0ce83; font-weight: 700; }
+.masum-ai-launch { overflow: visible !important; }
+.masum-ai-launch .masum-avatar { transform: scale(1.04); }
+.masum-ai-launch > span.absolute { display: none; }
+@keyframes sunny-bubble-in { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 640px) {
+  .sunny-roamer { right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); left: auto !important; top: auto !important; }
+  .sunny-roamer > .masum-ai-launch { width: 3.5rem; height: 3.5rem; }
+  .sunny-bubble { right: 2.6rem; bottom: .5rem; max-width: min(14rem, calc(100vw - 5rem)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
