@@ -81,15 +81,7 @@ export type LibraryItem = {
   url?: string;
 };
 // Add selected items and point url to a file in public/library/ or a trusted external source.
-export const libraryItems: LibraryItem[] = [
-  {
-    kind: 'PDF / Report',
-    title: 'How to Start Trading',
-    description: 'A trading guide selected for the research library.',
-    tags: ['Trading', 'Guide'],
-    url: publicAsset('library/how-to-start-trading.pdf'),
-  },
-];
+export const libraryItems: LibraryItem[] = [];
 
 export type Achievement = { id: string; title: string; org: string; detail: string; laurel: string; link?: string };
 export const achievements: Achievement[] = [
