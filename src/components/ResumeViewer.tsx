@@ -98,7 +98,7 @@ export function ResumeSheet() {
         </div>
       </header>
 
-      <p className="font-serif text-2xl italic leading-snug text-bone">{profile.intro}</p>
+      <p className="font-serif text-2xl italic leading-snug text-bone">{profile.fullStory}</p>
 
       {!hasDetails && <p className="mt-6 text-sm text-mist">Education, work, projects, skills, and milestones have not been added yet.</p>}
 

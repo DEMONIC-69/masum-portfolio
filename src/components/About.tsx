@@ -46,7 +46,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 1, ease: EASE }}
           >
-            “{profile.intro}”
+            {profile.about}
           </motion.p>
           <p className="mt-4 text-sm text-mist">— {profile.fullName}</p>
 

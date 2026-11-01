@@ -10,7 +10,9 @@ export const profile = {
   originalLabel: 'MASUM KAJI',
   role: 'RESEARCH ANALYST • BUSINESS STRATEGIST • FINANCE SPECIALIST',
   tagline: ['RESEARCH ANALYST', 'BUSINESS STRATEGIST', 'FINANCE SPECIALIST'],
-  intro: 'I’m a research analyst specializing in short- and long-term capital allocation across global assets, with a focus on commodity markets. I’m also a prop firm trader.',
+  intro: 'I’m a research analyst focused on capital allocation across global assets. I’m also interested in business strategy and how financial education can help young people make more informed decisions.',
+  about: 'I want to inspire young people to build better lives through education in money, business, markets, and personal finance. My interests also span human behavior, psychology, content creation, leadership, equity research, investing, coding, and editing.',
+  fullStory: 'My journey has moved across content creation, coding, entrepreneurship, and markets. I grew Monee Forum to 225K+ subscribers before selling the channel, and built and sold Siftmirth, a personalized gift company. I taught myself Python and JavaScript while creating Discord bots, and I’m now studying Geography at Midnapore City College. Today, I’m developing my research practice around global assets and commodities and documenting the process through Win With Masum. Long term, I hope to build a company that creates meaningful work and practical support for people with limited opportunities.',
   location: undefined as string | undefined,
   email: 'masumkaji07@gmail.com',
   links: { linkedin: 'https://www.linkedin.com/in/masum-kaji-543a38266/', youtube: 'https://youtube.com/@winwithmasum', instagram: 'https://www.instagram.com/winwithmasum/' } as { linkedin?: string; github?: string; youtube?: string; instagram?: string },
@@ -20,7 +22,7 @@ export const profile = {
     srcSet: `${publicAsset('assets/portrait-420.webp')} 420w, ${publicAsset('assets/portrait-720.webp')} 720w, ${publicAsset('assets/portrait-1100.webp')} 1100w`,
     alt: 'Portrait of Masum Kaji.',
   },
-  interests: [] as string[],
+  interests: ['Human behavior', 'Psychology', 'Content creation', 'Leadership', 'Equity research', 'Investing', 'Coding', 'Editing', 'Business', 'Personal finance education'],
 };
 
 export type Metric = { value: string; label: string };
