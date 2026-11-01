@@ -128,6 +128,16 @@ export default function Hero({ onPlay, onResume, profileId }: { onPlay: () => vo
           {profile.tagline.join(' • ')}
         </motion.p>
 
+        {/* Keep the floating role labels on desktop; on phones, place them in the
+            copy flow so they stay visible without covering the portrait. */}
+        <motion.div variants={item} className="mt-3 flex flex-wrap gap-1.5 md:hidden" aria-label="Profile roles">
+          {profile.tagline.map((role) => (
+            <span key={role} className="rounded-full border border-white/15 bg-black/35 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.08em] text-bone/90 backdrop-blur-sm">
+              {role}
+            </span>
+          ))}
+        </motion.div>
+
         <motion.p variants={item} className="mt-4 max-w-xl text-[15px] leading-relaxed text-bone/80 sm:text-base">
           {profile.intro}
         </motion.p>
