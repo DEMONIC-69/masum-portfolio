@@ -26,6 +26,26 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Blend the native Chromium scrollbar track into the page edge. */
+html {
+  scrollbar-color: #45464a var(--color-ink);
+  scrollbar-width: thin;
+}
+html::-webkit-scrollbar {
+  width: 8px;
+}
+html::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+html::-webkit-scrollbar-thumb {
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+  background: #45464a;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
 html.lenis,
 html.lenis body {
   height: auto;
