@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { achievements, certifications, education, experience, profile, projects, skillCategories } from '../data/portfolio';
+import { useSmoothScroll } from '../hooks/smoothScroll';
 import { EASE, Magnetic, SectionHeading } from './fx';
 
 export default function ResumeSection({ onView }: { onView: () => void }) {
+  const { scrollTo } = useSmoothScroll();
   return (
     <>
       <SectionHeading kicker="Profile" title="The Full Story" />
@@ -23,6 +25,28 @@ export default function ResumeSection({ onView }: { onView: () => void }) {
           <p className="mt-3 text-sm leading-relaxed text-mist">
             This profile brings together confirmed studies, milestones, platforms, and projects. Follow the Journey section for the timeline and current direction.
           </p>
+          <div className="mt-6 flex flex-col gap-3">
+            <Magnetic className="w-full">
+              <button
+                type="button"
+                data-cursor="link"
+                onClick={() => scrollTo('#journey', { offset: -64 })}
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-bone px-6 text-[15px] font-bold text-ink transition hover:bg-white"
+              >
+                Explore the Journey <span aria-hidden>↗</span>
+              </button>
+            </Magnetic>
+            <Magnetic className="w-full">
+              <button
+                type="button"
+                data-cursor="link"
+                onClick={() => scrollTo('#now', { offset: -64 })}
+                className="glass flex min-h-12 w-full items-center justify-center gap-2 rounded-md px-6 text-[15px] font-semibold text-bone transition hover:bg-white/15"
+              >
+                See What I’m Building <span aria-hidden>↗</span>
+              </button>
+            </Magnetic>
+          </div>
           {profile.resumePdf && (
             <div className="mt-6 flex flex-col gap-3">
               <Magnetic className="w-full">
