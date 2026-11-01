@@ -5,7 +5,7 @@ import { useSmoothScroll } from '../hooks/smoothScroll';
 import { EASE, Magnetic, Particles } from './fx';
 import { SeriesMark } from './Poster';
 
-export default function FinalCTA({ onReplay }: { onReplay: () => void }) {
+export default function FinalCTA({ onReplay, onResume }: { onReplay: () => void; onResume: () => void }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollTo } = useSmoothScroll();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'start 0.2'] });
@@ -79,6 +79,18 @@ export default function FinalCTA({ onReplay }: { onReplay: () => void }) {
             </Magnetic>
           </motion.div>
         ))}
+        <motion.div variants={{ hidden: { opacity: 0, y: 20, scale: 0.9 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: EASE } } }}>
+          <Magnetic>
+            <button
+              type="button"
+              onClick={onResume}
+              data-cursor="link"
+              className="flex min-h-12 items-center gap-2 rounded-full border border-white/25 px-7 text-sm font-bold tracking-[0.12em] text-bone transition hover:border-bone hover:bg-white/10"
+            >
+              RESUME <span className="text-mist">↗</span>
+            </button>
+          </Magnetic>
+        </motion.div>
       </motion.div>
 
       <div className="relative mt-16 flex flex-wrap justify-center gap-6 text-xs font-semibold tracking-[0.24em] text-smoke">
