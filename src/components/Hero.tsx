@@ -111,6 +111,18 @@ export default function Hero({ onPlay, onResume, profileId }: { onPlay: () => vo
         <motion.div variants={item} className="mb-3 text-lg">
           <SeriesMark />
         </motion.div>
+
+        {/* The desktop labels float around the portrait. On phones, surface the
+            same roles early in the copy flow so they are visible without
+            covering the face or relying on a narrow-screen absolute position. */}
+        <motion.div variants={item} className="mb-3 flex flex-wrap gap-1.5 md:hidden" aria-label="Profile roles">
+          {profile.tagline.map((role) => (
+            <span key={role} className="rounded-full border border-gold-bright/35 bg-[#111316]/90 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.08em] text-bone shadow-[0_4px_16px_rgba(0,0,0,0.35)] backdrop-blur-sm">
+              {role}
+            </span>
+          ))}
+        </motion.div>
+
         <motion.h1 variants={item} className="font-display leading-[0.82] tracking-[0.02em] text-bone" style={{ fontSize: 'clamp(3.2rem, 10vw, 9rem)' }}>
           <span className="shimmer-text">{profile.displayName.toUpperCase()}</span>
         </motion.h1>
@@ -127,16 +139,6 @@ export default function Hero({ onPlay, onResume, profileId }: { onPlay: () => vo
         <motion.p variants={item} className="mt-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-bone/90 sm:text-xs sm:tracking-[0.34em]">
           {profile.tagline.join(' • ')}
         </motion.p>
-
-        {/* Keep the floating role labels on desktop; on phones, place them in the
-            copy flow so they stay visible without covering the portrait. */}
-        <motion.div variants={item} className="mt-3 flex flex-wrap gap-1.5 md:hidden" aria-label="Profile roles">
-          {profile.tagline.map((role) => (
-            <span key={role} className="rounded-full border border-white/15 bg-black/35 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.08em] text-bone/90 backdrop-blur-sm">
-              {role}
-            </span>
-          ))}
-        </motion.div>
 
         <motion.p variants={item} className="mt-4 max-w-xl text-[15px] leading-relaxed text-bone/80 sm:text-base">
           {profile.intro}
