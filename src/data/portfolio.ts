@@ -384,7 +384,7 @@ export const sectionMeta: Record<SectionId, { nav: string; card: string; meta: s
   ventures: { nav: 'Ventures', card: 'Venture Case Studies', meta: 'Businesses built and sold', palette: neutral },
   originals: { nav: 'Research', card: 'Research & Ideas', meta: 'Market analysis and research notes', palette: neutral },
   journal: { nav: 'Market Views', card: 'Market Journal', meta: 'Daily, weekly, and monthly research', palette: neutral },
-  library: { nav: 'Library', card: 'Research Library', meta: 'Selected books, PDFs, quotes, and resources', palette: neutral },
+  library: { nav: 'Archive', card: 'Masum’s Archive', meta: 'Books, PDFs, quotes, and useful resources', palette: neutral },
   picks: { nav: 'Highlights', card: 'Highlights', meta: 'Selected highlights', palette: neutral },
   skills: { nav: 'Skills', card: 'My Skills', meta: 'Skills and tools', palette: neutral },
   moments: { nav: 'Milestones', card: 'Milestones', meta: 'Achievements and credentials', palette: neutral },

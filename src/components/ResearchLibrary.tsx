@@ -10,7 +10,7 @@ export default function ResearchLibrary() {
   const items = useMemo(() => libraryItems.filter((item) => filter === 'All' || item.kind === filter), [filter]);
 
   return <>
-    <SectionHeading kicker="A curated shelf · growing over time" title="Research Library" aside={<p className="max-w-sm text-sm leading-relaxed text-mist">Books, papers, quotes, and useful resources I’ve selected. The archive will grow as I read and find material worth sharing.</p>} />
+    <SectionHeading kicker="Books · PDFs · notes · useful links" title="Masum’s Archive" aside={<p className="max-w-sm text-sm leading-relaxed text-mist">A personal collection of books, PDFs, quotes, and resources worth saving and returning to.</p>} />
     <div className="gutter mb-6 flex flex-wrap gap-2" role="group" aria-label="Filter library by type">
       {filters.map((item) => <button key={item} type="button" onClick={() => setFilter(item)} aria-pressed={filter === item} className={`rounded-full border px-4 py-2 text-xs uppercase tracking-[.16em] transition ${filter === item ? 'border-gold/70 bg-gold/10 text-gold-bright' : 'border-white/10 text-mist hover:border-white/25 hover:text-bone'}`}>{item}</button>)}
     </div>
