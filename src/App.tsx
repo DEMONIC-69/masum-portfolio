@@ -21,6 +21,7 @@ import CurrentlyBuilding from './components/CurrentlyBuilding';
 import VentureStudies from './components/VentureStudies';
 import OpenJournal from './components/OpenJournal';
 import ResearchLibrary from './components/ResearchLibrary';
+import PortfolioGuide from './components/PortfolioGuide';
 import { EASE } from './components/fx';
 
 // Overlays are only needed on demand — split them out of the first load.
@@ -115,6 +116,7 @@ function Series() {
     <LayoutGroup>
       <div className="grain" aria-hidden />
       <CustomCursor />
+      {stage === 'home' && <PortfolioGuide />}
 
       <AnimatePresence>
         {stage === 'opening' && <OpeningSequence key="opening" onDone={() => setStage('profiles')} />}
