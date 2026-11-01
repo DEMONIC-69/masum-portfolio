@@ -262,13 +262,9 @@ a:focus-visible {
 .sunny-roamer {
   right: max(18px, env(safe-area-inset-right));
   bottom: max(20px, env(safe-area-inset-bottom));
-  transition: right 2.4s ease, left 2.4s ease, top 2.4s ease, bottom 2.4s ease;
   pointer-events: none;
 }
 .sunny-roamer > * { pointer-events: auto; }
-.sunny-roamer--1 { right: auto; left: max(24px, env(safe-area-inset-left)); }
-.sunny-roamer--2 { top: 22%; bottom: auto; right: max(18px, env(safe-area-inset-right)); }
-.sunny-roamer--3 { top: 32%; bottom: auto; right: auto; left: max(24px, env(safe-area-inset-left)); }
 .sunny-bubble {
   position: absolute;
   right: 3rem;
@@ -291,7 +287,7 @@ a:focus-visible {
 .masum-ai-launch > span.absolute { display: none; }
 @keyframes sunny-bubble-in { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (max-width: 640px) {
-  .sunny-roamer { right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); left: auto !important; top: auto !important; }
+  .sunny-roamer { right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); }
   .sunny-roamer > .masum-ai-launch { width: 3.5rem; height: 3.5rem; }
   .sunny-bubble { right: 2.6rem; bottom: .5rem; max-width: min(14rem, calc(100vw - 5rem)); }
 }

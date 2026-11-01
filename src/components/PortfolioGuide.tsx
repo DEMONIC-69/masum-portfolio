@@ -41,7 +41,6 @@ export default function PortfolioGuide() {
   const [speaking, setSpeaking] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [error, setError] = useState('');
-  const [roam, setRoam] = useState(0);
   const [bubble, setBubble] = useState(true);
   const [tipIndex, setTipIndex] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
@@ -49,7 +48,6 @@ export default function PortfolioGuide() {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setRoam((current) => (current + 1) % 4);
       setTipIndex((current) => (current + 1) % 3);
       setBubble(true);
     }, 16000);
@@ -128,7 +126,7 @@ export default function PortfolioGuide() {
   };
 
   return (
-    <motion.div className={`sunny-roamer sunny-roamer--${roam} fixed z-[95]`} animate={{ x: roam % 2 ? -24 : 0, y: roam > 1 ? -18 : 0 }} transition={{ duration: 2.2, ease: 'easeInOut' }}>
+    <motion.div className="sunny-roamer fixed z-[95]" animate={open ? { x: 0, y: 0 } : { x: [0, -8, 0, 7, 0], y: [0, -5, 0, -8, 0] }} transition={open ? { duration: .2 } : { duration: 18, repeat: Infinity, ease: 'easeInOut' }}>
       {!open && bubble && <div className="sunny-bubble" role="status">{contextualTip}{activeSection !== 'newsletter' && tipIndex === 2 && <a href="#newsletter" onClick={() => setBubble(false)}> Join ↗</a>}</div>}
       <AnimatePresence>
         {open && (
