@@ -52,7 +52,9 @@ export default function App() {
 
 function Series() {
   const stored = readStoredProfile();
-  const [stage, setStage] = useState<Stage>(stored ? 'home' : 'opening');
+  // Keep the cinematic intro available through the replay control, but make
+  // the real portfolio the first content on a fresh visit for users/crawlers.
+  const [stage, setStage] = useState<Stage>('home');
   const [profileId, setProfileId] = useState<ProfileId>(stored ?? 'masum');
   const [playing, setPlaying] = useState(false);
   const [project, setProject] = useState<Project | null>(null);
