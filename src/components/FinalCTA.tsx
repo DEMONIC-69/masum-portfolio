@@ -95,11 +95,11 @@ export default function FinalCTA({ onReplay, onResume }: { onReplay: () => void;
       </motion.div>
 
       <div className="relative mt-16 flex flex-wrap justify-center gap-6 text-xs font-semibold tracking-[0.24em] text-smoke">
-        <button type="button" onClick={() => scrollTo(0, { offset: 0 })} className="hover:text-bone">
-          ↺ WATCH AGAIN
+        <button type="button" onClick={() => scrollTo(0, { offset: 0 })} className="hover:text-bone" aria-label="Back to the top of the portfolio">
+          ↑ BACK TO TOP
         </button>
-        <button type="button" onClick={onReplay} className="hover:text-bone">
-          ▶ REPLAY OPENING
+        <button type="button" onClick={onReplay} className="hover:text-bone" aria-label="Replay the intro and choose who is watching">
+          ▶ REPLAY INTRO · CHOOSE PROFILE
         </button>
       </div>
 
