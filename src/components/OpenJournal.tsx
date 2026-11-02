@@ -34,6 +34,7 @@ function MarketCard({ view, index, open, onToggle }: { view: MarketView; index: 
       <span className="mt-5 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[.18em] text-gold-bright">{open ? 'Close view' : 'Read full view'} <span aria-hidden>{open ? '−' : '↗'}</span></span>
     </button>
     <AnimatePresence initial={false}>{open && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden"><div className="border-t border-white/10 px-5 py-5 text-sm text-mist">
+      {view.image && <figure className="mb-5 overflow-hidden rounded-xl border border-white/10 bg-black/30"><img src={view.image} alt={`TradingView chart supplied for ${view.title}`} loading="lazy" className="h-auto max-h-[28rem] w-full object-contain" /><figcaption className="px-3 py-2 text-[10px] text-smoke">Chart supplied by Masum · shown as provided</figcaption></figure>}
       <Block title="Thesis" lines={[view.thesis]} />
       <Block title="Evidence & catalysts" lines={view.evidence} />
       <Block title="Scenarios" lines={view.scenarios} />

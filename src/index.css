@@ -176,10 +176,10 @@ a:focus-visible {
   height: 3.25rem;
   flex: 0 0 auto;
   overflow: visible;
-  border: 1px solid rgba(217, 180, 106, .7);
-  border-radius: 9999px;
-  background: radial-gradient(circle at 50% 18%, rgba(217,180,106,.26), #161412 72%);
-  box-shadow: 0 0 25px rgba(217, 180, 106, .16), inset 0 0 0 3px rgba(255,255,255,.035);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   isolation: isolate;
 }
 .masum-avatar__stage {
@@ -200,9 +200,9 @@ a:focus-visible {
   width: 7.2rem;
   height: 7.2rem;
   overflow: visible;
-  border-color: rgba(217,180,106,.35);
-  background: radial-gradient(ellipse at 50% 57%, rgba(217,180,106,.15), transparent 72%);
-  box-shadow: 0 0 42px rgba(217,180,106,.13);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 .masum-avatar--hero .masum-avatar__stage { inset: 3%; }
 .masum-avatar__orbit {
@@ -224,25 +224,10 @@ a:focus-visible {
 .masum-avatar__spark--one { top: 11%; right: 14%; }
 .masum-avatar__spark--two { top: 40%; left: 5%; animation-delay: .7s; }
 .masum-avatar__status {
-  position: absolute;
-  z-index: 3;
-  right: 2px;
-  bottom: 2px;
-  width: .65rem;
-  height: .65rem;
-  border: 2px solid #101113;
-  border-radius: 50%;
-  background: #64d99b;
-  box-shadow: 0 0 10px rgba(100, 217, 155, .8);
+  display: none;
 }
-.masum-avatar--thinking { border-color: rgba(117, 210, 238, .9); box-shadow: 0 0 28px rgba(117, 210, 238, .22); }
-.masum-avatar--thinking .masum-avatar__orbit { border-color: rgba(117, 210, 238, .72); animation-duration: 2.2s; }
-.masum-avatar--thinking .masum-avatar__status { background: #75d2ee; box-shadow: 0 0 12px rgba(117, 210, 238, .9); }
-.masum-avatar--listening .masum-avatar__orbit { animation-duration: 7s; }
-.masum-avatar--speaking { border-color: rgba(240, 206, 131, .95); box-shadow: 0 0 30px rgba(217, 180, 106, .35); }
-.masum-avatar--speaking .masum-avatar__orbit { border-color: rgba(240, 206, 131, .8); animation-duration: 4s; }
+.masum-avatar--thinking, .masum-avatar--speaking { filter: drop-shadow(0 0 8px rgba(217,180,106,.28)); }
 .masum-avatar--speaking .masum-avatar__spark { animation-duration: .8s; }
-.masum-avatar--happy .masum-avatar__status { background: #f0ce83; box-shadow: 0 0 12px rgba(240,206,131,.8); }
 .masum-ai-dots { animation: masum-ai-dots 1.1s ease-in-out infinite; }
 @keyframes masum-avatar-orbit { to { transform: rotate(360deg); } }
 @keyframes masum-avatar-spark { 0%, 100% { opacity: .25; transform: scale(.7) rotate(0deg); } 50% { opacity: 1; transform: scale(1.05) rotate(20deg); } }
@@ -253,17 +238,18 @@ a:focus-visible {
 }
 
 .sunny-roamer {
-  right: max(18px, env(safe-area-inset-right));
-  bottom: max(20px, env(safe-area-inset-bottom));
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  will-change: transform;
   pointer-events: none;
 }
 .sunny-roamer > * { pointer-events: auto; }
 .sunny-bubble {
   position: absolute;
-  right: 3rem;
-  bottom: 1rem;
+  right: .1rem;
+  bottom: calc(100% + .85rem);
   width: max-content;
-  max-width: min(17rem, calc(100vw - 6rem));
+  max-width: min(18rem, calc(100vw - 3rem));
   padding: .75rem .95rem;
   border: 1px solid rgba(217,180,106,.42);
   border-radius: 1.1rem 1.1rem .25rem 1.1rem;
@@ -275,14 +261,14 @@ a:focus-visible {
   animation: sunny-bubble-in .35s ease-out both;
 }
 .sunny-bubble a { display: inline-block; color: #f0ce83; font-weight: 700; }
-.masum-ai-launch { overflow: visible !important; }
+.masum-ai-launch { overflow: visible !important; transform-origin: center; }
 .masum-ai-launch .masum-avatar { transform: scale(1.04); }
 .masum-ai-launch > span.absolute { display: none; }
 @keyframes sunny-bubble-in { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (max-width: 640px) {
-  .sunny-roamer { right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); }
-  .sunny-roamer > .masum-ai-launch { width: 3.5rem; height: 3.5rem; }
-  .sunny-bubble { right: 2.6rem; bottom: .5rem; max-width: min(14rem, calc(100vw - 5rem)); }
+  .sunny-roamer { right: max(18px, env(safe-area-inset-right)); bottom: max(22px, env(safe-area-inset-bottom)); }
+  .sunny-roamer > .masum-ai-launch { width: 3.65rem; height: 3.65rem; }
+  .sunny-bubble { right: -.15rem; bottom: calc(100% + .65rem); max-width: min(15rem, calc(100vw - 2.5rem)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

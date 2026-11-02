@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
 import { createAvatar, type AvatarController } from '@bible-strong/avatar-web';
 import suneeDefinition from '../assets/sunee.avatar.json';
 
@@ -58,7 +58,6 @@ function SuneeAvatar({ mood = 'idle', small = false, hero = false, context = 'ho
 
   return (
     <span className={`masum-avatar masum-avatar--${mood} ${small ? 'masum-avatar--small' : ''} ${hero ? 'masum-avatar--hero' : ''}`} aria-hidden="true">
-      <span className="masum-avatar__orbit" />
       <span ref={stageRef} className="masum-avatar__stage" />
       <span className="masum-avatar__spark masum-avatar__spark--one">✦</span>
       <span className="masum-avatar__spark masum-avatar__spark--two">✧</span>
@@ -68,6 +67,10 @@ function SuneeAvatar({ mood = 'idle', small = false, hero = false, context = 'ho
 }
 
 export default function PortfolioGuide() {
+  const rawPointerX = useMotionValue(0);
+  const rawPointerY = useMotionValue(0);
+  const pointerX = useSpring(rawPointerX, { stiffness: 90, damping: 22, mass: .7 });
+  const pointerY = useSpring(rawPointerY, { stiffness: 90, damping: 22, mass: .7 });
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState('');
   const [busy, setBusy] = useState(false);
@@ -80,12 +83,31 @@ export default function PortfolioGuide() {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    if (!finePointer.matches) return;
+    const move = (event: PointerEvent) => {
+      const max = window.innerWidth < 700 ? 7 : 15;
+      rawPointerX.set(((event.clientX / window.innerWidth) - .5) * max * 2);
+      rawPointerY.set(((event.clientY / window.innerHeight) - .5) * max * 2);
+    };
+    const reset = () => { rawPointerX.set(0); rawPointerY.set(0); };
+    window.addEventListener('pointermove', move, { passive: true });
+    window.addEventListener('blur', reset);
+    return () => { window.removeEventListener('pointermove', move); window.removeEventListener('blur', reset); };
+  }, [rawPointerX, rawPointerY]);
+
+  useEffect(() => {
     const timer = window.setInterval(() => {
       setTipIndex((current) => (current + 1) % 3);
       setBubble(true);
-    }, 16000);
+    }, 18000);
     return () => window.clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    setTipIndex(0);
+    setBubble(true);
+  }, [activeSection]);
 
   useEffect(() => {
     if (!bubble || open) return;
@@ -159,7 +181,7 @@ export default function PortfolioGuide() {
   };
 
   return (
-    <motion.div className="sunny-roamer fixed z-[95]" animate={open ? { x: 0, y: 0 } : { x: [0, -8, 0, 7, 0], y: [0, -5, 0, -8, 0] }} transition={open ? { duration: .2 } : { duration: 18, repeat: Infinity, ease: 'easeInOut' }}>
+    <motion.div className="sunny-roamer fixed z-[95]" style={{ x: pointerX, y: pointerY }}>
       {!open && bubble && <div className="sunny-bubble" role="status">{contextualTip}{activeSection !== 'newsletter' && tipIndex === 2 && <a href="#newsletter" onClick={() => setBubble(false)}> Join ↗</a>}</div>}
       <AnimatePresence>
         {open && (
@@ -224,7 +246,7 @@ export default function PortfolioGuide() {
         aria-label={open ? 'Close Sunee assistant' : 'Meet Sunee, Masum’s AI companion'}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="masum-ai-launch group relative grid h-[4.15rem] w-[4.15rem] place-items-center rounded-full border border-gold-bright/65 bg-[#111316] shadow-[0_8px_32px_rgba(0,0,0,.6),0_0_30px_rgba(217,180,106,.16)] transition hover:-translate-y-1 hover:border-gold-bright"
+        className="masum-ai-launch group relative grid h-[4.15rem] w-[4.15rem] place-items-center rounded-full border border-gold-bright/40 bg-[#111316]/95 shadow-[0_8px_32px_rgba(0,0,0,.6)] transition hover:-translate-y-1 hover:border-gold-bright/75"
         animate={{ y: open ? 0 : [0, -4, 0] }}
         transition={{ y: open ? { duration: .2 } : { duration: 3.2, repeat: Infinity, ease: 'easeInOut' } }}
         whileTap={{ scale: .94 }}

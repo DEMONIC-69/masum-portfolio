@@ -69,9 +69,21 @@ export type MarketView = {
   scenarios: string[];
   risks: string[];
   sources: { label: string; url: string }[];
+  image?: string;
 };
-// Add only completed, sourced views. This intentionally starts empty; it does not imply a live recommendation.
-export const marketViews: MarketView[] = [];
+// Position logs are clearly identified as personal records, not public trade instructions.
+export const marketViews: MarketView[] = [
+  {
+    date: 'Nov 1, 2026', cadence: 'Daily', market: 'BTCUSD · OPEN POSITION',
+    title: 'BTCUSD long — SFX-GO',
+    summary: 'Open position recorded on a $10,000 SFX Funded account. Entry 78,020 · target 81,034 · stop 76,130.',
+    thesis: 'Masum’s position log: a BTCUSD long opened on Nov 1, 2026. The trade was still open when this update was added; no outcome or realized P&L is being claimed.',
+    evidence: ['Account provider: SFX Funded', 'Account size: $10,000', 'Account type: SFX-GO', 'Entry: 78,020 · Take profit: 81,034 · Stop loss: 76,130'],
+    scenarios: ['The position remains open as last reported. The target and stop are the levels supplied with the trade record.'],
+    risks: ['Crypto prices can move sharply and the position may lose value. This is a personal trade record, not investment advice or a recommendation to copy the trade. Figures and status reflect the information supplied when posted.'],
+    sources: [], image: publicAsset('assets/trades/btcusd-sfx-funded-2026-11-01.png'),
+  },
+];
 
 export type LibraryItem = {
   kind: 'Book' | 'PDF / Report' | 'Quote' | 'Resource';
