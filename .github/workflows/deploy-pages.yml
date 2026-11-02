@@ -36,7 +36,6 @@ jobs:
         run: npm run build
         env:
           PAGES_BASE: ./
-          VITE_MASUM_AI_ENDPOINT: ${{ vars.MASUM_AI_ENDPOINT }}
           VITE_BUTTONDOWN_USERNAME: masum
 
       - name: Upload site artifact
