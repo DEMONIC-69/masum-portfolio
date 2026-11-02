@@ -6,7 +6,7 @@ import { SeriesMark } from './Poster';
 import { ProfileAvatar } from './ProfileSelector';
 import { EASE } from './fx';
 
-export default function Navbar({ order, profileId, onSwitch }: { order: SectionId[]; profileId: ProfileId; onSwitch: (id: ProfileId) => void }) {
+export default function Navbar({ order, profileId, onSwitch, onReplay }: { order: SectionId[]; profileId: ProfileId; onSwitch: (id: ProfileId) => void; onReplay: () => void }) {
   const { scrollY } = useScroll();
   const [solid, setSolid] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -127,6 +127,19 @@ export default function Navbar({ order, profileId, onSwitch }: { order: SectionI
                       </span>
                     </button>
                   ))}
+                  <div className="my-2 border-t border-white/10" />
+                  <button
+                    role="menuitem"
+                    type="button"
+                    onClick={() => {
+                      setMenu(false);
+                      onReplay();
+                    }}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-gold-bright transition hover:bg-white/5 hover:text-bone"
+                  >
+                    <span aria-hidden className="flex h-8 w-8 items-center justify-center rounded-md border border-gold/30 bg-gold/10">▶</span>
+                    <span>Play intro <span className="block text-[11px] font-normal text-smoke">Then choose a profile</span></span>
+                  </button>
                 </motion.div>
               )}
             </AnimatePresence>
