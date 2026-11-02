@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { createAvatar, type AvatarController } from '@bible-strong/avatar-web';
+import suneeDefinition from '../assets/sunee.avatar.json';
 
 type ChatMessage = { role: 'user' | 'model'; text: string };
 type Mood = 'idle' | 'listening' | 'thinking' | 'speaking' | 'happy';
@@ -12,21 +14,52 @@ const suggestions = [
   'What market research does he share?',
 ];
 
-const sunnyAnimations: Record<Mood, string> = {
-  idle: 'idle',
-  listening: 'waiting',
-  thinking: 'review',
-  speaking: 'waving',
-  happy: 'jumping',
+const moodAnimation: Record<Mood, string> = {
+  idle: 'idle', listening: 'listening', thinking: 'thinking', speaking: 'excited', happy: 'celebrate',
+};
+const moodExpression: Record<Mood, string> = {
+  idle: 'neutral', listening: 'small-attentive', thinking: 'upward-side-glance', speaking: 'joyful-wide', happy: 'joyful-down-right',
+};
+const contextExpression: Record<string, string> = {
+  now: 'curious-left', about: 'gentle-downward-gaze', journey: 'shy-downward', ventures: 'upward-side-glance',
+  journal: 'small-attentive', newsletter: 'joyful-wide', library: 'downward-gaze', originals: 'surprised-left',
+  picks: 'far-right-glance', skills: 'attentive-left', moments: 'joyful-wide', story: 'gentle-downward-gaze', contact: 'playful-right',
 };
 
-function SunnyAvatar({ mood = 'idle', small = false, hero = false }: { mood?: Mood; small?: boolean; hero?: boolean }) {
+function SuneeAvatar({ mood = 'idle', small = false, hero = false, context = 'home' }: { mood?: Mood; small?: boolean; hero?: boolean; context?: string }) {
+  const stageRef = useRef<HTMLSpanElement>(null);
+  const controllerRef = useRef<AvatarController | null>(null);
+  const animation = moodAnimation[mood];
+  const expression = mood === 'idle' ? (contextExpression[context] ?? 'neutral') : moodExpression[mood];
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const controller = createAvatar(stage, {
+      definition: suneeDefinition,
+      defaultAnimation: 'idle',
+      size: '100%',
+      ariaLabel: 'Sunee, Masum’s companion',
+      onError: (error) => console.error('Sunee avatar:', error.message),
+    });
+    controllerRef.current = controller;
+    return () => {
+      controller.destroy();
+      controllerRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const controller = controllerRef.current;
+    if (!controller) return;
+    controller.play(animation);
+    if (mood === 'idle') controller.setExpression(expression);
+  }, [animation, expression, mood]);
+
   return (
     <span className={`masum-avatar masum-avatar--${mood} ${small ? 'masum-avatar--small' : ''} ${hero ? 'masum-avatar--hero' : ''}`} aria-hidden="true">
       <span className="masum-avatar__orbit" />
-      <span className="masum-avatar__window">
-        <img className="masum-avatar__sprite" src={`${import.meta.env.BASE_URL}assets/sunny-${sunnyAnimations[mood]}.webp`} alt="" draggable="false" />
-      </span>
+      <span ref={stageRef} className="masum-avatar__stage" />
       <span className="masum-avatar__spark masum-avatar__spark--one">✦</span>
       <span className="masum-avatar__spark masum-avatar__spark--two">✧</span>
       <span className="masum-avatar__status" />
@@ -61,7 +94,7 @@ export default function PortfolioGuide() {
   }, [bubble, open]);
 
   useEffect(() => {
-    const sections = ['now', 'ventures', 'journal', 'newsletter', 'library'];
+    const sections = ['now', 'about', 'journey', 'ventures', 'journal', 'newsletter', 'library', 'originals', 'picks', 'skills', 'moments', 'story', 'contact'];
     const nodes = sections.map((id) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
     const observer = new IntersectionObserver((entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -75,7 +108,7 @@ export default function PortfolioGuide() {
     ? ['Want my next market update? The newsletter is just above.', 'I share market notes by email—take a look at the signup.', 'Have a question first? Open the chat and ask me.'][tipIndex]
     : activeSection === 'now'
       ? ['This is what Masum is focused on right now.', 'Explore a project card to see the details.', 'Want updates by email? Visit the newsletter section.'][tipIndex]
-      : ['Curious about Masum’s journey? Ask Sunny.', 'I can point you to his projects and published research.', 'Want the next update? Find the newsletter below.'][tipIndex];
+      : ['Curious about Masum’s journey? Ask Sunee.', 'I can point you to his projects and published research.', 'Want the next update? Find the newsletter below.'][tipIndex];
 
   const mood: Mood = busy ? 'thinking' : speaking ? 'speaking' : open ? 'listening' : 'idle';
 
@@ -113,7 +146,7 @@ export default function PortfolioGuide() {
       setSpeaking(true);
       window.setTimeout(() => setSpeaking(false), 2600);
     } catch (cause) {
-      setError(cause instanceof DOMException && cause.name === 'AbortError' ? 'Sunny couldn’t reach the AI just now. Please try again.' : cause instanceof Error ? cause.message : 'Connection failed. Please try again.');
+      setError(cause instanceof DOMException && cause.name === 'AbortError' ? 'Sunee couldn’t reach the AI just now. Please try again.' : cause instanceof Error ? cause.message : 'Connection failed. Please try again.');
       // Keep the visitor's question visible so a transient provider error doesn't erase it.
     } finally {
       setBusy(false);
@@ -131,7 +164,7 @@ export default function PortfolioGuide() {
       <AnimatePresence>
         {open && (
           <motion.section
-            aria-label="Ask Sunny about Masum"
+            aria-label="Ask Sunee about Masum"
             className="masum-ai-panel absolute bottom-[5rem] right-0 flex max-h-[min(78dvh,650px)] w-[min(390px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.35rem] border border-gold-bright/30 bg-[#0b0d0f]/[.97] shadow-[0_28px_100px_rgba(0,0,0,.72),0_0_55px_rgba(217,180,106,.09)] backdrop-blur-2xl"
             initial={{ opacity: 0, y: 22, scale: .94, filter: 'blur(8px)' }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
@@ -140,21 +173,21 @@ export default function PortfolioGuide() {
           >
             <header className="relative flex items-center gap-3 overflow-hidden border-b border-white/10 px-4 py-3.5">
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(217,180,106,.12),transparent_58%)]" />
-              <SunnyAvatar hero mood={mood} />
+              <SuneeAvatar hero mood={mood} context={activeSection} />
               <div className="relative min-w-0 flex-1">
-                <p className="text-sm font-semibold text-bone">Sunny</p>
+                <p className="text-sm font-semibold text-bone">Sunee</p>
                 <p className="mt-0.5 text-[10px] uppercase tracking-[.15em] text-smoke">{endpoint ? 'Masum’s AI companion · beta' : 'AI connection needed'}</p>
               </div>
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close Sunny assistant" className="relative grid h-9 w-9 place-items-center rounded-full text-xl text-mist transition hover:bg-white/10 hover:text-bone">×</button>
+              <button type="button" onClick={() => setOpen(false)} aria-label="Close Sunee assistant" className="relative grid h-9 w-9 place-items-center rounded-full text-xl text-mist transition hover:bg-white/10 hover:text-bone">×</button>
             </header>
 
             <div ref={listRef} className="min-h-44 flex-1 space-y-3 overflow-y-auto px-4 py-4" aria-live="polite" aria-relevant="additions text">
               {messages.length === 0 && (
                 <div className="space-y-4">
                   <div className="flex items-start gap-2.5">
-                    <SunnyAvatar small mood="happy" />
+                    <SuneeAvatar small mood="happy" />
                     <div className="max-w-[86%] rounded-2xl rounded-tl-sm border border-white/10 bg-white/[.055] px-3.5 py-3 text-xs leading-relaxed text-bone/85">
-                      <p className="font-medium text-bone">Hey, I’m Sunny—Masum’s portfolio companion.</p>
+                      <p className="font-medium text-bone">Hey, I’m Sunee—Masum’s portfolio companion.</p>
                       <p className="mt-1.5">Ask about his journey, ventures, current projects, or the research he publishes.</p>
                     </div>
                   </div>
@@ -168,17 +201,17 @@ export default function PortfolioGuide() {
               )}
               {messages.map((message, index) => (
                 <div key={`${index}-${message.role}`} className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  {message.role === 'model' && <SunnyAvatar small mood="speaking" />}
+                  {message.role === 'model' && <SuneeAvatar small mood="speaking" />}
                   <p className={`max-w-[84%] whitespace-pre-line rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed ${message.role === 'user' ? 'rounded-br-sm bg-gold-bright text-[#16120b]' : 'rounded-bl-sm border border-white/10 bg-white/[.055] text-bone/85'}`}>{message.text}</p>
                 </div>
               ))}
-              {busy && <div className="flex items-center gap-2.5 pl-1"><SunnyAvatar small mood="thinking" /><span className="text-[11px] text-smoke">Thinking through that<span className="masum-ai-dots ml-1 text-gold-bright">···</span></span></div>}
+              {busy && <div className="flex items-center gap-2.5 pl-1"><SuneeAvatar small mood="thinking" /><span className="text-[11px] text-smoke">Thinking through that<span className="masum-ai-dots ml-1 text-gold-bright">···</span></span></div>}
               {error && <p role="status" className="ml-11 rounded-xl border border-amber-300/20 bg-amber-200/[.06] px-3 py-2 text-[11px] leading-relaxed text-amber-100/80">{error}</p>}
             </div>
 
             <form onSubmit={submit} className="flex items-center gap-2 border-t border-white/10 p-3">
-              <label className="sr-only" htmlFor="portfolio-guide-question">Ask Sunny about Masum</label>
-              <input id="portfolio-guide-question" value={question} onChange={(event) => setQuestion(event.target.value)} maxLength={700} disabled={!endpoint || busy} placeholder={endpoint ? 'Ask Sunny about Masum…' : 'AI connection is being set up'} className="min-w-0 flex-1 rounded-full border border-white/10 bg-black/35 px-4 py-3 text-xs text-bone outline-none placeholder:text-smoke focus:border-gold-bright/55 disabled:opacity-60" />
+              <label className="sr-only" htmlFor="portfolio-guide-question">Ask Sunee about Masum</label>
+              <input id="portfolio-guide-question" value={question} onChange={(event) => setQuestion(event.target.value)} maxLength={700} disabled={!endpoint || busy} placeholder={endpoint ? 'Ask Sunee about Masum…' : 'AI connection is being set up'} className="min-w-0 flex-1 rounded-full border border-white/10 bg-black/35 px-4 py-3 text-xs text-bone outline-none placeholder:text-smoke focus:border-gold-bright/55 disabled:opacity-60" />
               <button type="submit" aria-label="Send question" disabled={!endpoint || busy || !question.trim()} className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold-bright text-lg font-semibold text-[#15120d] transition hover:bg-[#f0ce83] disabled:cursor-not-allowed disabled:opacity-45">↑</button>
             </form>
             <p className="px-4 pb-3 text-[9px] leading-relaxed text-smoke/80">Questions are processed by Google Gemini after setup. Don’t share private information. No live market data or personalized financial advice.</p>
@@ -188,7 +221,7 @@ export default function PortfolioGuide() {
 
       <motion.button
         type="button"
-        aria-label={open ? 'Close Sunny assistant' : 'Meet Sunny, Masum’s AI companion'}
+        aria-label={open ? 'Close Sunee assistant' : 'Meet Sunee, Masum’s AI companion'}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
         className="masum-ai-launch group relative grid h-[4.15rem] w-[4.15rem] place-items-center rounded-full border border-gold-bright/65 bg-[#111316] shadow-[0_8px_32px_rgba(0,0,0,.6),0_0_30px_rgba(217,180,106,.16)] transition hover:-translate-y-1 hover:border-gold-bright"
@@ -196,8 +229,8 @@ export default function PortfolioGuide() {
         transition={{ y: open ? { duration: .2 } : { duration: 3.2, repeat: Infinity, ease: 'easeInOut' } }}
         whileTap={{ scale: .94 }}
       >
-        <SunnyAvatar mood={mood} />
-        <span className="absolute -left-2 -top-2 rounded-full border border-gold-bright/40 bg-[#101113] px-2 py-1 text-[8px] font-bold uppercase tracking-[.12em] text-gold-bright shadow">{endpoint ? 'Meet Sunny' : 'Sunny · setup'}</span>
+        <SuneeAvatar mood={mood} context={activeSection} />
+        <span className="absolute -left-2 -top-2 rounded-full border border-gold-bright/40 bg-[#101113] px-2 py-1 text-[8px] font-bold uppercase tracking-[.12em] text-gold-bright shadow">{endpoint ? 'Meet Sunee' : 'Sunee · setup'}</span>
       </motion.button>
     </motion.div>
   );

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useScrollLock } from '../hooks/smoothScroll';
 import { EASE } from './fx';
 
-export type DetailSheetData = { eyebrow: string; title: string; subtitle: string; meta: string; facts: string[]; note: string; kind?: 'trade-dashboard' | 'siftmirth-research' };
+export type DetailSheetData = { eyebrow: string; title: string; subtitle: string; meta: string; facts: string[]; note: string; kind?: 'trade-dashboard' | 'siftmirth-research'; link?: { label: string; href: string } };
 
 export default function DetailSheet({ data, onClose }: { data: DetailSheetData | null; onClose: () => void }) {
   useScrollLock(Boolean(data));
@@ -37,6 +37,7 @@ export default function DetailSheet({ data, onClose }: { data: DetailSheetData |
             <section className="overflow-hidden rounded-xl border border-white/10 bg-black/25"><div className="border-b border-white/10 px-4 py-3"><h3 className="text-[10px] font-bold uppercase tracking-[.2em] text-bone">Trade screenshot · Tradeify Grand Cup</h3></div><img src={`${import.meta.env.BASE_URL}certificates/tradeify-grand-cup.webp`} alt="Tradeify Grand Cup result showing Masum Kaji ranked 2,360" className="max-h-[270px] w-full bg-black object-contain"/><p className="px-4 py-3 text-[10px] leading-relaxed text-mist">Competition evidence. Any future screenshots should be redacted before being added.</p></section>
           </div>
         </> : <div className="mt-8 grid gap-3 sm:grid-cols-2">{data.facts.map((fact, i) => <div key={fact} className="rounded-xl border border-white/10 bg-white/[.03] p-4"><span className="text-[10px] font-bold tracking-[.2em] text-gold">{String(i + 1).padStart(2, '0')}</span><p className="mt-2 text-sm leading-relaxed text-bone/80">{fact}</p></div>)}</div>}
+        {data.link && <a href={data.link.href} target="_blank" rel="noreferrer" className="mt-7 inline-flex rounded-full border border-gold/45 px-4 py-2.5 text-xs font-semibold text-gold-bright transition hover:border-gold-bright hover:bg-gold-bright/10">{data.link.label} ↗</a>}
         {data.kind !== 'trade-dashboard' && data.kind !== 'siftmirth-research' && <div className="mt-8 border-l border-gold/60 pl-4"><p className="text-[10px] font-bold uppercase tracking-[.24em] text-gold-bright">Reflection</p><p className="mt-2 text-sm leading-relaxed text-mist">{data.note}</p></div>}
       </div>
     </motion.article>

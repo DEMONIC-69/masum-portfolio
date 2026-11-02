@@ -43,12 +43,13 @@ export type Project = {
 };
 export const projects: Project[] = [];
 
-export type CurrentFocus = { title: string; status: string; detail: string; signal: string };
+export type CurrentFocus = { title: string; status: string; detail: string; signal: string; url?: string };
 export const currentFocus: CurrentFocus[] = [
   { title: 'Win With Masum', status: 'Personal Brand', detail: 'Documenting the markets journey and creating research-led content.', signal: 'Creator project' },
   { title: 'Equity & Gold Research', status: 'Researching', detail: 'Developing and publishing equity research, gold views, and market observations as they take shape.', signal: 'Research desk' },
   { title: 'Trade Journal', status: 'In progress', detail: 'Recording trade ideas, decisions, reviews, and funded-account milestones when confirmed.', signal: 'Process first' },
   { title: 'Geography & AI', status: 'Learning', detail: 'B.Sc. Geography studies at Midnapore City College, including Basics of AI coursework.', signal: 'Current studies' },
+  { title: 'Equity Research Cohort', status: 'Learning', detail: 'Studying company analysis through The Valuation School’s Equity Research Cohort, including financial statements, valuation, sector analysis, annual reports, and research writing.', signal: 'The Valuation School', url: 'https://thevaluationschool.com/erc' },
 ];
 
 export type VentureStudy = { name: string; label: string; summary: string; proof: string[]; lessons: string; palette: Palette };

@@ -168,7 +168,7 @@ a:focus-visible {
   animation: shimmer 6s linear infinite;
 }
 
-/* Sunny: the existing animated fox companion, styled to fit the portfolio palette. */
+/* Sunee: the exported procedural avatar, framed in the portfolio's warm gold. */
 .masum-avatar {
   position: relative;
   display: block;
@@ -178,29 +178,22 @@ a:focus-visible {
   overflow: visible;
   border: 1px solid rgba(217, 180, 106, .7);
   border-radius: 9999px;
-  background: radial-gradient(circle at 50% 18%, #514126, #161412 70%);
+  background: radial-gradient(circle at 50% 18%, rgba(217,180,106,.26), #161412 72%);
   box-shadow: 0 0 25px rgba(217, 180, 106, .16), inset 0 0 0 3px rgba(255,255,255,.035);
   isolation: isolate;
 }
-.masum-avatar__window {
+.masum-avatar__stage {
   position: absolute;
   z-index: 1;
   inset: 0;
-  overflow: visible;
-  border-radius: inherit;
+  display: grid;
+  place-items: center;
 }
-.masum-avatar__sprite {
-  position: absolute;
-  left: 50%;
-  bottom: -22%;
-  width: 160%;
-  height: 160%;
-  max-width: none;
-  object-fit: contain;
-  transform: translateX(-50%);
-  filter: drop-shadow(0 5px 6px rgba(0,0,0,.28));
-  user-select: none;
-  pointer-events: none;
+.masum-avatar__stage svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 .masum-avatar--small { width: 2.8rem; height: 2.8rem; }
 .masum-avatar--hero {
@@ -211,7 +204,7 @@ a:focus-visible {
   background: radial-gradient(ellipse at 50% 57%, rgba(217,180,106,.15), transparent 72%);
   box-shadow: 0 0 42px rgba(217,180,106,.13);
 }
-.masum-avatar--hero .masum-avatar__sprite { bottom: -18%; width: 150%; height: 150%; }
+.masum-avatar--hero .masum-avatar__stage { inset: 3%; }
 .masum-avatar__orbit {
   position: absolute;
   z-index: 0;
