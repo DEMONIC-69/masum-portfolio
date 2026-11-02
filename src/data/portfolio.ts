@@ -1,6 +1,7 @@
 /** Central portfolio data. Keep entries limited to facts Masum has confirmed. */
 
-const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`;
+// The site is served at the custom-domain root, including its nested article routes.
+const publicAsset = (path: string) => `/${path.replace(/^\/+/, '')}`;
 
 export type Palette = { from: string; via: string; to: string; accent: string };
 

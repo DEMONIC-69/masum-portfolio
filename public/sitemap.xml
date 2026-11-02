@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://masumkaji.tech/</loc></url>
+  <url><loc>https://masumkaji.tech/</loc><lastmod>2026-11-02</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://masumkaji.tech/ventures/siftmirth/</loc><lastmod>2026-11-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://masumkaji.tech/ventures/monee-forum/</loc><lastmod>2026-11-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://masumkaji.tech/market-notes/btcusd-sfx-go/</loc><lastmod>2026-11-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>

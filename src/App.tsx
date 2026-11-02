@@ -23,6 +23,7 @@ import OpenJournal from './components/OpenJournal';
 import ResearchLibrary from './components/ResearchLibrary';
 import Newsletter from './components/Newsletter';
 import { EASE } from './components/fx';
+import StoryPage from './components/StoryPage';
 
 // Overlays are only needed on demand — split them out of the first load.
 const PlayIntro = lazy(() => import('./components/PlayIntro'));
@@ -43,6 +44,14 @@ function readStoredProfile(): ProfileId | null {
 }
 
 export default function App() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  const story = path === '/ventures/siftmirth' ? 'siftmirth'
+    : path === '/ventures/monee-forum' ? 'monee-forum'
+      : path === '/market-notes/btcusd-sfx-go' ? 'btcusd-sfx-go'
+        : null;
+
+  if (story) return <StoryPage story={story} />;
+
   return (
     <SmoothScrollProvider>
       <Series />
