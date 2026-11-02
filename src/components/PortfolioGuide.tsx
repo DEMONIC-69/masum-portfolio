@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motion';
+import { createPortal } from 'react-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { createAvatar, type AvatarController } from '@bible-strong/avatar-web';
 import suneeDefinition from '../assets/sunee.avatar.json';
 
@@ -7,6 +8,7 @@ type ChatMessage = { role: 'user' | 'model'; text: string };
 type Mood = 'idle' | 'listening' | 'thinking' | 'speaking' | 'happy';
 
 const endpoint = import.meta.env.VITE_MASUM_AI_ENDPOINT?.trim();
+const sectionOrder = ['home', 'now', 'about', 'journey', 'ventures', 'journal', 'newsletter', 'library', 'originals', 'picks', 'skills', 'moments', 'story', 'contact'];
 const suggestions = [
   'What is Masum working on now?',
   'How did he build and sell Siftmirth?',
@@ -20,6 +22,11 @@ const moodAnimation: Record<Mood, string> = {
 const moodExpression: Record<Mood, string> = {
   idle: 'neutral', listening: 'small-attentive', thinking: 'upward-side-glance', speaking: 'joyful-wide', happy: 'joyful-down-right',
 };
+const contextAnimation: Record<string, string> = {
+  home: 'idle', now: 'curious', about: 'listening', journey: 'proud', ventures: 'excited',
+  journal: 'thinking', newsletter: 'happy', library: 'curious', originals: 'surprised',
+  picks: 'searching', skills: 'working', moments: 'celebrate', story: 'proud', contact: 'playful',
+};
 const contextExpression: Record<string, string> = {
   now: 'curious-left', about: 'gentle-downward-gaze', journey: 'shy-downward', ventures: 'upward-side-glance',
   journal: 'small-attentive', newsletter: 'joyful-wide', library: 'downward-gaze', originals: 'surprised-left',
@@ -29,7 +36,7 @@ const contextExpression: Record<string, string> = {
 function SuneeAvatar({ mood = 'idle', small = false, hero = false, context = 'home' }: { mood?: Mood; small?: boolean; hero?: boolean; context?: string }) {
   const stageRef = useRef<HTMLSpanElement>(null);
   const controllerRef = useRef<AvatarController | null>(null);
-  const animation = moodAnimation[mood];
+  const animation = mood === 'idle' ? (contextAnimation[context] ?? 'idle') : moodAnimation[mood];
   const expression = mood === 'idle' ? (contextExpression[context] ?? 'neutral') : moodExpression[mood];
 
   useEffect(() => {
@@ -61,16 +68,11 @@ function SuneeAvatar({ mood = 'idle', small = false, hero = false, context = 'ho
       <span ref={stageRef} className="masum-avatar__stage" />
       <span className="masum-avatar__spark masum-avatar__spark--one">✦</span>
       <span className="masum-avatar__spark masum-avatar__spark--two">✧</span>
-      <span className="masum-avatar__status" />
     </span>
   );
 }
 
 export default function PortfolioGuide() {
-  const rawPointerX = useMotionValue(0);
-  const rawPointerY = useMotionValue(0);
-  const pointerX = useSpring(rawPointerX, { stiffness: 90, damping: 22, mass: .7 });
-  const pointerY = useSpring(rawPointerY, { stiffness: 90, damping: 22, mass: .7 });
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState('');
   const [busy, setBusy] = useState(false);
@@ -81,20 +83,29 @@ export default function PortfolioGuide() {
   const [tipIndex, setTipIndex] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState('home');
+  const [roamPosition, setRoamPosition] = useState(() => ({
+    x: Math.max(14, window.innerWidth - (window.innerWidth <= 640 ? 52 : 68) - (window.innerWidth <= 640 ? 14 : 22)),
+    y: window.innerWidth <= 640 ? 84 : 94,
+    side: 'right' as 'left' | 'right',
+  }));
 
   useEffect(() => {
-    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-    if (!finePointer.matches) return;
-    const move = (event: PointerEvent) => {
-      const max = window.innerWidth < 700 ? 7 : 15;
-      rawPointerX.set(((event.clientX / window.innerWidth) - .5) * max * 2);
-      rawPointerY.set(((event.clientY / window.innerHeight) - .5) * max * 2);
+    const place = () => {
+      const index = Math.max(0, sectionOrder.indexOf(activeSection));
+      const side = index % 2 === 0 ? 'right' : 'left';
+      const size = window.innerWidth <= 640 ? 52 : 68;
+      const gutter = window.innerWidth <= 640 ? 14 : 22;
+      const navClearance = window.innerWidth <= 640 ? 84 : 94;
+      setRoamPosition({
+        x: side === 'left' ? gutter : Math.max(gutter, window.innerWidth - size - gutter),
+        y: navClearance,
+        side,
+      });
     };
-    const reset = () => { rawPointerX.set(0); rawPointerY.set(0); };
-    window.addEventListener('pointermove', move, { passive: true });
-    window.addEventListener('blur', reset);
-    return () => { window.removeEventListener('pointermove', move); window.removeEventListener('blur', reset); };
-  }, [rawPointerX, rawPointerY]);
+    place();
+    window.addEventListener('resize', place, { passive: true });
+    return () => window.removeEventListener('resize', place);
+  }, [activeSection]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -116,12 +127,12 @@ export default function PortfolioGuide() {
   }, [bubble, open]);
 
   useEffect(() => {
-    const sections = ['now', 'about', 'journey', 'ventures', 'journal', 'newsletter', 'library', 'originals', 'picks', 'skills', 'moments', 'story', 'contact'];
+    const sections = sectionOrder.filter((id) => id !== 'home');
     const nodes = sections.map((id) => document.getElementById(id)).filter((node): node is HTMLElement => Boolean(node));
     const observer = new IntersectionObserver((entries) => {
       const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (visible) setActiveSection(visible.target.id);
-    }, { threshold: [0.15, 0.35, 0.6] });
+    }, { rootMargin: '-34% 0px -48% 0px', threshold: 0.01 });
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
   }, []);
@@ -152,25 +163,26 @@ export default function PortfolioGuide() {
     setError('');
     setBusy(true);
 
+    let timeout: number | undefined;
     try {
       const controller = new AbortController();
-      const timeout = window.setTimeout(() => controller.abort(), 18000);
+      timeout = window.setTimeout(() => controller.abort(), 45000);
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: nextMessages.slice(-8) }),
         signal: controller.signal,
       });
-      window.clearTimeout(timeout);
       const payload = await response.json().catch(() => ({})) as { answer?: string; error?: string };
       if (!response.ok || !payload.answer) throw new Error(payload.error || 'The AI could not answer just now. Please try again shortly.');
       setMessages((current) => [...current, { role: 'model', text: payload.answer!.slice(0, 2400) }]);
       setSpeaking(true);
       window.setTimeout(() => setSpeaking(false), 2600);
     } catch (cause) {
-      setError(cause instanceof DOMException && cause.name === 'AbortError' ? 'Sunee couldn’t reach the AI just now. Please try again.' : cause instanceof Error ? cause.message : 'Connection failed. Please try again.');
+      setError(cause instanceof DOMException && cause.name === 'AbortError' ? 'The AI is taking too long to reply. Please try again.' : cause instanceof Error ? cause.message : 'Connection failed. Please try again.');
       // Keep the visitor's question visible so a transient provider error doesn't erase it.
     } finally {
+      if (timeout !== undefined) window.clearTimeout(timeout);
       setBusy(false);
     }
   };
@@ -181,13 +193,13 @@ export default function PortfolioGuide() {
   };
 
   return (
-    <motion.div className="sunny-roamer fixed z-[95]" style={{ x: pointerX, y: pointerY }}>
+    <motion.div className={`sunny-roamer sunny-roamer--${roamPosition.side} fixed z-[95]`} initial={false} animate={{ x: roamPosition.x, y: roamPosition.y }} transition={{ type: 'spring', stiffness: 42, damping: 17, mass: 1.05 }}>
       {!open && bubble && <div className="sunny-bubble" role="status">{contextualTip}{activeSection !== 'newsletter' && tipIndex === 2 && <a href="#newsletter" onClick={() => setBubble(false)}> Join ↗</a>}</div>}
       <AnimatePresence>
-        {open && (
+            {open && createPortal((
           <motion.section
             aria-label="Ask Sunee about Masum"
-            className="masum-ai-panel absolute bottom-[5rem] right-0 flex max-h-[min(78dvh,650px)] w-[min(390px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.35rem] border border-gold-bright/30 bg-[#0b0d0f]/[.97] shadow-[0_28px_100px_rgba(0,0,0,.72),0_0_55px_rgba(217,180,106,.09)] backdrop-blur-2xl"
+            className="masum-ai-panel fixed bottom-6 right-4 flex max-h-[min(78dvh,650px)] w-[min(390px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.35rem] border border-gold-bright/30 bg-[#0b0d0f]/[.97] shadow-[0_28px_100px_rgba(0,0,0,.72),0_0_55px_rgba(217,180,106,.09)] backdrop-blur-2xl"
             initial={{ opacity: 0, y: 22, scale: .94, filter: 'blur(8px)' }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: 12, scale: .98, filter: 'blur(5px)' }}
@@ -213,7 +225,7 @@ export default function PortfolioGuide() {
                       <p className="mt-1.5">Ask about his journey, ventures, current projects, or the research he publishes.</p>
                     </div>
                   </div>
-                  {!endpoint && <p className="ml-11 rounded-xl border border-gold-bright/20 bg-gold-bright/[.045] px-3 py-2 text-[10px] leading-relaxed text-gold-bright/90">The AI service is being connected. Questions will be sent to Gemini after setup; please don’t enter private information.</p>}
+                  {!endpoint && <p className="ml-11 rounded-xl border border-gold-bright/20 bg-gold-bright/[.045] px-3 py-2 text-[10px] leading-relaxed text-gold-bright/90">Sunee’s AI connection isn’t configured yet. Please try again later.</p>}
                   <div className="flex flex-wrap gap-2 pl-11">
                     {suggestions.map((suggestion) => (
                       <button key={suggestion} type="button" disabled={!endpoint || busy} onClick={() => void ask(suggestion)} className="rounded-full border border-gold-bright/25 bg-gold-bright/[.04] px-2.5 py-2 text-left text-[10px] leading-snug text-gold-bright transition hover:border-gold-bright/55 hover:bg-gold-bright/10 disabled:cursor-default disabled:opacity-60">{suggestion}</button>
@@ -237,8 +249,8 @@ export default function PortfolioGuide() {
               <button type="submit" aria-label="Send question" disabled={!endpoint || busy || !question.trim()} className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold-bright text-lg font-semibold text-[#15120d] transition hover:bg-[#f0ce83] disabled:cursor-not-allowed disabled:opacity-45">↑</button>
             </form>
             <p className="px-4 pb-3 text-[9px] leading-relaxed text-smoke/80">Questions are processed by Google Gemini after setup. Don’t share private information. No live market data or personalized financial advice.</p>
-          </motion.section>
-        )}
+              </motion.section>
+            ), document.body)}
       </AnimatePresence>
 
       <motion.button
@@ -246,7 +258,7 @@ export default function PortfolioGuide() {
         aria-label={open ? 'Close Sunee assistant' : 'Meet Sunee, Masum’s AI companion'}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="masum-ai-launch group relative grid h-[4.15rem] w-[4.15rem] place-items-center rounded-full border border-gold-bright/40 bg-[#111316]/95 shadow-[0_8px_32px_rgba(0,0,0,.6)] transition hover:-translate-y-1 hover:border-gold-bright/75"
+        className="masum-ai-launch group relative grid h-[4.25rem] w-[4.25rem] place-items-center rounded-full border-0 bg-transparent shadow-none transition hover:-translate-y-1"
         animate={{ y: open ? 0 : [0, -4, 0] }}
         transition={{ y: open ? { duration: .2 } : { duration: 3.2, repeat: Infinity, ease: 'easeInOut' } }}
         whileTap={{ scale: .94 }}

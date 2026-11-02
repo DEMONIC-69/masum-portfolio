@@ -94,7 +94,7 @@ export default {
     if (contents[contents.length - 1].role !== 'user') return json({ error: 'Send a question to continue.' }, 400, origin);
 
     try {
-      const model = env.GEMINI_MODEL || 'gemini-3.8-flash';
+      const model = env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
       const result = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
@@ -104,10 +104,32 @@ export default {
           generationConfig: { maxOutputTokens: 500, temperature: 0.65 },
         }),
       });
-      if (!result.ok) return json({ error: 'The AI is temporarily unavailable. Please try again shortly.' }, 502, origin);
       const data = await result.json();
+      if (!result.ok) {
+        const providerError = data?.error || {};
+        console.warn('Gemini provider error', {
+          httpStatus: result.status,
+          code: Number(providerError.code) || undefined,
+          status: typeof providerError.status === 'string' ? providerError.status.slice(0, 60) : undefined,
+          message: typeof providerError.message === 'string' ? providerError.message.slice(0, 180) : undefined,
+        });
+        const message = result.status === 429
+          ? 'Sunee has reached Gemini’s current request limit. Please try again later.'
+          : result.status === 401 || result.status === 403
+            ? 'Gemini rejected the assistant credentials or model access. The site owner needs to check the AI key and model permissions.'
+            : result.status === 400
+              ? 'Gemini rejected the assistant model or request settings. The site owner needs to check the Worker configuration.'
+              : 'Gemini is temporarily unavailable. Please try again shortly.';
+        return json({ error: message }, 502, origin);
+      }
       const answer = data?.candidates?.[0]?.content?.parts?.map((part) => part.text || '').join('').trim();
-      if (!answer) return json({ error: 'The AI could not form a reply. Please try asking another way.' }, 502, origin);
+      if (!answer) {
+        console.warn('Gemini response contained no text', {
+          blockReason: data?.promptFeedback?.blockReason,
+          finishReason: data?.candidates?.[0]?.finishReason,
+        });
+        return json({ error: 'Gemini returned no text for that question. Please try rephrasing it.' }, 502, origin);
+      }
       return json({ answer: answer.slice(0, 2400) }, 200, origin);
     } catch {
       // Do not log prompts, visitor content, or provider error payloads.
