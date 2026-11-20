@@ -7,6 +7,15 @@ const generatedAt = '2026-11-02';
 
 const pages = [
   {
+    path: 'newsletter/index.html',
+    url: 'https://masumkaji.tech/newsletter/',
+    title: 'Market Notes Newsletter | Masum Kaji',
+    description: 'Subscribe to Masum Kaji’s Market Notes for market briefs, equity research, business lessons, and selected personal finance insights.',
+    heading: 'Market Notes Newsletter',
+    text: 'Subscribe to Market Notes by Masum Kaji for research and observations on gold, major indices, macro events, company research, personal finance education, and business lessons. Updates are sent when there is something useful to share. Unsubscribe at any time. This newsletter is educational and is not individualized financial advice or a recommendation to buy or sell.',
+    type: 'WebPage',
+  },
+  {
     path: 'resume/index.html',
     url: 'https://masumkaji.tech/resume/',
     title: 'Kaji Masum Hossen Resume | Masum Kaji — Research Analyst',
