@@ -7,6 +7,15 @@ const generatedAt = '2026-11-02';
 
 const pages = [
   {
+    path: 'resume/index.html',
+    url: 'https://masumkaji.tech/resume/',
+    title: 'Kaji Masum Hossen Resume | Masum Kaji — Research Analyst',
+    description: 'Resume of Kaji Masum Hossen (Masum Kaji): Geography undergraduate, independent market researcher, entrepreneur, creator, and self-taught Python and JavaScript developer.',
+    heading: 'Kaji Masum Hossen — Resume',
+    text: 'Research Analyst • Business Strategist • Finance Specialist. Geography undergraduate at Midnapore City College. Experience includes independent market research and prop-firm trading, video editing, digital community operations, and Discord bot development. Selected ventures: Siftmirth, built and sold; Monee Forum, grown to 225K+ subscribers and sold. Skills include equity and commodity research, capital allocation, business strategy, personal finance education, Python, JavaScript, content strategy, and video production. Download the resume PDF or visit the portfolio for the full story and supporting project details.',
+    type: 'ProfilePage',
+  },
+  {
     path: 'ventures/siftmirth/index.html',
     url: 'https://masumkaji.tech/ventures/siftmirth/',
     title: 'Siftmirth — Personalized Gifting Venture Case Study | Masum Kaji',
