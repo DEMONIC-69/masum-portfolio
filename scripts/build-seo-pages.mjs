@@ -7,6 +7,15 @@ const generatedAt = '2026-11-21';
 
 const pages = [
   {
+    path: 'links/index.html',
+    url: 'https://masumkaji.tech/links/',
+    title: 'TheMasumKaji Links | Masum Kaji',
+    description: 'Official links for Masum Kaji and TheMasumKaji: portfolio, Market Notes newsletter, resume, YouTube, Instagram, LinkedIn, and email.',
+    heading: 'TheMasumKaji official links',
+    text: 'Find Masum Kaji’s official portfolio, Market Notes newsletter, public resume, YouTube channel, Instagram profile, LinkedIn profile, and contact email in one place.',
+    type: 'ProfilePage',
+  },
+  {
     path: 'newsletter/index.html',
     url: 'https://masumkaji.tech/newsletter/',
     title: 'Market Notes Newsletter | Masum Kaji',

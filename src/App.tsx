@@ -26,6 +26,7 @@ import { EASE } from './components/fx';
 import StoryPage from './components/StoryPage';
 import ResumePage from './components/ResumePage';
 import NewsletterPage from './components/NewsletterPage';
+import LinksPage from './components/LinksPage';
 
 // Overlays are only needed on demand — split them out of the first load.
 const PlayIntro = lazy(() => import('./components/PlayIntro'));
@@ -49,6 +50,7 @@ export default function App() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
   if (path === '/resume') return <ResumePage />;
   if (path === '/newsletter') return <NewsletterPage />;
+  if (path === '/links') return <LinksPage />;
   const story = path === '/ventures/siftmirth' ? 'siftmirth'
     : path === '/ventures/monee-forum' ? 'monee-forum'
       : path === '/market-notes/btcusd-sfx-go' ? 'btcusd-sfx-go'
