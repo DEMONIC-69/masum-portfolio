@@ -27,6 +27,9 @@ export default function LinksPage() {
           <a href="/" className="rounded-md border border-white/15 px-4 py-2.5 text-xs font-semibold text-bone transition hover:border-gold-bright/60">Back to portfolio ↗</a>
         </nav>
         <header className="text-center">
+          <figure className="mx-auto mb-5 grid h-28 w-28 place-items-end overflow-hidden rounded-full border border-gold-bright/40 bg-[radial-gradient(circle_at_50%_20%,rgba(217,180,106,.3),transparent_65%),#101114] shadow-[0_0_36px_rgba(217,180,106,.12)]">
+            <img src="/assets/masum-kaji-research-analyst.png" width="1347" height="1167" alt="Masum Kaji, research analyst, investor, and creator of TheMasumKaji" className="h-[118%] w-[118%] max-w-none object-contain object-bottom" />
+          </figure>
           <p className="text-[10px] font-bold uppercase tracking-[.32em] text-gold-bright">TheMasumKaji</p>
           <h1 className="mt-3 font-display text-6xl leading-[.88] tracking-wide sm:text-7xl">ALL THE<br />IMPORTANT LINKS</h1>
           <p className="mx-auto mt-5 max-w-xl font-serif text-2xl italic leading-relaxed text-bone/90">One place for the work, research, and the journey.</p>

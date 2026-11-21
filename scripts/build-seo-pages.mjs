@@ -9,11 +9,12 @@ const pages = [
   {
     path: 'links/index.html',
     url: 'https://masumkaji.tech/links/',
-    title: 'TheMasumKaji Links | Masum Kaji',
+    title: 'Masum Kaji Links | Research Analyst, Markets & TheMasumKaji',
     description: 'Official links for Masum Kaji and TheMasumKaji: portfolio, Market Notes newsletter, resume, YouTube, Instagram, LinkedIn, and email.',
     heading: 'TheMasumKaji official links',
     text: 'Find Masum Kaji’s official portfolio, Market Notes newsletter, public resume, YouTube channel, Instagram profile, LinkedIn profile, and contact email in one place.',
     type: 'ProfilePage',
+    image: { url: 'https://masumkaji.tech/assets/masum-kaji-research-analyst.png', caption: 'Masum Kaji, research analyst, investor, and creator of TheMasumKaji.' },
   },
   {
     path: 'newsletter/index.html',
@@ -63,6 +64,10 @@ const pages = [
 ];
 
 for (const page of pages) {
+  const pageImage = page.image ? {
+    image: { '@type': 'ImageObject', contentUrl: page.image.url, url: page.image.url, caption: page.image.caption },
+    primaryImageOfPage: page.image.url,
+  } : {};
   const schema = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': page.type,
@@ -74,7 +79,9 @@ for (const page of pages) {
     author: { '@type': 'Person', name: 'Kaji Masum Hossen', alternateName: 'Masum Kaji', url: 'https://masumkaji.tech/' },
     publisher: { '@type': 'Person', name: 'Kaji Masum Hossen', url: 'https://masumkaji.tech/' },
     isPartOf: { '@type': 'WebSite', name: 'Masum Kaji', url: 'https://masumkaji.tech/' },
+    ...pageImage,
   });
+  const noscriptImage = page.image ? `<figure><img src="${page.image.url}" width="1347" height="1167" alt="${page.image.caption}" /><figcaption>${page.image.caption}</figcaption></figure>` : '';
   let html = template
     .replace('<head>', '<head>\n    <base href="/" />')
     .replace(/<title>.*?<\/title>/, `<title>${page.title}</title>`)
@@ -85,8 +92,8 @@ for (const page of pages) {
     .replace(/<meta property="og:description" content="[^"]*"\s*\/>/, `<meta property="og:description" content="${page.description}" />`)
     .replace(/<meta name="twitter:card" content="[^"]*"\s*\/>/, '<meta name="twitter:card" content="summary_large_image" />')
     .replace(/\{"@context":"https:\/\/schema\.org"[\s\S]*?<\/script>/, `${schema}\n    </script>`)
-    .replace(/<div id="root"><\/div>/, `<div id="root"></div><noscript><main><h1>${page.heading}</h1><p>${page.text}</p><p><a href="/">Return to Masum Kaji’s portfolio</a></p></main></noscript>`)
-    .replace(/<noscript><main><h1>Masum Kaji<\/h1>[\s\S]*?<\/noscript>/, '');
+    .replace(/<noscript>[\s\S]*?<\/noscript>/, '')
+    .replace(/<div id="root"><\/div>/, `<div id="root"></div><noscript><main>${noscriptImage}<h1>${page.heading}</h1><p>${page.text}</p><p><a href="/">Return to Masum Kaji’s portfolio</a></p></main></noscript>`);
 
   const output = join(root, 'dist', page.path);
   await mkdir(dirname(output), { recursive: true });
