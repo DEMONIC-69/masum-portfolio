@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#090a0c" />
+    <title>404 — Signal Lost | Masum Kaji</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root { color-scheme: dark; --ink:#090a0c; --panel:#111216; --bone:#f4f1ec; --muted:#aaa8ad; --gold:#d9b46a; --gold-deep:#a88439; }
+      * { box-sizing:border-box; }
+      html, body { min-height:100%; margin:0; }
+      body { background:var(--ink); color:var(--bone); font-family:Inter,Arial,sans-serif; overflow-x:hidden; }
+      .page { min-height:100svh; display:grid; place-items:center; isolation:isolate; padding:32px 22px; position:relative; overflow:hidden; }
+      .page::before { content:""; position:absolute; inset:0; z-index:-2; background:radial-gradient(circle at 74% 38%, rgba(217,180,106,.18), transparent 28rem), radial-gradient(circle at 17% 92%, rgba(168,132,57,.11), transparent 25rem), linear-gradient(115deg,#08090b 0%,#111216 53%,#090a0c 100%); }
+      .grain { pointer-events:none; position:absolute; inset:0; opacity:.23; z-index:-1; background-image:radial-gradient(rgba(255,255,255,.23) .55px, transparent .7px); background-size:5px 5px; mask-image:linear-gradient(to bottom,transparent,black 18%,black 82%,transparent); }
+      .orbit { position:absolute; border:1px solid rgba(217,180,106,.2); border-radius:50%; aspect-ratio:1; width:min(64vw,780px); right:-15vw; top:50%; transform:translateY(-50%); }
+      .orbit::after { content:""; position:absolute; width:11px; height:11px; border-radius:50%; background:var(--gold); box-shadow:0 0 24px 7px rgba(217,180,106,.36); top:17%; left:8%; animation:drift 6s ease-in-out infinite; }
+      .card { width:min(720px,100%); padding:clamp(30px,6vw,70px); position:relative; border:1px solid rgba(255,255,255,.11); border-radius:28px; background:linear-gradient(145deg,rgba(23,24,28,.88),rgba(11,12,15,.72)); box-shadow:0 28px 90px rgba(0,0,0,.38); backdrop-filter:blur(13px); }
+      .mark { color:var(--gold); display:flex; align-items:center; gap:9px; font-size:12px; font-weight:700; letter-spacing:.32em; text-transform:uppercase; }
+      .mark b { font-family:"Bebas Neue",Impact,sans-serif; font-size:30px; line-height:0; letter-spacing:0; }
+      .kicker { color:var(--gold); font-size:11px; font-weight:700; letter-spacing:.28em; margin:64px 0 14px; text-transform:uppercase; }
+      h1 { font-family:"Bebas Neue",Impact,sans-serif; font-size:clamp(68px,13vw,142px); letter-spacing:.025em; line-height:.8; margin:0; max-width:660px; }
+      h1 em { color:var(--gold); font-style:normal; }
+      .copy { color:var(--muted); font-family:"Instrument Serif",Georgia,serif; font-size:clamp(23px,3vw,30px); font-style:italic; line-height:1.15; margin:29px 0 36px; max-width:520px; }
+      .actions { display:flex; flex-wrap:wrap; gap:12px; }
+      .button { align-items:center; border:1px solid rgba(255,255,255,.19); border-radius:10px; color:var(--bone); display:inline-flex; font-size:12px; font-weight:700; gap:10px; letter-spacing:.09em; min-height:51px; padding:0 20px; text-decoration:none; text-transform:uppercase; transition:transform .2s ease, background .2s ease, border-color .2s ease; }
+      .button:hover { border-color:var(--gold); background:rgba(217,180,106,.08); transform:translateY(-2px); }
+      .button.primary { background:var(--gold); border-color:var(--gold); color:#17130b; }
+      .button.primary:hover { background:#efcc82; }
+      .signal { border-top:1px solid rgba(255,255,255,.1); color:#8e8c91; display:flex; font-size:11px; gap:10px; letter-spacing:.1em; margin-top:48px; padding-top:17px; text-transform:uppercase; }
+      .dot { background:#86dc79; border-radius:50%; box-shadow:0 0 12px #86dc79; display:inline-block; height:7px; margin-top:3px; width:7px; }
+      @keyframes drift { 50% { transform:translate(28px,22px) scale(1.3); } }
+      @media (max-width:560px) { .page { padding:18px; align-items:start; } .card { margin-top:9vh; border-radius:22px; } .kicker { margin-top:50px; } .actions { display:grid; } .button { justify-content:center; } .orbit { width:130vw; right:-72vw; top:8%; transform:none; } }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="grain" aria-hidden="true"></div>
+      <div class="orbit" aria-hidden="true"></div>
+      <section class="card" aria-labelledby="lost-title">
+        <div class="mark"><b>M</b><span>Portfolio</span></div>
+        <p class="kicker">404 / Lost in the feed</p>
+        <h1 id="lost-title">This page took <em>a detour.</em></h1>
+        <p class="copy">Even disciplined research has a wrong turn. Let’s get you back to the portfolio.</p>
+        <nav class="actions" aria-label="Helpful links">
+          <a class="button primary" href="/">Return home <span aria-hidden="true">→</span></a>
+          <a class="button" href="/resume/">Open resume</a>
+          <a class="button" href="/newsletter/">Get market notes</a>
+        </nav>
+        <p class="signal"><span class="dot" aria-hidden="true"></span> Portfolio signal online · Page not found</p>
+      </section>
+    </main>
+  </body>
+</html>

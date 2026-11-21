@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 
 const root = process.cwd();
 const template = await readFile(join(root, 'dist', 'index.html'), 'utf8');
-const generatedAt = '2026-11-02';
+const generatedAt = '2026-11-21';
 
 const pages = [
   {
