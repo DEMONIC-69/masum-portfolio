@@ -1,23 +1,41 @@
+import type { ReactNode } from 'react';
 import { profile } from '../data/portfolio';
 
 type LinkCard = {
   label: string;
   detail: string;
   href: string;
+  icon: 'home' | 'notes' | 'resume' | 'contact' | 'youtube' | 'instagram' | 'linkedin' | 'email';
   external?: boolean;
   primary?: boolean;
 };
 
 const links: LinkCard[] = [
-  { label: 'Portfolio', detail: 'Research, ventures, work, and the full story.', href: '/', primary: true },
-  { label: 'Market Notes', detail: 'Subscribe for research, market views, and decision notes.', href: '/newsletter/' },
-  { label: 'Resume', detail: 'View the public resume and download the PDF.', href: '/resume/' },
-  { label: 'Contact', detail: 'Send a professional inquiry or collaboration request.', href: '/contact/' },
-  { label: 'YouTube', detail: 'Subscribe to TheMasumKaji on YouTube.', href: profile.links.youtube ?? 'https://www.youtube.com/', external: true },
-  { label: 'Instagram', detail: 'Follow TheMasumKaji for updates and behind the scenes.', href: profile.links.instagram ?? 'https://www.instagram.com/themasumkaji/', external: true },
-  { label: 'LinkedIn', detail: 'Connect professionally and follow my journey.', href: profile.links.linkedin ?? 'https://www.linkedin.com/', external: true },
-  { label: 'Email', detail: 'For opportunities, collaborations, and conversations.', href: `mailto:${profile.email}`, external: true },
+  { label: 'Portfolio', detail: 'Research, ventures, work, and the full story.', href: '/', icon: 'home', primary: true },
+  { label: 'Market Notes', detail: 'Subscribe for research, market views, and decision notes.', href: '/newsletter/', icon: 'notes' },
+  { label: 'Resume', detail: 'View the public resume and download the PDF.', href: '/resume/', icon: 'resume' },
+  { label: 'Contact', detail: 'Send a professional inquiry or collaboration request.', href: '/contact/', icon: 'contact' },
+  { label: 'YouTube', detail: 'Subscribe to TheMasumKaji on YouTube.', href: profile.links.youtube ?? 'https://www.youtube.com/', icon: 'youtube', external: true },
+  { label: 'Instagram', detail: 'Follow TheMasumKaji for updates and behind the scenes.', href: profile.links.instagram ?? 'https://www.instagram.com/themasumkaji/', icon: 'instagram', external: true },
+  { label: 'LinkedIn', detail: 'Connect professionally and follow my journey.', href: profile.links.linkedin ?? 'https://www.linkedin.com/', icon: 'linkedin', external: true },
+  { label: 'Email', detail: 'For opportunities, collaborations, and conversations.', href: `mailto:${profile.email}`, icon: 'email', external: true },
 ];
+
+function LinkIcon({ name }: { name: LinkCard['icon'] }) {
+  const shared = { fill: 'none', stroke: 'currentColor', strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, strokeWidth: 1.7 };
+  const shapes: Record<LinkCard['icon'], ReactNode> = {
+    home: <><path d="m3 10 9-7 9 7" /><path d="M5 9v11h14V9M9 20v-6h6v6" /></>,
+    notes: <><path d="M7 3h8l4 4v14H7z" /><path d="M15 3v5h4M10 12h6M10 16h6" /></>,
+    resume: <><path d="M7 3h8l4 4v14H7z" /><path d="M15 3v5h4M10 12h6M10 16h6" /><path d="M4 7v14" /></>,
+    contact: <><path d="M4 5h16v12H9l-5 4z" /><path d="M8 10h8M8 13h5" /></>,
+    youtube: <><rect x="3" y="5" width="18" height="14" rx="4" /><path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none" /></>,
+    instagram: <><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.8" r=".8" fill="currentColor" stroke="none" /></>,
+    linkedin: <><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M8 10v7M8 7v.01M12 17v-7m0 3a3 3 0 0 1 6 0v4" /></>,
+    email: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></>,
+  };
+
+  return <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5" {...shared}>{shapes[name]}</svg>;
+}
 
 export default function LinksPage() {
   return (
@@ -44,7 +62,10 @@ export default function LinksPage() {
               {...(link.external ? { target: '_blank', rel: 'noreferrer' } : {})}
               className={`group flex items-center gap-4 rounded-xl border p-5 transition sm:p-6 ${link.primary ? 'border-gold-bright/45 bg-[radial-gradient(ellipse_at_top_right,rgba(217,180,106,.17),transparent_58%),linear-gradient(145deg,#191712,#101114)] hover:border-gold-bright' : 'border-white/10 bg-white/[.025] hover:border-gold-bright/45 hover:bg-white/[.045]'}`}
             >
-              <span className="font-display text-3xl tracking-wide text-gold-bright">0{index + 1}</span>
+              <span className="flex w-14 shrink-0 flex-col items-center gap-2 text-gold-bright sm:w-16">
+                <span className="font-display text-3xl leading-none tracking-wide">0{index + 1}</span>
+                <span className="grid h-9 w-9 place-items-center rounded-full border border-gold-bright/25 bg-black/20 text-gold-bright transition group-hover:border-gold-bright/70 group-hover:bg-gold-bright/10"><LinkIcon name={link.icon} /></span>
+              </span>
               <span className="min-w-0 flex-1">
                 <span className="block font-display text-3xl leading-none tracking-wide sm:text-4xl">{link.label}</span>
                 <span className="mt-2 block text-xs leading-relaxed text-mist sm:text-sm">{link.detail}</span>
