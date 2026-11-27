@@ -27,6 +27,7 @@ import StoryPage from './components/StoryPage';
 import ResumePage from './components/ResumePage';
 import NewsletterPage from './components/NewsletterPage';
 import LinksPage from './components/LinksPage';
+import ContactPage from './components/ContactPage';
 
 // Overlays are only needed on demand — split them out of the first load.
 const PlayIntro = lazy(() => import('./components/PlayIntro'));
@@ -51,6 +52,7 @@ export default function App() {
   if (path === '/resume') return <ResumePage />;
   if (path === '/newsletter') return <NewsletterPage />;
   if (path === '/links') return <LinksPage />;
+  if (path === '/contact') return <ContactPage />;
   const story = path === '/ventures/siftmirth' ? 'siftmirth'
     : path === '/ventures/monee-forum' ? 'monee-forum'
       : path === '/market-notes/btcusd-sfx-go' ? 'btcusd-sfx-go'

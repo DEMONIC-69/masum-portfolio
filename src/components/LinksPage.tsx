@@ -12,10 +12,11 @@ const links: LinkCard[] = [
   { label: 'Portfolio', detail: 'Research, ventures, work, and the full story.', href: '/', primary: true },
   { label: 'Market Notes', detail: 'Subscribe for research, market views, and decision notes.', href: '/newsletter/' },
   { label: 'Resume', detail: 'View the public resume and download the PDF.', href: '/resume/' },
+  { label: 'Contact', detail: 'Send a professional inquiry or collaboration request.', href: '/contact/' },
   { label: 'YouTube', detail: 'Subscribe to TheMasumKaji on YouTube.', href: profile.links.youtube ?? 'https://www.youtube.com/', external: true },
   { label: 'Instagram', detail: 'Follow TheMasumKaji for updates and behind the scenes.', href: profile.links.instagram ?? 'https://www.instagram.com/themasumkaji/', external: true },
   { label: 'LinkedIn', detail: 'Connect professionally and follow my journey.', href: profile.links.linkedin ?? 'https://www.linkedin.com/', external: true },
-  { label: 'Email', detail: 'For opportunities, collaborations, and conversations.', href: `mailto:${profile.email}` },
+  { label: 'Email', detail: 'For opportunities, collaborations, and conversations.', href: `mailto:${profile.email}`, external: true },
 ];
 
 export default function LinksPage() {
@@ -33,6 +34,7 @@ export default function LinksPage() {
           <p className="text-[10px] font-bold uppercase tracking-[.32em] text-gold-bright">TheMasumKaji</p>
           <h1 className="mt-3 font-display text-6xl leading-[.88] tracking-wide sm:text-7xl">ALL THE<br />IMPORTANT LINKS</h1>
           <p className="mx-auto mt-5 max-w-xl font-serif text-2xl italic leading-relaxed text-bone/90">One place for the work, research, and the journey.</p>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-mist">Masum Kaji is a research analyst, investor, market researcher, and YouTube creator. Explore global markets, equity and stock-market research, commodities, business strategy, and selected trading notes.</p>
         </header>
         <section className="mt-10 grid gap-3" aria-label="Important links">
           {links.map((link, index) => (

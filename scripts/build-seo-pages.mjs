@@ -3,9 +3,18 @@ import { dirname, join } from 'node:path';
 
 const root = process.cwd();
 const template = await readFile(join(root, 'dist', 'index.html'), 'utf8');
-const generatedAt = '2026-11-21';
+const generatedAt = '2026-11-27';
 
 const pages = [
+  {
+    path: 'contact/index.html',
+    url: 'https://masumkaji.tech/contact/',
+    title: 'Contact Masum Kaji | Professional Inquiries & Collaborations',
+    description: 'Contact Masum Kaji for professional opportunities, research or media inquiries, business collaborations, interviews, and other thoughtful conversations.',
+    heading: 'Contact Masum Kaji',
+    text: 'Send a professional inquiry, research or media question, business collaboration request, speaking or interview invitation, or another message to Masum Kaji. Include your name, reply email, inquiry type, and a brief description. The contact form opens an email draft and does not store form data on the website.',
+    type: 'ContactPage',
+  },
   {
     path: 'links/index.html',
     url: 'https://masumkaji.tech/links/',
