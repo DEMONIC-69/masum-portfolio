@@ -29,7 +29,9 @@ export default function ContactPage() {
       '',
       message,
     ].filter((line) => line !== '').join('\n');
-    window.location.href = `mailto:${profile.email}?${new URLSearchParams({ subject, body })}`;
+    // mailto uses URI percent encoding; form-style encoding would leave '+'
+    // characters in some clients instead of turning them back into spaces.
+    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setNotice('Your email app should open with the inquiry ready to send. If it does not, use the email link beside the form.');
   }
 
