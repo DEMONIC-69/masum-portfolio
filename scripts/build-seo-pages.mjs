@@ -61,15 +61,6 @@ const pages = [
     text: 'Monee Forum was a YouTube channel focused on online money, online business, and business education. Masum Kaji grew it to more than 225,000 subscribers and later sold the channel.',
     type: 'Article',
   },
-  {
-    path: 'market-notes/btcusd-sfx-go/index.html',
-    url: 'https://masumkaji.tech/market-notes/btcusd-sfx-go/',
-    title: 'BTCUSD Long — SFX-GO Trade Note | Masum Kaji',
-    description: 'A dated personal BTCUSD position log: SFX Funded $10,000 SFX-GO account, entry 78,020, target 81,034, and stop 76,130. Not a trade recommendation.',
-    heading: 'BTCUSD long trade note',
-    text: 'Personal position log dated November 1, 2026. The reported BTCUSD long listed entry 78,020, take profit 81,034, and stop loss 76,130 on an SFX Funded $10,000 SFX-GO account. No written rationale, timeframe, or outcome was supplied.',
-    type: 'Article',
-  },
 ];
 
 for (const page of pages) {

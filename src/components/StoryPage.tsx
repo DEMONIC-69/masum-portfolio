@@ -1,6 +1,6 @@
-import { marketViews, ventureStudies } from '../data/portfolio';
+import { ventureStudies } from '../data/portfolio';
 
-type Story = 'siftmirth' | 'monee-forum' | 'btcusd-sfx-go';
+type Story = 'siftmirth' | 'monee-forum';
 
 const linkClass = 'inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2.5 text-xs font-semibold text-bone transition hover:border-gold-bright hover:text-gold-bright';
 const panelClass = 'rounded-2xl border border-white/10 bg-white/[.025] p-5 sm:p-7';
@@ -8,22 +8,19 @@ const panelClass = 'rounded-2xl border border-white/10 bg-white/[.025] p-5 sm:p-
 export default function StoryPage({ story }: { story: Story }) {
   const siftmirth = ventureStudies.find((item) => item.name === 'Siftmirth')!;
   const monee = ventureStudies.find((item) => item.name === 'Monee Forum')!;
-  const trade = marketViews[0];
   const isSiftmirth = story === 'siftmirth';
   const isMonee = story === 'monee-forum';
-  const title = isSiftmirth ? 'Siftmirth — Venture Case Study' : isMonee ? 'Monee Forum — Venture Case Study' : 'BTCUSD Long — SFX-GO Trade Note';
-  const kicker = isSiftmirth ? siftmirth.label : isMonee ? monee.label : 'PERSONAL POSITION LOG · NOV 1, 2026';
+  const title = isSiftmirth ? 'Siftmirth — Venture Case Study' : 'Monee Forum — Venture Case Study';
+  const kicker = isSiftmirth ? siftmirth.label : monee.label;
   const intro = isSiftmirth
     ? 'A one-person, AI-assisted personalized gifting venture: the idea, operating model, reported results, and what the build taught me.'
-    : isMonee
-      ? 'A creator project about online income and business education that I grew to more than 225,000 subscribers before selling the channel.'
-      : 'A dated record of a BTCUSD long reported on a $10,000 SFX Funded SFX-GO account. Levels are reproduced as supplied, with no added market rationale.';
+    : 'A creator project about online income and business education that I grew to more than 225,000 subscribers before selling the channel.';
 
   return <div className="min-h-screen bg-ink text-bone">
     <header className="sticky top-0 z-20 border-b border-white/10 bg-ink/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
         <a href="/" className="text-xs font-bold uppercase tracking-[.3em] text-gold-bright">M <span className="text-mist">Portfolio</span></a>
-        <a href={isSiftmirth || isMonee ? '/#ventures' : '/#journal'} className={linkClass}>← Back to {isSiftmirth || isMonee ? 'ventures' : 'market journal'}</a>
+        <a href="/#ventures" className={linkClass}>← Back to ventures</a>
       </div>
     </header>
     <main className="mx-auto max-w-6xl px-5 pb-20 pt-12 sm:px-8 sm:pt-20">
@@ -57,12 +54,6 @@ export default function StoryPage({ story }: { story: Story }) {
           <p className="mt-6 text-xs leading-relaxed text-smoke">The public record here is limited to the channel topic, subscriber milestone, and reported sale. Revenue, timeline, acquisition methods, and sale terms have not been provided for this case study.</p>
         </>}
 
-        {!isSiftmirth && !isMonee && <>
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{[['Account', '$10,000'], ['Program', 'SFX-GO'], ['Entry', '78,020'], ['TP / SL', '81,034 / 76,130']].map(([label, value]) => <div key={label} className={`${panelClass} border-emerald-300/15`}><p className="text-[9px] font-bold uppercase tracking-[.18em] text-smoke">{label}</p><p className="mt-3 font-display text-2xl text-emerald-200">{value}</p></div>)}</div>
-          {trade.image && <figure className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-black/50"><img src="/assets/trades/btcusd-sfx-funded-2026-11-01.png" alt="TradingView chart supplied with the BTCUSD SFX-GO trade update" className="w-full object-contain"/><figcaption className="border-t border-white/10 px-4 py-3 text-xs text-smoke">Chart provided with the update · TradingView · Nov 2, 2026 capture</figcaption></figure>}
-          <div className="mt-8 grid gap-5 md:grid-cols-2"><section className={panelClass}><p className="text-[10px] font-bold uppercase tracking-[.24em] text-gold-bright">What was recorded</p><p className="mt-3 text-sm leading-relaxed text-mist">A BTCUSD long position was reported opened on Nov 1, 2026. The provided note listed entry 78,020, take profit 81,034, and stop loss 76,130 on an SFX Funded $10,000 SFX-GO account.</p></section><section className={panelClass}><p className="text-[10px] font-bold uppercase tracking-[.24em] text-gold-bright">Limits of this record</p><p className="mt-3 text-sm leading-relaxed text-mist">The update did not include a written rationale, timeframe, alternative scenarios, or a later outcome. The chart is shown as supplied and is not independent verification of the account or execution.</p></section></div>
-          <p className="mt-6 text-xs leading-relaxed text-smoke">Personal trade record for education and discussion, not a trade instruction or recommendation. Crypto markets are volatile; do not treat these levels as advice to copy a position.</p>
-        </>}
         <nav className="mt-10 flex flex-wrap gap-3" aria-label="Related pages"><a href="/#ventures" className={linkClass}>Venture case studies ↗</a><a href="/#journal" className={linkClass}>Market journal ↗</a><a href="/" className={linkClass}>Portfolio home ↗</a></nav>
       </article>
     </main>

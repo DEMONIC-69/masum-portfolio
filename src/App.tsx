@@ -55,8 +55,7 @@ export default function App() {
   if (path === '/contact') return <ContactPage />;
   const story = path === '/ventures/siftmirth' ? 'siftmirth'
     : path === '/ventures/monee-forum' ? 'monee-forum'
-      : path === '/market-notes/btcusd-sfx-go' ? 'btcusd-sfx-go'
-        : null;
+      : null;
 
   if (story) return <StoryPage story={story} />;
 

@@ -26,9 +26,8 @@ export default function OpenJournal() {
 }
 
 function MarketCard({ view, index }: { view: MarketView; index: number }) {
-  return <motion.a href="/market-notes/btcusd-sfx-go/" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .55, delay: index * .05, ease: EASE }} className="block overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/[.045] to-transparent p-5 text-left transition hover:border-gold/40 hover:bg-white/[.025]">
+  return <motion.article initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .55, delay: index * .05, ease: EASE }} className="block overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/[.045] to-transparent p-5 text-left">
       <div className="flex items-center justify-between gap-3"><span className="text-[10px] font-bold uppercase tracking-[.22em] text-gold-bright">{view.market}</span><span className="rounded-full border border-white/10 px-2.5 py-1 text-[9px] uppercase tracking-widest text-smoke">{view.cadence}</span></div>
       <p className="mt-5 text-[10px] uppercase tracking-[.18em] text-smoke">{view.date}</p><h3 className="mt-2 font-display text-2xl text-bone">{view.title}</h3><p className="mt-3 text-sm leading-relaxed text-mist">{view.summary}</p>
-      <span className="mt-5 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[.18em] text-gold-bright">Read full note <span aria-hidden>↗</span></span>
-  </motion.a>;
+  </motion.article>;
 }
