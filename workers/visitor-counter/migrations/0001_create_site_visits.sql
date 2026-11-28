@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS site_visits (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  total INTEGER NOT NULL DEFAULT 0
+);
+
+INSERT OR IGNORE INTO site_visits (id, total) VALUES (1, 0);

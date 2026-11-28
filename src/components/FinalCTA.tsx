@@ -4,6 +4,7 @@ import { profile } from '../data/portfolio';
 import { useSmoothScroll } from '../hooks/smoothScroll';
 import { EASE, Magnetic, Particles } from './fx';
 import { SeriesMark } from './Poster';
+import VisitorCounter from './VisitorCounter';
 
 export default function FinalCTA({ onReplay, onResume }: { onReplay: () => void; onResume: () => void }) {
   const ref = useRef<HTMLElement>(null);
@@ -102,6 +103,8 @@ export default function FinalCTA({ onReplay, onResume }: { onReplay: () => void;
           ▶ REPLAY INTRO · CHOOSE PROFILE
         </button>
       </div>
+
+      <VisitorCounter />
 
       <footer className="absolute inset-x-0 bottom-0 px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-center">
         <div className="mb-2 text-base">

@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "masum-portfolio-visitor-counter",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-28",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "masum-portfolio-visits",
+      "database_id": "a8f8a05b-a6ed-45be-9de8-d66cd956c284",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
